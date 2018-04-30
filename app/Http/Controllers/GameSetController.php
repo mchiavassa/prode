@@ -30,7 +30,7 @@ class GameSetController extends Controller
 
     public function showDetails($id)
     {
-        $gameSet = $this->gameSet->find($id);
+        $gameSet = $this->gameSet->with('games')->find($id);
 
         return view('set.details', ['gameSet' => $gameSet]);
     }

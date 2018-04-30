@@ -12,4 +12,9 @@ class GameSet extends Model
     {
         return $this->hasMany(Game::class, 'set_id');
     }
+
+    public function isCompleted()
+    {
+        return $this->games->where('home_score', '<>', null)->isEmpty();
+    }
 }

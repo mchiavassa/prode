@@ -5,7 +5,7 @@
 @else
     @foreach ($games as $game)
         <div class="card party text-center mb-2">
-            <a href="#">
+            <a href="{{route('game.result', ['id' => $game->id])}}">
                 <div class="card-body float-left">
                     <img class="float-left mr-2" src="{{ asset('img/flags/'.$game->home.'.svg') }}" height="50" />
                     <h3 class="card-text float-left">{{ config('domain.teams.'.$game->home) }}</h3>

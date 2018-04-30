@@ -21,6 +21,9 @@
     @if(!$gameSet->enabled)
         <a href="{{route('set.enable', ['id' => $gameSet->id])}}" class="btn btn-success">Habilitar</a>
     @endif
+    @if(!$gameSet->isCompleted())
+        <a href="#" class="btn btn-success">Computar pronósticos</a>
+    @endif
     <a href="{{route('set')}}" class="btn ">Volver</a>
 
     <div class="async-list mt-4" data-source-url="{{route('game.list.admin', ['id' => $gameSet->id])}}">

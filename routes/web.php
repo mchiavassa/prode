@@ -38,3 +38,6 @@ Route::get('/admin/sets/{id}/games/create', 'GameController@showCreate')->where(
 Route::post('/admin/sets/{id}/games/create', 'GameController@create')->where('id', '[0-9]+')->name('game.create')->middleware('auth.admin');
 
 Route::get('/admin/sets/{id}/games/list', 'GameController@listAdmin')->where('id', '[0-9]+')->name('game.list.admin');
+
+Route::get('/admin/games/{id}', 'GameController@showResultSet')->where('id', '[0-9]+')->name('game.result.show');
+Route::post('/admin/games/{id}', 'GameController@setResult')->where('id', '[0-9]+')->name('game.result');
