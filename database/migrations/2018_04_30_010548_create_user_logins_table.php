@@ -18,7 +18,7 @@ class CreateUserLoginsTable extends Migration
 
             $table->unsignedInteger('user_id');
             $table->string('provider', 100);
-            $table->string('providerKey');
+            $table->string('provider_key');
 
             $table->timestamps();
 

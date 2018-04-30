@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +13,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('login', 'LoginController@showLoginForm')->name('login');
+Route::post('logout', 'LoginController@logout')->name('logout');;
+Route::get('login/{provider}', 'LoginController@redirectToProvider')->name('login.external');
+Route::get('login/{provider}/callback', 'LoginController@handleProviderCallback');
+
+Route::get('/', 'HomeController@index');
