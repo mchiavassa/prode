@@ -19,3 +19,8 @@ Route::get('login/{provider}', 'LoginController@redirectToProvider')->name('logi
 Route::get('login/{provider}/callback', 'LoginController@handleProviderCallback');
 
 Route::get('/', 'HomeController@index');
+
+Route::get('/parties', 'PartyController@index')->name('party');
+Route::get('/parties/list', 'PartyController@list')->name('party.list');
+Route::get('/parties/{id}', 'PartyController@details')->where('id', '[0-9]+')->name('party.details');
+

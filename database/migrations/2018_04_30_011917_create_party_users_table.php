@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserPartiesTable extends Migration
+class CreatePartyUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateUserPartiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_parties', function (Blueprint $table) {
+        Schema::create('party_users', function (Blueprint $table) {
             $table->increments('id');
 
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('party_id');
 
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('party_id')->references('id')->on('parties');
         });
     }
 

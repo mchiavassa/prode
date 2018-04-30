@@ -17,7 +17,7 @@ class CreateForecastsTable extends Migration
             $table->increments('id');
 
             $table->unsignedInteger('game_id');
-            $table->unsignedInteger('user_party_id');
+            $table->unsignedInteger('party_user_id');
 
             $table->string('home_score', 50)->nullable();
             $table->string('away_score', 50)->nullable();
@@ -28,9 +28,9 @@ class CreateForecastsTable extends Migration
             $table->timestamps();
 
             $table->foreign('game_id')->references('id')->on('games');
-            $table->foreign('user_party_id')->references('id')->on('user_parties');
+            $table->foreign('party_user_id')->references('id')->on('party_users');
 
-            $table->unique(['game_id', 'user_party_id']);
+            $table->unique(['game_id', 'party_user_id']);
         });
     }
 

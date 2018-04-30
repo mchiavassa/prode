@@ -12,3 +12,24 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+.card {
+  a {
+    text-decoration: none !important;
+    color: #000000;
+  }
+  a:hover {
+    text-decoration: none !important;
+  }
+
+  img {
+    opacity: .5;
+    transition: 1s;
+  }
+}
+
+.card:hover {
+  img {
+    opacity: 1;
+  }
+}
