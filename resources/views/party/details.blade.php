@@ -1,12 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2 class="mb-4">{{$party->name}}</h2>
+    <div class="mb-4">
+        <h2>{{$party->name}}</h2>
+        <span class="badge badge-pill badge-dark">
+            {{$party->users->count()}} jugadores
+        </span>
+    </div>
 
-    <div class="card-columns">
+
+    <div class="card-columns party-details">
         <div class="card p-3">
             <h4 class="mb-4">Puntos</h4>
-
             <h1>
                 <strong>
                     {{$party->users->where('user_id', Auth::user()->id)->first()->points}}
@@ -15,7 +20,6 @@
         </div>
         <div class="card p-3">
             <h4 class="mb-4">Fechas</h4>
-
             <div class="async-list" data-source-url="{{route('set.list', ['enabled' => true])}}">
             </div>
             <div class="row">
@@ -28,7 +32,6 @@
         </div>
         <div class="card p-3">
             <h4 class="mb-4">Posiciones</h4>
-
             @include('party.ranking', ['partyUsers' => $party->users])
         </div>
     </div>

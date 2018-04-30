@@ -28,6 +28,13 @@ class GameSetController extends Controller
         return view('set.create');
     }
 
+    public function showDetails($id)
+    {
+        $gameSet = $this->gameSet->find($id);
+
+        return view('set.details', ['gameSet' => $gameSet]);
+    }
+
     public function create(StoreGameSet $request)
     {
         $validated = $request->validated();
@@ -42,7 +49,7 @@ class GameSetController extends Controller
 
     public function list(Request $request)
     {
-        $gameSets = $this->gameSet;
+        $gameSets = $this->gameSet->with('games');
 
         if ($request->query('enabled')) {
             $gameSets = $gameSets->where('enabled', $request->query('enabled'));

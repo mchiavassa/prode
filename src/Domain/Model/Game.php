@@ -8,7 +8,7 @@ class Game extends Model
 {
     public function set()
     {
-        return $this->belongsTo(GameSet::class);
+        return $this->belongsTo(GameSet::class, 'set_id');
     }
 
     public function forecasts()

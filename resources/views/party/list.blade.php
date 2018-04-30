@@ -11,6 +11,9 @@
                 <img class="card-img-top" src="{{asset('img/logo.png')}}" alt="{{ $party->name }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ $party->name }}</h5>
+                    <span class="badge badge-pill badge-dark">
+                        {{$party->users->count()}} jugadores
+                    </span>
                 </div>
             </a>
         </div>

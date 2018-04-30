@@ -17,6 +17,15 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04)
 }
 
+.party-details{
+  @include media-breakpoint-only(lg) {
+    column-count: 2;
+  }
+  @include media-breakpoint-only(xl) {
+    column-count: 2;
+  }
+}
+
 .party {
   a {
     text-decoration: none !important;
