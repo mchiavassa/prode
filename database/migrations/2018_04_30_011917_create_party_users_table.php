@@ -18,6 +18,7 @@ class CreatePartyUsersTable extends Migration
 
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('party_id');
+            $table->integer('points')->default(0);
 
             $table->timestamps();
             $table->softDeletes();

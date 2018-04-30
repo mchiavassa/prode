@@ -6,7 +6,7 @@
 @else
     <div class="card-columns">
     @foreach ($parties as $party)
-        <div class="card p-3">
+        <div class="card party p-3">
             <a href="{{ route('party.details', ['id' => $party->id]) }}">
                 <img class="card-img-top" src="{{asset('img/logo.png')}}" alt="{{ $party->name }}">
                 <div class="card-body">

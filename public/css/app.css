@@ -10394,22 +10394,22 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.card a {
+.party a {
   text-decoration: none !important;
   color: #000000;
 }
 
-.card a:hover {
+.party a:hover {
   text-decoration: none !important;
 }
 
-.card img {
+.party img {
   opacity: .5;
   -webkit-transition: 1s;
   transition: 1s;
 }
 
-.card:hover img {
+.party:hover img {
   opacity: 1;
 }
 

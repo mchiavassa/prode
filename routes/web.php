@@ -18,9 +18,11 @@ Route::post('logout', 'LoginController@logout')->name('logout');;
 Route::get('login/{provider}', 'LoginController@redirectToProvider')->name('login.external');
 Route::get('login/{provider}/callback', 'LoginController@handleProviderCallback');
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/parties', 'PartyController@index')->name('party');
 Route::get('/parties/list', 'PartyController@list')->name('party.list');
 Route::get('/parties/{id}', 'PartyController@details')->where('id', '[0-9]+')->name('party.details');
+
+Route::get('/sets/list', 'GameSetController@list')->name('set.list');
 

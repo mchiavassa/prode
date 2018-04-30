@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +23,15 @@ class PartyController extends Controller
 
     public function details($id)
     {
-        return view('party.details');
+        $party = $this->party
+            ->with('users', 'users.user')
+            ->find($id);
+
+        if ($party->users->where('user_id', Auth::user()->id)->isEmpty()) {
+            return redirect()->route('party');
+        }
+
+        return view('party.details', ['party' => $party]);
     }
 
     public function list()

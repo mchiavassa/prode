@@ -19,7 +19,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand">
+                <a class="navbar-brand" href="{{route('home')}}">
                     <img src="{{asset('img/logo.png')}}" alt="Prode" class="rounded" height="30px">
                     {{ config('app.name', 'Laravel') }}
                 </a>

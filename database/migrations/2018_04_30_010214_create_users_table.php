@@ -18,7 +18,6 @@ class CreateUsersTable extends Migration
 
             $table->string('name', 150);
             $table->string('email')->unique();
-            $table->integer('points')->default(0);
             $table->string('picture_url', 500)->nullable();
 
             $table->rememberToken();
