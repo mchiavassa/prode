@@ -20,4 +20,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(PartyUser::class);
     }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return in_array($this->email, config('auth.admins'));
+    }
 }

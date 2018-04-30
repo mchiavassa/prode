@@ -3,16 +3,19 @@
         Aún no hay fechas cargadas para pronosticar
     </div>
 @else
-    <div class="card-columns">
-        @foreach ($gameSets->sortBy('created_at') as $gameSet)
-            <div class="card p-4">
-                <a href="#">
-                    <img class="card-img-top" src="{{asset('img/logo.png')}}" alt="{{ $gameSet->name }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $gameSet->name }}</h5>
-                    </div>
-                </a>
-            </div>
-        @endforeach
-    </div>
+    @foreach ($gameSets->sortByDesc('forecast_deadline') as $gameSet)
+        <div class="card party mb-2">
+            <a href="#">
+                <img class="float-left rounded p-2" height="100px" src="{{asset('img/logo.png')}}" alt="{{ $gameSet->name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $gameSet->name }}</h5>
+                    <p class="card-text">
+                        <small class="text-muted countdown">
+                            Fecha límite: <strong>{{ $gameSet->forecast_deadline->tz(-3)->format('d/m/Y H:i') }}</strong>
+                        </small>
+                    </p>
+                </div>
+            </a>
+        </div>
+    @endforeach
 @endif

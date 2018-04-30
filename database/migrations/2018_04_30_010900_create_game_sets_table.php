@@ -17,6 +17,7 @@ class CreateGameSetsTable extends Migration
             $table->increments('id');
 
             $table->string('name', 50);
+            $table->boolean('enabled')->default(0);
             $table->dateTime('forecast_deadline');
 
             $table->timestamps();

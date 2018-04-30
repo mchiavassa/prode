@@ -6,6 +6,7 @@
     <div class="card-columns">
         <div class="card p-3">
             <h4 class="mb-4">Puntos</h4>
+
             <h1>
                 <strong>
                     {{$party->users->where('user_id', Auth::user()->id)->first()->points}}
@@ -15,7 +16,7 @@
         <div class="card p-3">
             <h4 class="mb-4">Fechas</h4>
 
-            <div class="async-list" data-source-url="{{route('set.list')}}">
+            <div class="async-list" data-source-url="{{route('set.list', ['enabled' => true])}}">
             </div>
             <div class="row">
                 <div class="col-md-12">

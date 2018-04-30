@@ -24,5 +24,9 @@ Route::get('/parties', 'PartyController@index')->name('party');
 Route::get('/parties/list', 'PartyController@list')->name('party.list');
 Route::get('/parties/{id}', 'PartyController@details')->where('id', '[0-9]+')->name('party.details');
 
+Route::get('/sets', 'GameSetController@index')->name('set')->middleware('auth.admin');
+Route::get('/sets/create', 'GameSetController@showCreate')->name('set.create.show')->middleware('auth.admin');
+Route::post('/sets/create', 'GameSetController@create')->name('set.create')->middleware('auth.admin');
+
 Route::get('/sets/list', 'GameSetController@list')->name('set.list');
 
