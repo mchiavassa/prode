@@ -10424,8 +10424,8 @@ a.text-dark:focus {
 
 .party img {
   opacity: .5;
-  -webkit-transition: 1s;
-  transition: 1s;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
 
 .party:hover img {

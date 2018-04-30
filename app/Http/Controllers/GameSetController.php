@@ -47,6 +47,30 @@ class GameSetController extends Controller
         return redirect()->route('set');
     }
 
+    public function enable($id)
+    {
+        $gameSet = $this->gameSet->find($id);
+
+        if (!$gameSet->enabled) {
+            $gameSet->enabled = true;
+            $gameSet->save();
+
+            // TODO: send email to all users
+        }
+        return redirect()->route('set.details', ['id' => $id]);
+    }
+
+    public function listAdmin(Request $request)
+    {
+        $gameSets = $this->gameSet->with('games');
+
+        if ($request->query('enabled')) {
+            $gameSets = $gameSets->where('enabled', $request->query('enabled'));
+        }
+
+        return view('set.list-admin', ['gameSets' => $gameSets->get()]);
+    }
+
     public function list(Request $request)
     {
         $gameSets = $this->gameSet->with('games');

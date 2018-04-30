@@ -41,10 +41,10 @@ class GameController extends Controller
         return redirect()->route('set.details', ['id' => $id]);
     }
 
-    public function list($id)
+    public function listAdmin($id)
     {
         $games = $this->game->where('set_id', $id)->get();
 
-        return view('game.list', ['games' => $games]);
+        return view('game.list-admin', ['games' => $games]);
     }
 }

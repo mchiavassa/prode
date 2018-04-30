@@ -17,10 +17,13 @@
         </div>
     </div>
 
-    <a href="{{route('game.create.show', ['id' => $gameSet->id])}}" class="btn btn-primary">Nuevo Partido</a>
+    <a href="{{route('game.create.show', ['id' => $gameSet->id])}}" class="btn btn-primary">Agregar Partido</a>
+    @if(!$gameSet->enabled)
+        <a href="{{route('set.enable', ['id' => $gameSet->id])}}" class="btn btn-success">Habilitar</a>
+    @endif
     <a href="{{route('set')}}" class="btn ">Volver</a>
 
-    <div class="async-list mt-4" data-source-url="{{route('game.list', ['id' => $gameSet->id])}}">
+    <div class="async-list mt-4" data-source-url="{{route('game.list.admin', ['id' => $gameSet->id])}}">
     </div>
     <div class="row">
         <div class="col-md-12">
