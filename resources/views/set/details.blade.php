@@ -16,10 +16,12 @@
 
     @if($gameSet->isDraft())
         <a href="{{route('game.create.show', ['id' => $gameSet->id])}}" class="btn btn-primary">Agregar Partido</a>
-        <a href="{{route('set.enable', ['id' => $gameSet->id])}}" class="btn btn-success">Habilitar</a>
+        @if($gameSet->games->isNotEmpty())
+            <a href="{{route('set.enable', ['id' => $gameSet->id])}}" class="btn btn-success">Habilitar</a>
+        @endif
     @endif
 
-    @if(!$gameSet->isComputed() && $gameSet->gamesAreCompleted())
+    @if($gameSet->isEnabled() && $gameSet->gamesAreCompleted())
         <a href="{{route('set.compute', ['id' => $gameSet->id])}}" class="btn btn-success">Computar pronósticos</a>
     @endif
 
