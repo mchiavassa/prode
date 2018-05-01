@@ -3,6 +3,7 @@
 namespace Prode\Domain\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Prode\Domain\GameResult;
 
 class Game extends Model
 {
@@ -14,5 +15,13 @@ class Game extends Model
     public function forecasts()
     {
         return $this->hasMany(Forecast::class);
+    }
+
+    /**
+     * @return string
+     */
+    public function getResult()
+    {
+        return GameResult::buildFromGame($this)->get();
     }
 }

@@ -18,7 +18,7 @@
                         </span>
                         @if(Auth::user()->isAdmin())
                             <span class="badge badge-pill badge-light">
-                                {{$gameSet->enabled ? 'habilitada' : 'deshabilitada'}}
+                                {{$gameSet->status}}
                             </span>
                         @endif
 

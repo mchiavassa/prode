@@ -42,6 +42,7 @@ class GameSetController extends Controller
         $gameSet = new GameSet();
         $gameSet->name = array_get($validated, 'name');
         $gameSet->forecast_deadline = Carbon::parse(array_get($validated, 'forecast_deadline'))->tz('UTC');
+        $gameSet->status = GameSet::STATUS_DRAFT;
         $gameSet->save();
 
         return redirect()->route('set');
@@ -51,8 +52,8 @@ class GameSetController extends Controller
     {
         $gameSet = $this->gameSet->find($id);
 
-        if (!$gameSet->enabled) {
-            $gameSet->enabled = true;
+        if (!$gameSet->isEnabled()) {
+            $gameSet->status = GameSet::STATUS_ENABLED;
             $gameSet->save();
 
             // TODO: send email to all users
@@ -60,15 +61,11 @@ class GameSetController extends Controller
         return redirect()->route('set.details', ['id' => $id]);
     }
 
-    public function listAdmin(Request $request)
+    public function listAdmin()
     {
-        $gameSets = $this->gameSet->with('games');
+        $gameSets = $this->gameSet->with('games')->get();
 
-        if ($request->query('enabled')) {
-            $gameSets = $gameSets->where('enabled', $request->query('enabled'));
-        }
-
-        return view('set.list-admin', ['gameSets' => $gameSets->get()]);
+        return view('set.list-admin', ['gameSets' => $gameSets]);
     }
 
     public function list(Request $request)
@@ -76,7 +73,7 @@ class GameSetController extends Controller
         $gameSets = $this->gameSet->with('games');
 
         if ($request->query('enabled')) {
-            $gameSets = $gameSets->where('enabled', $request->query('enabled'));
+            $gameSets = $gameSets->where('status', GameSet::STATUS_ENABLED);
         }
 
         return view('set.list', ['gameSets' => $gameSets->get()]);
