@@ -4,32 +4,33 @@ namespace Prode\Service;
 
 use InvalidArgumentException;
 use Prode\Domain\Model\Forecast;
-use Prode\Domain\Model\Game;
 use Prode\Domain\Model\GameSet;
 
 class ForecastService
 {
+    private $pointsService;
     private $gameSet;
     private $forecast;
 
-    public function __construct(GameSet $gameSet, Forecast $forecast)
+    public function __construct(PointsService $pointsService, GameSet $gameSet, Forecast $forecast)
     {
+        $this->pointsService = $pointsService;
         $this->gameSet = $gameSet;
         $this->forecast = $forecast;
     }
 
     /**
-     * @param $id id of the GameSet
+     * @param $gameSetId
      */
-    public function computeGameSet($id)
+    public function computeForecastsFromGameSet($gameSetId)
     {
-        $setGames = $this->gameSet->with('games')->find($id);
+        $gameSet = $this->gameSet->with('games')->find($gameSetId);
 
-        if (!$setGames->isCompleted()) {
+        if (!$gameSet->gamesAreCompleted()) {
             throw new InvalidArgumentException('Set is not completed.');
         }
 
-        $games = $setGames->games->mapWithKeys(function ($item) {
+        $games = $gameSet->games->mapWithKeys(function ($item) {
             return [$item['id'] => $item];
         });
 
@@ -42,34 +43,16 @@ class ForecastService
         foreach ($forecasts as $forecast) {
             $game = $games[$forecast->game_id];
 
-            $this->computeForecast($forecast, $game);
-        }
-    }
+            $points = $this->pointsService->resolveForecastPoints($forecast, $game);
 
-    /**
-     * @param Forecast $forecast
-     * @param Game $game
-     */
-    private function computeForecast(Forecast $forecast, Game $game)
-    {
-        $points = 0;
+            $forecast->points_earned = $points;
+            $forecast->partyUser->points += $points;
 
-        if ($forecast->getResult() === $game->getResult()) {
-            $points += config('domain.points.result');
+            $forecast->partyUser->save();
+            $forecast->save();
         }
 
-        if ($forecast->home_score === $game->home_score &&
-            $forecast->away_score === $game->away_score &&
-            $forecast->home_tie_brek_score === $game->home_tie_brek_score &&
-            $forecast->away_tie_brek_score === $game->away_tie_brek_score
-        ) {
-            $points += config('domain.points.score');
-        }
-
-        $forecast->points_earned = $points;
-        $forecast->partyUser->points += $points;
-
-        $forecast->partyUser->save();
-        $forecast->save();
+        $gameSet->status = GameSet::STATUS_COMPUTED;
+        $gameSet->save();
     }
 }

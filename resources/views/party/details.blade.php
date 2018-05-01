@@ -20,7 +20,7 @@
         </div>
         <div class="card p-3">
             <h4 class="mb-4">Fechas</h4>
-            <div class="async-list" data-source-url="{{route('set.list', ['enabled' => true])}}">
+            <div class="async-list" data-source-url="{{route('set.list', ['enabled' => true, 'partyId' => $party->id])}}">
             </div>
             <div class="row">
                 <div class="col-md-12">

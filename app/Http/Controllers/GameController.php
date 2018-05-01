@@ -22,14 +22,14 @@ class GameController extends Controller
 
     public function showCreate($id)
     {
-        $gameSet = $this->gameSet->find($id);
+        $gameSet = $this->gameSet->findOrFail($id);
 
         return view('game.create', ['gameSet' => $gameSet]);
     }
 
     public function showResultSet($id)
     {
-        $game = $this->game->with('set')->find($id);
+        $game = $this->game->with('set')->findOrFail($id);
 
         return view('game.result', ['game' => $game]);
     }
@@ -38,7 +38,7 @@ class GameController extends Controller
     {
         $validated = $request->validated();
 
-        $game = $this->game->with('set')->find($id);
+        $game = $this->game->with('set')->findOrFail($id);
 
         $game->home_score = array_get($validated, 'home_score');
         $game->away_score = array_get($validated, 'away_score');
@@ -53,7 +53,7 @@ class GameController extends Controller
     {
         $validated = $request->validated();
 
-        $gameSet = $this->gameSet->find($id);
+        $gameSet = $this->gameSet->findOrFail($id);
 
         $game = new Game();
         $game->home = array_get($validated, 'home');

@@ -29,7 +29,7 @@ class GameSet extends Model
     /**
      * @return bool
      */
-    public function isCompleted()
+    public function gamesAreCompleted()
     {
         return $this->games->where('home_score', null)->isEmpty();
     }

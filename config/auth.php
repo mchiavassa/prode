@@ -52,11 +52,6 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-        ],
     ],
 
     /*
@@ -81,11 +76,6 @@ return [
             'driver' => 'eloquent',
             'model' => \Prode\Domain\Model\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*

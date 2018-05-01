@@ -1,6 +1,6 @@
 <?php
 
-namespace Prode;
+namespace Test;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 

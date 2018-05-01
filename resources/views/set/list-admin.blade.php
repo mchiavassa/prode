@@ -16,12 +16,7 @@
                         <span class="badge badge-pill badge-dark">
                             {{$gameSet->games->count()}} partidos
                         </span>
-                        @if(Auth::user()->isAdmin())
-                            <span class="badge badge-pill badge-light">
-                                {{$gameSet->status}}
-                            </span>
-                        @endif
-
+                        @component('set.status') {{ $gameSet->status }} @endcomponent
                     </p>
                 </div>
             </a>

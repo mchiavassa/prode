@@ -24,4 +24,12 @@ class Game extends Model
     {
         return GameResult::buildFromGame($this)->get();
     }
+
+    /**
+     * @return bool
+     */
+    public function hasResult()
+    {
+        return $this->home_score !== null;
+    }
 }

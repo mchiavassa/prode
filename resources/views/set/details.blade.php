@@ -10,20 +10,19 @@
             <span class="badge badge-pill badge-dark">
                 {{$gameSet->games->count()}} partidos
             </span>
-            <span class="badge badge-pill badge-light">
-                {{$gameSet->status}}
-            </span>
-
+            @component('set.status') {{ $gameSet->status }} @endcomponent
         </div>
     </div>
 
-    <a href="{{route('game.create.show', ['id' => $gameSet->id])}}" class="btn btn-primary">Agregar Partido</a>
     @if($gameSet->isDraft())
+        <a href="{{route('game.create.show', ['id' => $gameSet->id])}}" class="btn btn-primary">Agregar Partido</a>
         <a href="{{route('set.enable', ['id' => $gameSet->id])}}" class="btn btn-success">Habilitar</a>
     @endif
-    @if(!$gameSet->isComputed() && $gameSet->isCompleted())
-        <a href="#" class="btn btn-success">Computar pronósticos</a>
+
+    @if(!$gameSet->isComputed() && $gameSet->gamesAreCompleted())
+        <a href="{{route('set.compute', ['id' => $gameSet->id])}}" class="btn btn-success">Computar pronósticos</a>
     @endif
+
     <a href="{{route('set')}}" class="btn ">Volver</a>
 
     <div class="async-list mt-4" data-source-url="{{route('game.list.admin', ['id' => $gameSet->id])}}">

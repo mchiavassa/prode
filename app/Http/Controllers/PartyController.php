@@ -25,7 +25,7 @@ class PartyController extends Controller
     {
         $party = $this->party
             ->with('users', 'users.user')
-            ->find($id);
+            ->findOrFail($id);
 
         if ($party->users->where('user_id', Auth::user()->id)->isEmpty()) {
             return redirect()->route('party');

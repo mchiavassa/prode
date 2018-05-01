@@ -42,7 +42,7 @@ class InviteUserToParty extends Command
      */
     public function handle()
     {
-        $party = $this->party->find($this->option('party_id'));
+        $party = $this->party->findOrFail($this->option('party_id'));
         $user = $this->user->where('email', $this->option('email'))->first();
 
         if (!$user) {

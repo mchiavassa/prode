@@ -6,16 +6,19 @@ use App\Http\Requests\StoreGameSet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Prode\Domain\Model\GameSet;
+use Prode\Service\ForecastService;
 
 class GameSetController extends Controller
 {
     private $gameSet;
+    private $forecastService;
 
-    public function __construct(GameSet $gameSet)
+    public function __construct(GameSet $gameSet, ForecastService $forecastService)
     {
         $this->middleware('auth');
 
         $this->gameSet = $gameSet;
+        $this->forecastService = $forecastService;
     }
 
     public function index()
@@ -30,7 +33,7 @@ class GameSetController extends Controller
 
     public function showDetails($id)
     {
-        $gameSet = $this->gameSet->with('games')->find($id);
+        $gameSet = $this->gameSet->with('games')->findOrFail($id);
 
         return view('set.details', ['gameSet' => $gameSet]);
     }
@@ -50,7 +53,7 @@ class GameSetController extends Controller
 
     public function enable($id)
     {
-        $gameSet = $this->gameSet->find($id);
+        $gameSet = $this->gameSet->findOrFail($id);
 
         if (!$gameSet->isEnabled()) {
             $gameSet->status = GameSet::STATUS_ENABLED;
@@ -61,6 +64,15 @@ class GameSetController extends Controller
         return redirect()->route('set.details', ['id' => $id]);
     }
 
+    public function compute($id)
+    {
+        $this->forecastService->computeForecastsFromGameSet($id);
+
+        // TODO: send email to all users
+
+        return redirect()->route('set.details', ['id' => $id]);
+    }
+
     public function listAdmin()
     {
         $gameSets = $this->gameSet->with('games')->get();
@@ -68,14 +80,14 @@ class GameSetController extends Controller
         return view('set.list-admin', ['gameSets' => $gameSets]);
     }
 
-    public function list(Request $request)
+    public function list(Request $request, $partyId)
     {
         $gameSets = $this->gameSet->with('games');
 
         if ($request->query('enabled')) {
-            $gameSets = $gameSets->where('status', GameSet::STATUS_ENABLED);
+            $gameSets = $gameSets->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_COMPUTED]);
         }
 
-        return view('set.list', ['gameSets' => $gameSets->get()]);
+        return view('set.list', ['gameSets' => $gameSets->get(), 'partyId' => $partyId]);
     }
 }

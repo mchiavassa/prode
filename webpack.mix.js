@@ -13,4 +13,5 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
     .copyDirectory('resources/assets/img', 'public/img')
+    .react('resources/assets/js/components/ForecastGameSet.jsx', 'public/js/react-components')
    .sass('resources/assets/sass/app.scss', 'public/css');
