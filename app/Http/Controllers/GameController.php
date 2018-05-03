@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGame;
 use App\Http\Requests\StoreGameResult;
+use Carbon\Carbon;
 use Prode\Domain\Model\Game;
 use Prode\Domain\Model\GameSet;
 
@@ -58,6 +59,9 @@ class GameController extends Controller
         $game = new Game();
         $game->home = array_get($validated, 'home');
         $game->away = array_get($validated, 'away');
+        $game->group = array_get($validated, 'group');
+        $game->tie_break_required = array_get($validated, 'tie_break_required');
+        $game->date_and_hour = Carbon::parse(array_get($validated, 'date_and_hour'))->tz('UTC');
         $game->set()->associate($gameSet);
         $game->save();
 

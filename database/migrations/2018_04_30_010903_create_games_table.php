@@ -19,10 +19,17 @@ class CreateGamesTable extends Migration
 
             $table->string('home', 50);
             $table->string('away', 50);
+
+            $table->string('group', 150)->nullable();
+            $table->dateTime('date_and_hour');
+            $table->boolean('tie_break_required');
+            $table->boolean('computed')->default(false);
+
             $table->string('home_score', 50)->nullable();
             $table->string('away_score', 50)->nullable();
             $table->string('home_tie_break_score', 50)->nullable();
             $table->string('away_tie_break_score', 50)->nullable();
+
 
             $table->timestamps();
 

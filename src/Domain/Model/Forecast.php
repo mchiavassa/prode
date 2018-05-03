@@ -12,9 +12,9 @@ class Forecast extends Model
         return $this->belongsTo(Game::class);
     }
 
-    public function partyUser()
+    public function user()
     {
-        return $this->belongsTo(PartyUser::class);
+        return $this->belongsTo(User::class);
     }
 
     /**

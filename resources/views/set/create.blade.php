@@ -21,11 +21,9 @@
 
                 <div class="form-group">
                     {{ Form::text('name', '', ['class' => 'form-control mb-2', 'placeholder'=> 'Nombre']) }}
-                    {{ Form::text('forecast_deadline', '', ['class' => 'form-control', 'placeholder'=> 'Fecha y hora']) }}
-                    <small class="form-text text-muted">Formato: 2018-04-30 20:30:00</small>
                 </div>
                 <input type="submit" class="btn btn-primary" value="Crear">
-                <a href="{{route('set')}}" class="btn btn-default">Volver</a>
+                <a href="{{route('set')}}" class="btn btn-dark">Volver</a>
             </form>
         </div>
     </div>

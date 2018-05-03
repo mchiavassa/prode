@@ -18,7 +18,7 @@ class User extends Authenticatable
 
     public function parties()
     {
-        return $this->hasMany(PartyUser::class);
+        return $this->belongsToMany(Party::class);
     }
 
     /**

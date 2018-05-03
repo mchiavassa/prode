@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGameSet;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Prode\Domain\Model\GameSet;
 use Prode\Service\ForecastService;
@@ -44,7 +43,6 @@ class GameSetController extends Controller
 
         $gameSet = new GameSet();
         $gameSet->name = array_get($validated, 'name');
-        $gameSet->forecast_deadline = Carbon::parse(array_get($validated, 'forecast_deadline'))->tz('UTC');
         $gameSet->status = GameSet::STATUS_DRAFT;
         $gameSet->save();
 
@@ -80,7 +78,7 @@ class GameSetController extends Controller
         return view('set.list-admin', ['gameSets' => $gameSets]);
     }
 
-    public function list(Request $request, $partyId)
+    public function list(Request $request)
     {
         $gameSets = $this->gameSet->with('games');
 
@@ -88,6 +86,6 @@ class GameSetController extends Controller
             $gameSets = $gameSets->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_COMPUTED]);
         }
 
-        return view('set.list', ['gameSets' => $gameSets->get(), 'partyId' => $partyId]);
+        return view('set.list', ['gameSets' => $gameSets->get()]);
     }
 }

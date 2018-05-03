@@ -4,6 +4,11 @@
     <h2 class="mb-4">{{ $game->set->name }}</h2>
 
     <div class="card">
+        <div class="row text-center">
+            <div class="col-12">
+                <div class="text-muted">{{$game->group}} - {{$game->date_and_hour->format('d/m/Y H:i')}}</div>
+            </div>
+        </div>
         <div class="card-body">
             <form method="POST" action="{{ route('game.result', ['id' =>  $game->id]) }}">
                 @csrf
@@ -47,7 +52,7 @@
                 <div class="row text-center mt-2">
                     <div class="col-md-12">
                         <input type="submit" class="btn btn-primary" value="Guardar">
-                        <a href="{{ route('set.details', ['id' => $game->set->id]) }}" class="btn btn-default">Volver</a>
+                        <a href="{{ route('set.details', ['id' => $game->set->id]) }}" class="btn btn-dark">Volver</a>
                     </div>
                 </div>
             </form>

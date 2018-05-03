@@ -26,16 +26,12 @@ class ForecastService
     {
         $gameSet = $this->gameSet->with('games')->find($gameSetId);
 
-        if (!$gameSet->gamesAreCompleted()) {
-            throw new InvalidArgumentException('Set is not completed.');
-        }
-
         $games = $gameSet->games->mapWithKeys(function ($item) {
             return [$item['id'] => $item];
         });
 
         $forecasts = $this->forecast
-            ->with('partyUser')
+            ->with('user')
             ->whereIn('game_id', $games->keys()->all())
             ->get();
 
@@ -46,9 +42,9 @@ class ForecastService
             $points = $this->pointsService->resolveForecastPoints($forecast, $game);
 
             $forecast->points_earned = $points;
-            $forecast->partyUser->points += $points;
+            $forecast->user->points += $points;
 
-            $forecast->partyUser->save();
+            $forecast->user->save();
             $forecast->save();
         }
 

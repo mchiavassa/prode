@@ -5,33 +5,33 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ForecastGame;
 use Illuminate\Support\Facades\Auth;
 use Prode\Domain\Model\Forecast;
+use Prode\Domain\Model\Game;
 use Prode\Domain\Model\GameSet;
-use Prode\Domain\Model\PartyUser;
 
 class ForecastController extends Controller
 {
-    private $partyUser;
     private $gameSet;
+    private $game;
     private $forecast;
 
-    public function __construct(GameSet $gameSet, PartyUser $partyUser, Forecast $forecast)
+    public function __construct(GameSet $gameSet, Game $game, Forecast $forecast)
     {
         $this->middleware('auth');
 
-        $this->partyUser = $partyUser;
         $this->gameSet = $gameSet;
+        $this->game = $game;
         $this->forecast = $forecast;
     }
 
-    public function forecastGameSet($partyId, $id)
+    public function showGameSetGamesForecasts($id)
     {
-        $partyUser = $this->getCurrentPartyUser($partyId);
-
         /** @var GameSet $gameSet */
         $gameSet = $this->gameSet->with('games')->findOrFail($id);
-        $games = $gameSet->games->map(function($game) use ($partyId) {
+        $games = $gameSet->games->map(function($game) {
             return [
                 'id' => $game->id,
+                'dateAndHour' => $game->date_and_hour->timestamp * 1000,
+                'group' => $game->group,
                 'home' => $game->home,
                 'away' => $game->away,
                 'homeFullName' => config('domain.teams.'.$game->home),
@@ -43,13 +43,15 @@ class ForecastController extends Controller
                 'homeTieBreakScore' => $game->home_tie_break_score,
                 'awayTieBreakScore' => $game->away_tie_break_score,
                 'hasResult' => $game->hasResult(),
-                'forecastUrl' => route('forecast.game', ['id' => $game->id, 'partyId' => $partyId])
+                'canForecast' => $game->canForecast(),
+                'computed' => $game->computed,
+                'forecastUrl' => route('forecast.game', ['id' => $game->id])
             ];
         });
 
         $forecasts = $this->forecast
             ->whereIn('game_id', $games->pluck('id')->all())
-            ->where('party_user_id', $partyUser->id)
+            ->where('user_id', Auth::user()->id)
             ->get()
             ->mapWithKeys(function ($forecast) {
                 return [$forecast->game_id => [
@@ -64,21 +66,21 @@ class ForecastController extends Controller
 
         return view(
             'forecast.set',
-            ['gameSet' => $gameSet, 'partyUser' => $partyUser, 'games' => $games, 'forecasts' => $forecasts]
+            ['gameSet' => $gameSet, 'games' => $games, 'forecasts' => $forecasts]
         );
     }
 
-    public function forecastGame(ForecastGame $request, $partyId, $id)
+    public function forecastGame(ForecastGame $request, $id)
     {
         $validated = $request->validated();
 
-        $partyUser = $this->getCurrentPartyUser($partyId);
+        $game = $this->game->findOrFail($id);
 
-        $this->assertGameIsNotForecastByPartyUser($id, $partyUser->id);
+        $this->assertGameCanBeForecast($game);
 
         $forecast = new Forecast();
         $forecast->game_id = $id;
-        $forecast->partyUser()->associate($partyUser);
+        $forecast->user()->associate(Auth::user());
         $forecast->home_score = array_get($validated, 'home_score');
         $forecast->away_score = array_get($validated, 'away_score');
         $forecast->home_tie_break_score = array_get($validated, 'home_tie_break_score');
@@ -94,28 +96,14 @@ class ForecastController extends Controller
         ]);
     }
 
-    private function assertGameIsNotForecastByPartyUser($gameId, $partyUserId)
+    private function assertGameCanBeForecast(Game $game)
     {
-        if ($this->forecast->where('game_id', $gameId)->where('party_user_id', $partyUserId)->first()) {
-            abort(400, 'Game already forecast.');
-        }
-    }
-
-    /**
-     * @param $partyId
-     * @return PartyUser
-     */
-    private function getCurrentPartyUser($partyId)
-    {
-        $partyUser = $this->partyUser
-            ->where('party_id', $partyId)
-            ->where('user_id', Auth::user()->id)
-            ->first();
-
-        if (!$partyUser) {
-            abort(404);
+        if (!$game->canForecast()) {
+            abort(400, 'Game cannot be forecast.');
         }
 
-        return $partyUser;
+        if ($this->forecast->where('game_id', $game->id)->where('user_id', Auth::user()->id)->first()) {
+            abort(400, 'Game already forecast by User.');
+        }
     }
 }

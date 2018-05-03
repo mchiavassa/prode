@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import Countdown from 'react-countdown-now';
 import ScoreDisplay from './ScoreDisplay';
 import TeamDisplay from './TeamDisplay';
 import ForecastForm from './ForecastForm';
+import axios from 'axios';
 
 export default class ForecastGame extends Component {
     constructor(props) {
@@ -13,6 +14,17 @@ export default class ForecastGame extends Component {
         };
 
         this.onForecastSubmit = this.onForecastSubmit.bind(this);
+        this.onCompleteCountdown = this.onCompleteCountdown.bind(this);
+    }
+
+    onCompleteCountdown() {
+        let game = {...this.state.game};
+
+        game.canForecast = false;
+
+        this.setState({
+            game: game
+        });
     }
 
     onForecastSubmit(forecast) {
@@ -24,6 +36,7 @@ export default class ForecastGame extends Component {
         };
 
         let self = this;
+
         axios.post(this.state.game.forecastUrl, data)
             .then(function (response) {
                 self.setState({
@@ -32,7 +45,6 @@ export default class ForecastGame extends Component {
             })
             .catch(function (error) {
                 console.log(error);
-                // TODO rollback to original state !
                 // toastr.error(error.response.data.error.message || 'An unexpected error occurred.');
             });
     }
@@ -40,6 +52,22 @@ export default class ForecastGame extends Component {
     render() {
         return (
             <div className={'card text-center mb-2'}>
+                <div className={'row text-center'}>
+                    <div className={'col-md-12'}>
+                        <div className={'text-muted'}>{this.state.game.group}</div>
+                        <div>
+                            <Countdown date={this.state.game.dateAndHour}
+                                       onComplete={this.onCompleteCountdown}
+                                       renderer={({ hours, minutes, seconds, completed }) => {
+                                            if (completed) {
+                                                return <span>El partido ya comenzó!</span>;
+                                            } else {
+                                                return <span>{hours}h {minutes}m {seconds}s</span>;
+                                            }
+                                       }}/>
+                        </div>
+                    </div>
+                </div>
                 <div className={'row card-body'}>
                     <div className={'col-md-12'}>
                         <div className={'row text-center'}>
@@ -47,7 +75,7 @@ export default class ForecastGame extends Component {
                                 <TeamDisplay shield={this.state.game.homeShield} name={this.state.game.homeFullName}/>
                             </div>
                             <div className={'col-4 font-weight-bold'}>
-                                {this.props.computed &&
+                                {this.state.game.computed &&
                                 <span>
                                     Puntos <h1>{this.state.forecast ? this.state.forecast.pointsEarned : 0}</h1>
                                 </span>
@@ -79,7 +107,7 @@ export default class ForecastGame extends Component {
                         </div>
                         }
 
-                        {!this.state.game.hasResult && !this.state.forecast && this.props.forecastEnabled &&
+                        {!this.state.game.hasResult && !this.state.forecast && this.state.game.canForecast &&
                             <ForecastForm onForecastSubmit={this.onForecastSubmit} />
                         }
 

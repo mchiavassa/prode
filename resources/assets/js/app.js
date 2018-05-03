@@ -7,4 +7,3 @@
 
 require('./bootstrap');
 require('./async-list');
-require('./jquery.countdown.min');

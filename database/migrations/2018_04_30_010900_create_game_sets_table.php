@@ -18,7 +18,6 @@ class CreateGameSetsTable extends Migration
 
             $table->string('name', 50);
             $table->string('status', 50);
-            $table->dateTime('forecast_deadline');
 
             $table->timestamps();
         });

@@ -6,6 +6,11 @@
     @foreach ($games as $game)
         <div class="card party text-center mb-2">
             <a href="{{route('game.result', ['id' => $game->id])}}">
+                <div class="row text-center">
+                    <div class="col-12">
+                        <div class="badge badge-pill badge-dark">{{$game->tie_break_required ? 'Incluye penales': ''}}</div>
+                    </div>
+                </div>
                 <div class="row card-body">
                     <div class="col-md-4">
                         <img class="float-left mr-2" src="{{ asset('img/flags/'.$game->home.'.svg') }}" height="50" />
@@ -20,6 +25,11 @@
                     <div class="col-md-4">
                         <img class="float-right ml-2" src="{{ asset('img/flags/'.$game->away.'.svg') }}" height="50" />
                         <h3 class="card-text float-right">{{ config('domain.teams.'.$game->away) }}</h3>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12">
+                        <div class="text-muted">{{$game->group}} - {{$game->date_and_hour->format('d/m/Y H:i')}}</div>
                     </div>
                 </div>
             </a>

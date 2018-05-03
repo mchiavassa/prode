@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use InvalidArgumentException;
 use Prode\Domain\Model\Party;
-use Prode\Domain\Model\PartyUser;
 use Prode\Domain\Model\User;
 
 class InviteUserToParty extends Command
@@ -42,7 +41,10 @@ class InviteUserToParty extends Command
      */
     public function handle()
     {
+        /** @var Party $party */
         $party = $this->party->findOrFail($this->option('party_id'));
+
+        /** @var User $user */
         $user = $this->user->where('email', $this->option('email'))->first();
 
         if (!$user) {
@@ -53,10 +55,8 @@ class InviteUserToParty extends Command
 
         $this->table(['user', 'party'], [[$user->name, $party->name]]);
 
-        $partyUser = new PartyUser();
-        $partyUser->party()->associate($party);
-        $partyUser->user()->associate($user);
-        $partyUser->save();
+        $party->users()->attach($user->id);
+        $party->save();
 
         // TODO: send email!
 

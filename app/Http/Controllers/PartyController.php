@@ -16,19 +16,14 @@ class PartyController extends Controller
         $this->party = $party;
     }
 
-    public function index()
-    {
-        return view('party.index');
-    }
-
     public function details($id)
     {
         $party = $this->party
-            ->with('users', 'users.user')
+            ->with('users')
             ->findOrFail($id);
 
-        if ($party->users->where('user_id', Auth::user()->id)->isEmpty()) {
-            return redirect()->route('party');
+        if ($party->users->where('id', Auth::user()->id)->isEmpty()) {
+            return redirect()->route('home');
         }
 
         return view('party.details', ['party' => $party]);

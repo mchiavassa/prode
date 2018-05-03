@@ -24,8 +24,7 @@ class StoreGameSet extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:50',
-            'forecast_deadline' => 'required|date_format:Y-m-d H:i:s|after:tomorrow'
+            'name' => 'required|max:50'
         ];
     }
 }

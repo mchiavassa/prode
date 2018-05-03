@@ -8,6 +8,6 @@ class Party extends Model
 {
     public function users()
     {
-        return $this->hasMany(PartyUser::class);
+        return $this->belongsToMany(User::class);
     }
 }

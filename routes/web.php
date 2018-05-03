@@ -20,7 +20,6 @@ Route::get('login/{provider}/callback', 'LoginController@handleProviderCallback'
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/parties', 'PartyController@index')->name('party');
 Route::get('/parties/list', 'PartyController@list')->name('party.list');
 Route::get('/parties/{id}', 'PartyController@details')->where('id', '[0-9]+')->name('party.details');
 
@@ -32,7 +31,7 @@ Route::post('/admin/sets/create', 'GameSetController@create')->name('set.create'
 Route::get('/admin/sets/{id}/enable', 'GameSetController@enable')->where('id', '[0-9]+')->name('set.enable')->middleware('auth.admin');
 Route::get('/admin/sets/{id}/compute', 'GameSetController@compute')->where('id', '[0-9]+')->name('set.compute')->middleware('auth.admin');
 
-Route::get('/parties/{partyId}/sets/list', 'GameSetController@list')->where('partyId', '[0-9]+')->name('set.list');
+Route::get('/sets/list', 'GameSetController@list')->name('set.list');
 
 Route::get('/admin/sets/{id}/games/create', 'GameController@showCreate')->where('id', '[0-9]+')->name('game.create.show')->middleware('auth.admin');
 Route::post('/admin/sets/{id}/games/create', 'GameController@create')->where('id', '[0-9]+')->name('game.create')->middleware('auth.admin');
@@ -42,5 +41,5 @@ Route::get('/admin/sets/{id}/games/list', 'GameController@listAdmin')->where('id
 Route::get('/admin/games/{id}', 'GameController@showResultSet')->where('id', '[0-9]+')->name('game.result.show');
 Route::post('/admin/games/{id}', 'GameController@setResult')->where('id', '[0-9]+')->name('game.result');
 
-Route::get('/parties/{partyId}/forecast/{id}', 'ForecastController@forecastGameSet')->where('id', '[0-9]+')->where('partyId', '[0-9]+')->name('forecast.set');
-Route::post('/parties/{partyId}/forecast/game/{id}', 'ForecastController@forecastGame')->where('id', '[0-9]+')->where('partyId', '[0-9]+')->name('forecast.game');
+Route::get('/sets/{id}/forecasts', 'ForecastController@showGameSetGamesForecasts')->where('id', '[0-9]+')->name('forecast.set');
+Route::post('/games/{id}/forecast', 'ForecastController@forecastGame')->where('id', '[0-9]+')->name('forecast.game');

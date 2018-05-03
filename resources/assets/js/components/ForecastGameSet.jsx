@@ -19,8 +19,6 @@ class ForecastGameSet extends Component {
                         key={game.id}
                         game={game}
                         forecast={forecasts[game.id]}
-                        forecastEnabled={this.props.forecastEnabled}
-                        computed={this.props.setComputed}
                     />
                 ))}
             </div>
@@ -29,6 +27,6 @@ class ForecastGameSet extends Component {
 }
 
 ReactDOM.render(
-    <ForecastGameSet games={games} forecasts={forecasts} forecastEnabled={forecastEnabled} setComputed={setComputed}/>,
+    <ForecastGameSet games={games} forecasts={forecasts} />,
     document.getElementById('game-set-forecast')
 );
