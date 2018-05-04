@@ -301,8 +301,7 @@
                                 <tr>
                                     <td>
                                         <p>Hola!</p>
-                                        <p>Fuiste invitado al grupo <strong>{{$party->name}}</strong></p>
-                                        <p>No te olvides de cargar tus pronósticos para los próximos partidos.</p>
+                                        <p>Se habilitó la fecha <strong>{{$gameSet->name}}</strong> con <strong>{{$gameSet->games->count()}}</strong> nuevos partidos para pronosticar.</p>
                                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                             <tbody>
                                             <tr>
@@ -310,7 +309,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td><a href="{{route('home')}}" target="_blank">Ir a Prode!</a></td>
+                                                            <td><a href="{{route('forecast.set', ['id' => $gameSet->id])}}" target="_blank">Ir a la fecha!</a></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>

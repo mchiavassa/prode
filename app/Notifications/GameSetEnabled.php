@@ -2,21 +2,21 @@
 
 namespace App\Notifications;
 
-use App\Mail\PartyInvitationEmail;
+use App\Mail\GameSetEnabledEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
-use Prode\Domain\Model\Party;
+use Prode\Domain\Model\GameSet;
 
-class PartyInvitation extends Notification implements ShouldQueue
+class GameSetEnabled extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private $party;
+    private $gameSet;
 
-    public function __construct(Party $party)
+    public function __construct(GameSet $gameSet)
     {
-        $this->party = $party;
+        $this->gameSet = $gameSet;
     }
 
     public function via($notifiable)
@@ -27,8 +27,8 @@ class PartyInvitation extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-        return (new PartyInvitationEmail($this->party))
-            ->subject(sprintf('Bienvenido a %s', $this->party->name))
+        return (new GameSetEnabledEmail($this->gameSet))
+            ->subject('Nueva fecha habilitada')
             ->to($notifiable->email);
     }
 }
