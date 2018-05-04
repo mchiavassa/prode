@@ -20954,7 +20954,8 @@ var ForecastGame = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'card text-center mb-2' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row text-center' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-md-12' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-muted' }, this.state.game.group), !this.state.game.computed && !this.state.game.hasResult && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_countdown_now___default.a, { date: this.state.game.dateAndHour,
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'card text-center mb-2' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row text-center' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-md-12' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-muted mt-2' }, this.state.game.group), !this.state.game.computed && !this.state.game.hasResult && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_countdown_now___default.a, { className: 'mt-2',
+                date: this.state.game.dateAndHour,
                 onComplete: this.onCompleteCountdown,
                 renderer: function renderer(_ref) {
                     var hours = _ref.hours,
@@ -21970,7 +21971,7 @@ var TeamDisplay = function (_Component) {
     _createClass(TeamDisplay, [{
         key: 'render',
         value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'mb-2 img-fluid', src: this.props.shield }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'card-text' }, this.props.name));
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'mb-2 img-fluid flag', src: this.props.shield }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'card-text' }, this.props.name));
         }
     }]);
 

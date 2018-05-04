@@ -53,10 +53,11 @@ export default class ForecastGame extends Component {
             <div className={'card text-center mb-2'}>
                 <div className={'row text-center'}>
                     <div className={'col-md-12'}>
-                        <div className={'text-muted'}>{this.state.game.group}</div>
+                        <div className={'text-muted mt-2'}>{this.state.game.group}</div>
                         {!this.state.game.computed && !this.state.game.hasResult &&
                         <div>
-                            <Countdown date={this.state.game.dateAndHour}
+                            <Countdown className={'mt-2'}
+                                       date={this.state.game.dateAndHour}
                                        onComplete={this.onCompleteCountdown}
                                        renderer={({ hours, minutes, seconds, completed }) => {
                                             if (completed) {

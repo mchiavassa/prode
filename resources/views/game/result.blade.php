@@ -25,7 +25,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <img class="float-left mr-2" src="{{ asset('img/flags/'.$game->home.'.svg') }}" height="50" />
+                        <img class="float-left mr-2 flag" src="{{ asset('img/flags/'.$game->home.'.svg') }}" height="50" />
                         <h3 class="card-text float-left">{{ config('domain.teams.'.$game->home) }}</h3>
                     </div>
                     <div class="{{$game->tie_break_required ? 'col-md-1' : 'col-md-1 offset-1 border-right'}}">
@@ -49,7 +49,7 @@
                        </div>
                     @endif
                     <div class="col-md-4">
-                        <img class="float-right ml-2" src="{{ asset('img/flags/'.$game->away.'.svg') }}" height="50" />
+                        <img class="float-right ml-2 flag" src="{{ asset('img/flags/'.$game->away.'.svg') }}" height="50" />
                         <h3 class="card-text float-right">{{ config('domain.teams.'.$game->away) }}</h3>
                     </div>
                 </div>
