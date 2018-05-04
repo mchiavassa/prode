@@ -61,6 +61,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @include('common.messages')
     @stack('script')
 </body>
 </html>

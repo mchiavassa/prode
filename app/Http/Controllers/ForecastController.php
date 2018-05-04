@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ForecastGame;
 use Illuminate\Support\Facades\Auth;
+use Prode\Domain\GameResult;
 use Prode\Domain\Model\Forecast;
 use Prode\Domain\Model\Game;
 use Prode\Domain\Model\GameSet;
@@ -45,6 +46,7 @@ class ForecastController extends Controller
                 'hasResult' => $game->hasResult(),
                 'canForecast' => $game->canForecast(),
                 'computed' => $game->computed,
+                'tieBreakRequired' => $game->tie_break_required,
                 'forecastUrl' => route('forecast.game', ['id' => $game->id])
             ];
         });
@@ -85,6 +87,25 @@ class ForecastController extends Controller
         $forecast->away_score = array_get($validated, 'away_score');
         $forecast->home_tie_break_score = array_get($validated, 'home_tie_break_score');
         $forecast->away_tie_break_score = array_get($validated, 'away_tie_break_score');
+
+        if (!GameResult::resultIsValid(
+            $forecast->home_score,
+            $forecast->away_score,
+            $game->tie_break_required,
+            $forecast->home_tie_break_score,
+            $forecast->away_tie_break_score
+        )) {
+            return response()->json([
+                'metadata' => [
+                    'code' => 400,
+                    'message' => 'BadRequest',
+                ],
+                'error' => [
+                    'message' => 'El resultado es inválido',
+                ],
+            ], 400);
+        }
+
         $forecast->save();
 
         return response()->json([

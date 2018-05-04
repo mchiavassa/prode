@@ -10,7 +10,7 @@ class Game extends Model
 {
     protected $dates = ['date_and_hour'];
 
-    protected $casts = ['computed' => 'boolean'];
+    protected $casts = ['computed' => 'boolean', 'tie_break_required' => 'boolean'];
 
     public function set()
     {

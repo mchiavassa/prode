@@ -4,9 +4,9 @@
     @include('set.header', ['gameSet' => $gameSet])
 
     @if($gameSet->isDraft())
-        <a href="{{route('game.create.show', ['id' => $gameSet->id])}}" class="btn btn-primary">Agregar Partido</a>
+        <a href="{{route('game.create.show', ['id' => $gameSet->id])}}" class="btn btn-primary mb-3">Agregar Partido</a>
         @if($gameSet->games->isNotEmpty())
-            <a href="{{route('set.enable', ['id' => $gameSet->id])}}" class="btn btn-success">Habilitar</a>
+            <a href="{{route('set.enable', ['id' => $gameSet->id])}}" class="btn btn-success mb-3">Habilitar</a>
         @endif
     @endif
 

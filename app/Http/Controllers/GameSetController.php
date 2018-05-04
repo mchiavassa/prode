@@ -5,19 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGameSet;
 use Illuminate\Http\Request;
 use Prode\Domain\Model\GameSet;
-use Prode\Service\ForecastService;
 
 class GameSetController extends Controller
 {
     private $gameSet;
-    private $forecastService;
 
-    public function __construct(GameSet $gameSet, ForecastService $forecastService)
+    public function __construct(GameSet $gameSet)
     {
         $this->middleware('auth');
 
         $this->gameSet = $gameSet;
-        $this->forecastService = $forecastService;
     }
 
     public function index()
@@ -59,16 +56,21 @@ class GameSetController extends Controller
 
             // TODO: send email to all users
         }
-        return redirect()->route('set.details', ['id' => $id]);
+        return redirect()->route('set.details', ['id' => $id])->with(self::SUCCESS_MESSAGE, 'Fecha habilitada!');
     }
 
-    public function compute($id)
+    public function finish($id)
     {
-        $this->forecastService->computeForecastsFromGameSet($id);
+        $gameSet = $this->gameSet->with('games')->findOrFail($id);
 
-        // TODO: send email to all users
+        if($gameSet->games->where('computed', false)->isNotEmpty()) {
+            abort(400, 'There are games to be computed.');
+        }
 
-        return redirect()->route('set.details', ['id' => $id]);
+        $gameSet->status = GameSet::STATUS_FINISHED;
+        $gameSet->save();
+
+        return redirect()->route('set.details', ['id' => $id])->with(self::SUCCESS_MESSAGE, 'Fecha finalizada!');
     }
 
     public function listAdmin()
@@ -83,7 +85,7 @@ class GameSetController extends Controller
         $gameSets = $this->gameSet->with('games');
 
         if ($request->query('enabled')) {
-            $gameSets = $gameSets->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_COMPUTED]);
+            $gameSets = $gameSets->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED]);
         }
 
         return view('set.list', ['gameSets' => $gameSets->get()]);

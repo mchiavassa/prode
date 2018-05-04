@@ -8,7 +8,7 @@ class GameSet extends Model
 {
     const STATUS_DRAFT = 'draft';
     const STATUS_ENABLED = 'enabled';
-    const STATUS_COMPUTED = 'computed';
+    const STATUS_FINISHED = 'finished';
 
     public function games()
     {
@@ -18,9 +18,9 @@ class GameSet extends Model
     /**
      * @return bool
      */
-    public function isComputed()
+    public function isFinished()
     {
-        return $this->status === self::STATUS_COMPUTED;
+        return $this->status === self::STATUS_FINISHED;
     }
 
     /**

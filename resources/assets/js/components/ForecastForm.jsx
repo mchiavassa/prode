@@ -41,8 +41,8 @@ export default class ForecastForm extends Component {
             <div>
                 <div className={'row mt-4'}>
                     <div className={'col-6 border-right'}>
-                        <div className={'row'}>
-                            <div className={'col-6'}>
+                        <div className={'row float-right'}>
+                            <div className={!this.props.tieBreakRequired ? 'col-6 offset-6' : 'col-6'}>
                                 <label>Goles</label>
                                 <input type="text"
                                        name="homeScore"
@@ -51,14 +51,16 @@ export default class ForecastForm extends Component {
                                        onChange={this.handleInputChange}
                                 />
                             </div>
-                            <div className={'col-6'}>
-                                <label>Penales</label>
-                                <input type="text"
-                                       name="homeTieBreakScore"
-                                       className={'form-control mb-2'}
-                                       onChange={this.handleInputChange}
-                                />
-                            </div>
+                            {this.props.tieBreakRequired === true &&
+                                <div className={'col-6'}>
+                                    <label>Penales</label>
+                                    <input type="text"
+                                           name="homeTieBreakScore"
+                                           className={'form-control mb-2'}
+                                           onChange={this.handleInputChange}
+                                    />
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className={'col-6'}>
@@ -71,14 +73,16 @@ export default class ForecastForm extends Component {
                                        onChange={this.handleInputChange}
                                 />
                             </div>
-                            <div className={'col-6'}>
-                                <label>Penales</label>
-                                <input type="text"
-                                       name="awayTieBreakScore"
-                                       className={'form-control mb-2'}
-                                       onChange={this.handleInputChange}
-                                />
-                            </div>
+                            {this.props.tieBreakRequired === true &&
+                                <div className={'col-6'}>
+                                    <label>Penales</label>
+                                    <input type="text"
+                                           name="awayTieBreakScore"
+                                           className={'form-control mb-2'}
+                                           onChange={this.handleInputChange}
+                                    />
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

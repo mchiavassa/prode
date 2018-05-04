@@ -2,53 +2,47 @@
 
 namespace Prode\Service;
 
-use InvalidArgumentException;
+use Illuminate\Database\DatabaseManager;
 use Prode\Domain\Model\Forecast;
-use Prode\Domain\Model\GameSet;
+use Prode\Domain\Model\Game;
 
 class ForecastService
 {
     private $pointsService;
-    private $gameSet;
+    private $db;
     private $forecast;
 
-    public function __construct(PointsService $pointsService, GameSet $gameSet, Forecast $forecast)
+    public function __construct(PointsService $pointsService, DatabaseManager $db, Forecast $forecast)
     {
         $this->pointsService = $pointsService;
-        $this->gameSet = $gameSet;
+        $this->db = $db;
         $this->forecast = $forecast;
     }
 
     /**
-     * @param $gameSetId
+     * @param Game $game
      */
-    public function computeForecastsFromGameSet($gameSetId)
+    public function computeGame(Game $game)
     {
-        $gameSet = $this->gameSet->with('games')->find($gameSetId);
-
-        $games = $gameSet->games->mapWithKeys(function ($item) {
-            return [$item['id'] => $item];
-        });
-
         $forecasts = $this->forecast
             ->with('user')
-            ->whereIn('game_id', $games->keys()->all())
+            ->where('game_id', $game->id)
             ->get();
 
-        /** @var Forecast $forecast */
-        foreach ($forecasts as $forecast) {
-            $game = $games[$forecast->game_id];
+        $this->db->connection()->transaction(function () use ($game, $forecasts) {
+            /** @var Forecast $forecast */
+            foreach ($forecasts as $forecast) {
+                $points = $this->pointsService->resolveForecastPoints($forecast, $game);
 
-            $points = $this->pointsService->resolveForecastPoints($forecast, $game);
+                $forecast->points_earned = $points;
+                $forecast->user->points += $points;
 
-            $forecast->points_earned = $points;
-            $forecast->user->points += $points;
+                $forecast->user->save();
+                $forecast->save();
+            }
 
-            $forecast->user->save();
-            $forecast->save();
-        }
-
-        $gameSet->status = GameSet::STATUS_COMPUTED;
-        $gameSet->save();
+            $game->computed = true;
+            $game->save();
+        });
     }
 }

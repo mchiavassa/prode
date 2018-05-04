@@ -44,8 +44,7 @@ export default class ForecastGame extends Component {
                 });
             })
             .catch(function (error) {
-                console.log(error);
-                // toastr.error(error.response.data.error.message || 'An unexpected error occurred.');
+                toastr.error(error.response.data.error.message || 'An unexpected error occurred.');
             });
     }
 
@@ -55,6 +54,7 @@ export default class ForecastGame extends Component {
                 <div className={'row text-center'}>
                     <div className={'col-md-12'}>
                         <div className={'text-muted'}>{this.state.game.group}</div>
+                        {!this.state.game.computed && !this.state.game.hasResult &&
                         <div>
                             <Countdown date={this.state.game.dateAndHour}
                                        onComplete={this.onCompleteCountdown}
@@ -62,10 +62,13 @@ export default class ForecastGame extends Component {
                                             if (completed) {
                                                 return <span>El partido ya comenzó!</span>;
                                             } else {
-                                                return <span>{hours}h {minutes}m {seconds}s</span>;
+                                                return <span className={'text-muted'}>
+                                                    faltan <strong>{hours}h {minutes}m {seconds}s</strong> para el partido
+                                                </span>;
                                             }
                                        }}/>
                         </div>
+                        }
                     </div>
                 </div>
                 <div className={'row card-body'}>
@@ -108,7 +111,7 @@ export default class ForecastGame extends Component {
                         }
 
                         {!this.state.game.hasResult && !this.state.forecast && this.state.game.canForecast &&
-                            <ForecastForm onForecastSubmit={this.onForecastSubmit} />
+                            <ForecastForm tieBreakRequired={this.state.game.tieBreakRequired} onForecastSubmit={this.onForecastSubmit} />
                         }
 
                         {!this.state.forecast && this.state.game.hasResult &&

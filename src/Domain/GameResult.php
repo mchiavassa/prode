@@ -32,6 +32,20 @@ class GameResult
         $this->awayTieBreakScore = $awayTieBreakScore;
     }
 
+    public static function resultIsValid(
+        $homeScore,
+        $awayScore,
+        $tie_break_required,
+        $homeTieBreakScore = null,
+        $awayTieBreakScore = null
+    ) {
+        if ($homeScore === $awayScore && $tie_break_required) {
+            return $homeTieBreakScore != null && $awayTieBreakScore != null && $homeTieBreakScore != $awayTieBreakScore;
+        }
+
+        return $homeTieBreakScore == null && $awayTieBreakScore == null;
+    }
+
     /**
      * @param Forecast $forecast
      * @return GameResult
