@@ -17,25 +17,47 @@ class AuthService
     }
 
     /**
-     * @param ExternalUser $user
+     * @param ExternalUser $externalUser
      * @param SocialNetworkProvider $provider Social auth provider
      *
      * @return User
      */
-    public function findOrCreateUser(ExternalUser $user, SocialNetworkProvider $provider)
+    public function findOrCreateUser(ExternalUser $externalUser, SocialNetworkProvider $provider)
     {
-        $authUser = $this->getUserWithLogin($provider, $user->getId());
+        $user = $this->getUserByEmail($externalUser->getEmail());
 
-        if ($authUser) {
-            $authUser->name = $user->getName();
-            $authUser->email = $user->getEmail();
-            $authUser->picture_url = $user->getPictureUrl();
-            $authUser->save();
-
-            return $authUser;
+        if (empty($user)) {
+            return $this->registerExternalUser($externalUser);
         }
 
-        return $this->registerExternalUser($user);
+        $providerLogin = $user->logins
+            ->where('provider', (string) $provider)
+            ->where('provider_key', $externalUser->getId())
+            ->first();
+
+        if (empty($providerLogin)) {
+            $this->addProviderLogin($user, $externalUser);
+        } else {
+            $user->name = $externalUser->getName();
+            $user->email = $externalUser->getEmail();
+            $user->picture_url = $externalUser->getPictureUrl();
+            $user->save();
+        }
+
+        return $user;
+    }
+
+    /**
+     * @param $email
+     *
+     * @return User|null
+     */
+    private function getUserByEmail($email)
+    {
+        return $this->user
+            ->with('logins')
+            ->where('email', $email)
+            ->first();
     }
 
     /**
@@ -72,11 +94,21 @@ class AuthService
         $user->picture_url = $externalUser->getPictureUrl();
         $user->save();
 
+        $this->addProviderLogin($user, $externalUser);
+
+        return $user;
+    }
+
+    /**
+     * @param User $user
+     * @param ExternalUser $externalUser
+     */
+    private function addProviderLogin(User $user, ExternalUser $externalUser)
+    {
         $userLogin = new UserLogin();
         $userLogin->provider = $externalUser->getProvider();
         $userLogin->provider_key = $externalUser->getId();
-        $user->logins()->save($userLogin);
 
-        return $user;
+        $user->logins()->save($userLogin);
     }
 }

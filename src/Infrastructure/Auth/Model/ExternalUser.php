@@ -2,6 +2,8 @@
 
 namespace Prode\Infrastructure\Auth\Model;
 
+use InvalidArgumentException;
+
 abstract class ExternalUser
 {
     private $id;
@@ -9,12 +11,30 @@ abstract class ExternalUser
     private $name;
     private $pictureUrl;
 
-    public function __construct($id, $email, $name = null, $pictureUrl = null)
+    public function __construct($id, $email, $name, $pictureUrl)
     {
+        $this->validateParams($id, $email, $name, $pictureUrl);
+
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
         $this->pictureUrl = $pictureUrl;
+    }
+
+    private function validateParams($id, $email, $name, $pictureUrl)
+    {
+        if (empty($id)) {
+            throw new InvalidArgumentException('The id is required.');
+        }
+        if (empty($name)) {
+            throw new InvalidArgumentException('The name is required.');
+        }
+        if (empty($email)) {
+            throw new InvalidArgumentException('The email is required.');
+        }
+        if (empty($pictureUrl)) {
+            throw new InvalidArgumentException('The pictureUrl is required.');
+        }
     }
 
     /**

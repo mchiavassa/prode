@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use InvalidArgumentException;
 use Laravel\Socialite\Facades\Socialite;
 use Prode\Domain\SocialNetworkProvider;
 use Prode\Infrastructure\Auth\ExternalUserFactory;
@@ -69,16 +70,23 @@ class LoginController extends Controller
         if ($request->has('error')) {
             return redirect()->route('login')->with(
                 self::ERROR_MESSAGE,
-                sprintf('Se produjo un error al intentar ingresar con %s', ucfirst($provider))
+                sprintf('Se produjo un error al intentar ingresar con %s.', ucfirst($provider))
             );
         }
 
         $provider = new SocialNetworkProvider($provider);
 
-        $externalUser = ExternalUserFactory::createExternalUser(
-            $provider,
-            (array) Socialite::driver((string) $provider)->user()
-        );
+        try {
+            $externalUser = ExternalUserFactory::createExternalUser(
+                $provider,
+                (array) Socialite::driver((string) $provider)->user()
+            );
+        } catch (InvalidArgumentException $e) {
+            return redirect()->route('login')->with(
+                self::ERROR_MESSAGE,
+                sprintf('Se produjo un error al intentar ingresar con %s.', ucfirst($provider))
+            );
+        }
 
         $authUser = $this->authService->findOrCreateUser($externalUser, $provider);
 
