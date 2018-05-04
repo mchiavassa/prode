@@ -60,11 +60,19 @@ class LoginController extends Controller
     /**
      * Obtain the user information from GitHub.
      *
+     * @param Request $request
      * @param $provider
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback($provider)
+    public function handleProviderCallback(Request $request, $provider)
     {
+        if ($request->has('error')) {
+            return redirect()->route('login')->with(
+                self::ERROR_MESSAGE,
+                sprintf('Se produjo un error al intentar ingresar con %s', ucfirst($provider))
+            );
+        }
+
         $provider = new SocialNetworkProvider($provider);
 
         $externalUser = ExternalUserFactory::createExternalUser(
