@@ -10,11 +10,27 @@ export default class ForecastGame extends Component {
         super(props);
         this.state = {
             game: props.game,
-            forecast: props.forecast
+            forecast: props.forecast,
+            edit: false
         };
 
         this.onForecastSubmit = this.onForecastSubmit.bind(this);
+        this.onForecastUpdate = this.onForecastUpdate.bind(this);
         this.onCompleteCountdown = this.onCompleteCountdown.bind(this);
+        this.editForecast = this.editForecast.bind(this);
+        this.cancelEditForecast = this.cancelEditForecast.bind(this);
+    }
+
+    editForecast() {
+        this.setState({
+            edit: true
+        });
+    }
+
+    cancelEditForecast() {
+        this.setState({
+            edit: false
+        });
     }
 
     onCompleteCountdown() {
@@ -39,6 +55,8 @@ export default class ForecastGame extends Component {
 
         axios.post(this.state.game.forecastUrl, data)
             .then(function (response) {
+                forecast.id = response.data.data.id;
+
                 self.setState({
                     forecast: forecast
                 });
@@ -47,6 +65,31 @@ export default class ForecastGame extends Component {
                 toastr.error(error.response.data.error.message || 'An unexpected error occurred.');
             });
     }
+
+    onForecastUpdate(forecast) {
+        let data = {
+            'home_score': forecast.homeScore,
+            'away_score': forecast.awayScore,
+            'home_tie_break_score': forecast.homeTieBreakScore,
+            'away_tie_break_score': forecast.awayTieBreakScore,
+        };
+
+        let self = this;
+
+        axios.put(this.state.game.forecastUrl + '/' + this.state.forecast.id, data)
+            .then(function (response) {
+                forecast.id = response.data.data.id;
+
+                self.setState({
+                    forecast: forecast,
+                    edit: false
+                });
+            })
+            .catch(function (error) {
+                toastr.error(error.response.data.error.message || 'An unexpected error occurred.');
+            });
+    }
+
 
     render() {
         return (
@@ -93,7 +136,7 @@ export default class ForecastGame extends Component {
                     </div>
 
                     <div className={'col-md-12'}>
-                        {this.state.forecast &&
+                        {this.state.forecast && !this.state.edit &&
                         <div>
                             <div className={'mt-4'}>Tu pronóstico</div>
                             <div className={'row'}>
@@ -108,11 +151,31 @@ export default class ForecastGame extends Component {
                                     </h2>
                                 </div>
                             </div>
+                            {this.state.game.canForecast &&
+                                <div className={'mt-2 text-center'}>
+                                    <button onClick={this.editForecast} className={'btn btn-light'}>Modificar</button>
+                                </div>
+                            }
                         </div>
                         }
 
                         {!this.state.game.hasResult && !this.state.forecast && this.state.game.canForecast &&
-                            <ForecastForm tieBreakRequired={this.state.game.tieBreakRequired} onForecastSubmit={this.onForecastSubmit} />
+                            <ForecastForm tieBreakRequired={this.state.game.tieBreakRequired}
+                                          onForecastSubmit={this.onForecastSubmit} />
+                        }
+
+                        {this.state.edit &&
+                            <div>
+                                <ForecastForm tieBreakRequired={this.state.game.tieBreakRequired}
+                                              homeScore={this.state.forecast.homeScore}
+                                              awayScore={this.state.forecast.awayScore}
+                                              homeTieBreakScore={this.state.forecast.homeTieBreakScore}
+                                              awayTieBreakScore={this.state.forecast.awayTieBreakScore}
+                                              onForecastSubmit={this.onForecastUpdate} />
+                                <div className={'mt-2 text-center'}>
+                                    <button onClick={this.cancelEditForecast} className={'btn btn-light'}>Cancelar</button>
+                                </div>
+                            </div>
                         }
 
                         {!this.state.forecast && this.state.game.hasResult &&

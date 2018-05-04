@@ -20912,15 +20912,33 @@ var ForecastGame = function (_Component) {
 
         _this.state = {
             game: props.game,
-            forecast: props.forecast
+            forecast: props.forecast,
+            edit: false
         };
 
         _this.onForecastSubmit = _this.onForecastSubmit.bind(_this);
+        _this.onForecastUpdate = _this.onForecastUpdate.bind(_this);
         _this.onCompleteCountdown = _this.onCompleteCountdown.bind(_this);
+        _this.editForecast = _this.editForecast.bind(_this);
+        _this.cancelEditForecast = _this.cancelEditForecast.bind(_this);
         return _this;
     }
 
     _createClass(ForecastGame, [{
+        key: 'editForecast',
+        value: function editForecast() {
+            this.setState({
+                edit: true
+            });
+        }
+    }, {
+        key: 'cancelEditForecast',
+        value: function cancelEditForecast() {
+            this.setState({
+                edit: false
+            });
+        }
+    }, {
         key: 'onCompleteCountdown',
         value: function onCompleteCountdown() {
             var game = _extends({}, this.state.game);
@@ -20944,8 +20962,33 @@ var ForecastGame = function (_Component) {
             var self = this;
 
             __WEBPACK_IMPORTED_MODULE_5_axios___default.a.post(this.state.game.forecastUrl, data).then(function (response) {
+                forecast.id = response.data.data.id;
+
                 self.setState({
                     forecast: forecast
+                });
+            }).catch(function (error) {
+                toastr.error(error.response.data.error.message || 'An unexpected error occurred.');
+            });
+        }
+    }, {
+        key: 'onForecastUpdate',
+        value: function onForecastUpdate(forecast) {
+            var data = {
+                'home_score': forecast.homeScore,
+                'away_score': forecast.awayScore,
+                'home_tie_break_score': forecast.homeTieBreakScore,
+                'away_tie_break_score': forecast.awayTieBreakScore
+            };
+
+            var self = this;
+
+            __WEBPACK_IMPORTED_MODULE_5_axios___default.a.put(this.state.game.forecastUrl + '/' + this.state.forecast.id, data).then(function (response) {
+                forecast.id = response.data.data.id;
+
+                self.setState({
+                    forecast: forecast,
+                    edit: false
                 });
             }).catch(function (error) {
                 toastr.error(error.response.data.error.message || 'An unexpected error occurred.');
@@ -20968,7 +21011,13 @@ var ForecastGame = function (_Component) {
                     } else {
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'text-muted' }, 'faltan ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, hours, 'h ', minutes, 'm ', seconds, 's'), ' para el partido');
                     }
-                } })))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row card-body' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-md-12' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row text-center' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__TeamDisplay__["a" /* default */], { shield: this.state.game.homeShield, name: this.state.game.homeFullName })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-4 font-weight-bold' }, this.state.game.computed && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'Puntos ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('h1', null, this.state.forecast ? this.state.forecast.pointsEarned : 0))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__TeamDisplay__["a" /* default */], { shield: this.state.game.awayShield, name: this.state.game.awayFullName })))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-md-12' }, this.state.forecast && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mt-4' }, 'Tu pron\xF3stico'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('h2', { className: 'card-text' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__ScoreDisplay__["a" /* default */], { score: this.state.forecast.homeScore, tieBreakScore: this.state.forecast.homeTieBreakScore }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('h2', { className: 'card-text' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__ScoreDisplay__["a" /* default */], { score: this.state.forecast.awayScore, tieBreakScore: this.state.forecast.awayTieBreakScore }))))), !this.state.game.hasResult && !this.state.forecast && this.state.game.canForecast && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__ForecastForm__["a" /* default */], { tieBreakRequired: this.state.game.tieBreakRequired, onForecastSubmit: this.onForecastSubmit }), !this.state.forecast && this.state.game.hasResult && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'font-italic text-muted mt-4' }, 'No pronosticaste este partido')), this.state.game.hasResult && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-md-12' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Resultado final'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('h4', { className: 'card-text' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__ScoreDisplay__["a" /* default */], { score: this.state.game.homeScore, tieBreakScore: this.state.game.homeTieBreakScore }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('h4', { className: 'card-text' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__ScoreDisplay__["a" /* default */], { score: this.state.game.awayScore, tieBreakScore: this.state.game.awayTieBreakScore })))))));
+                } })))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row card-body' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-md-12' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row text-center' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__TeamDisplay__["a" /* default */], { shield: this.state.game.homeShield, name: this.state.game.homeFullName })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-4 font-weight-bold' }, this.state.game.computed && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'Puntos ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('h1', null, this.state.forecast ? this.state.forecast.pointsEarned : 0))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__TeamDisplay__["a" /* default */], { shield: this.state.game.awayShield, name: this.state.game.awayFullName })))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-md-12' }, this.state.forecast && !this.state.edit && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mt-4' }, 'Tu pron\xF3stico'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('h2', { className: 'card-text' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__ScoreDisplay__["a" /* default */], { score: this.state.forecast.homeScore, tieBreakScore: this.state.forecast.homeTieBreakScore }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('h2', { className: 'card-text' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__ScoreDisplay__["a" /* default */], { score: this.state.forecast.awayScore, tieBreakScore: this.state.forecast.awayTieBreakScore })))), this.state.game.canForecast && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mt-2 text-center' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { onClick: this.editForecast, className: 'btn btn-light' }, 'Modificar'))), !this.state.game.hasResult && !this.state.forecast && this.state.game.canForecast && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__ForecastForm__["a" /* default */], { tieBreakRequired: this.state.game.tieBreakRequired,
+                onForecastSubmit: this.onForecastSubmit }), this.state.edit && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__ForecastForm__["a" /* default */], { tieBreakRequired: this.state.game.tieBreakRequired,
+                homeScore: this.state.forecast.homeScore,
+                awayScore: this.state.forecast.awayScore,
+                homeTieBreakScore: this.state.forecast.homeTieBreakScore,
+                awayTieBreakScore: this.state.forecast.awayTieBreakScore,
+                onForecastSubmit: this.onForecastUpdate }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mt-2 text-center' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { onClick: this.cancelEditForecast, className: 'btn btn-light' }, 'Cancelar'))), !this.state.forecast && this.state.game.hasResult && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'font-italic text-muted mt-4' }, 'No pronosticaste este partido')), this.state.game.hasResult && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-md-12' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Resultado final'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('h4', { className: 'card-text' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__ScoreDisplay__["a" /* default */], { score: this.state.game.homeScore, tieBreakScore: this.state.game.homeTieBreakScore }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('h4', { className: 'card-text' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__ScoreDisplay__["a" /* default */], { score: this.state.game.awayScore, tieBreakScore: this.state.game.awayTieBreakScore })))))));
         }
     }]);
 
@@ -22036,10 +22085,10 @@ var ForecastForm = function (_Component) {
         var _this = _possibleConstructorReturn(this, (ForecastForm.__proto__ || Object.getPrototypeOf(ForecastForm)).call(this, props));
 
         _this.state = {
-            homeScore: '',
-            awayScore: '',
-            homeTieBreakScore: '',
-            awayTieBreakScore: ''
+            homeScore: props.homeScore || '',
+            awayScore: props.awayScore || '',
+            homeTieBreakScore: props.homeTieBreakScore || '',
+            awayTieBreakScore: props.awayTieBreakScore || ''
         };
 
         _this.handleInputChange = _this.handleInputChange.bind(_this);
@@ -22079,14 +22128,17 @@ var ForecastForm = function (_Component) {
                 onChange: this.handleInputChange
             })), this.props.tieBreakRequired === true && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Penales'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
                 name: 'homeTieBreakScore',
+                value: this.state.homeTieBreakScore,
                 className: 'form-control mb-2',
                 onChange: this.handleInputChange
             })))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Goles'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
                 name: 'awayScore',
+                value: this.state.awayScore,
                 className: 'form-control mb-2',
                 onChange: this.handleInputChange
             })), this.props.tieBreakRequired === true && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Penales'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
                 name: 'awayTieBreakScore',
+                value: this.state.awayTieBreakScore,
                 className: 'form-control mb-2',
                 onChange: this.handleInputChange
             }))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mt-2 text-center' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { onClick: this.validateForecast, className: 'btn btn-primary' }, 'Pronosticar')));

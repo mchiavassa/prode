@@ -4,10 +4,10 @@ export default class ForecastForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            homeScore: '',
-            awayScore: '',
-            homeTieBreakScore: '',
-            awayTieBreakScore: ''
+            homeScore: props.homeScore || '',
+            awayScore: props.awayScore || '',
+            homeTieBreakScore: props.homeTieBreakScore || '',
+            awayTieBreakScore: props.awayTieBreakScore || ''
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -56,6 +56,7 @@ export default class ForecastForm extends Component {
                                     <label>Penales</label>
                                     <input type="text"
                                            name="homeTieBreakScore"
+                                           value={this.state.homeTieBreakScore}
                                            className={'form-control mb-2'}
                                            onChange={this.handleInputChange}
                                     />
@@ -69,6 +70,7 @@ export default class ForecastForm extends Component {
                                 <label>Goles</label>
                                 <input type="text"
                                        name="awayScore"
+                                       value={this.state.awayScore}
                                        className={'form-control mb-2'}
                                        onChange={this.handleInputChange}
                                 />
@@ -78,6 +80,7 @@ export default class ForecastForm extends Component {
                                     <label>Penales</label>
                                     <input type="text"
                                            name="awayTieBreakScore"
+                                           value={this.state.awayTieBreakScore}
                                            className={'form-control mb-2'}
                                            onChange={this.handleInputChange}
                                     />

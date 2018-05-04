@@ -47,7 +47,7 @@ class ForecastController extends Controller
                 'canForecast' => $game->canForecast(),
                 'computed' => $game->computed,
                 'tieBreakRequired' => $game->tie_break_required,
-                'forecastUrl' => route('forecast.game', ['id' => $game->id])
+                'forecastUrl' => route('forecast.game', ['gameId' => $game->id])
             ];
         });
 
@@ -72,16 +72,17 @@ class ForecastController extends Controller
         );
     }
 
-    public function forecastGame(ForecastGame $request, $id)
+    public function forecastGame(ForecastGame $request, $gameId)
     {
         $validated = $request->validated();
 
-        $game = $this->game->findOrFail($id);
+        $game = $this->game->findOrFail($gameId);
 
         $this->assertGameCanBeForecast($game);
+        $this->assertGameIsNotForecastedByUser($game);
 
         $forecast = new Forecast();
-        $forecast->game_id = $id;
+        $forecast->game_id = $gameId;
         $forecast->user()->associate(Auth::user());
         $forecast->home_score = array_get($validated, 'home_score');
         $forecast->away_score = array_get($validated, 'away_score');
@@ -117,12 +118,58 @@ class ForecastController extends Controller
         ]);
     }
 
+    public function updateForecastGame(ForecastGame $request, $gameId, $forecastId)
+    {
+        $validated = $request->validated();
+
+        $forecast = $this->forecast->with('game')->where('game_id', $gameId)->findOrFail($forecastId);
+
+        $this->assertGameCanBeForecast($forecast->game);
+
+        $forecast->home_score = array_get($validated, 'home_score');
+        $forecast->away_score = array_get($validated, 'away_score');
+        $forecast->home_tie_break_score = array_get($validated, 'home_tie_break_score');
+        $forecast->away_tie_break_score = array_get($validated, 'away_tie_break_score');
+
+        if (!GameResult::resultIsValid(
+            $forecast->home_score,
+            $forecast->away_score,
+            $forecast->game->tie_break_required,
+            $forecast->home_tie_break_score,
+            $forecast->away_tie_break_score
+        )) {
+            return response()->json([
+                'metadata' => [
+                    'code' => 400,
+                    'message' => 'BadRequest',
+                ],
+                'error' => [
+                    'message' => 'El resultado es inválido',
+                ],
+            ], 400);
+        }
+
+        $forecast->save();
+
+        return response()->json([
+            'metadata' => [
+                'code' => 200,
+                'message' => 'OK',
+            ],
+            'data' => json_decode($forecast, true)
+        ]);
+    }
+
+
     private function assertGameCanBeForecast(Game $game)
     {
         if (!$game->canForecast()) {
             abort(400, 'Game cannot be forecast.');
         }
+    }
 
+    private function assertGameIsNotForecastedByUser(Game $game)
+    {
         if ($this->forecast->where('game_id', $game->id)->where('user_id', Auth::user()->id)->first()) {
             abort(400, 'Game already forecast by User.');
         }
