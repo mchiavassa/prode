@@ -18,6 +18,7 @@ Route::post('logout', 'LoginController@logout')->name('logout');;
 Route::get('login/{provider}', 'LoginController@redirectToProvider')->name('login.external');
 Route::get('login/{provider}/callback', 'LoginController@handleProviderCallback');
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/rules', 'HomeController@rules')->name('rules');
 
 
 Route::get('/parties/list', 'PartyController@list')->name('party.list');
