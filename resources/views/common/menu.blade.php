@@ -7,6 +7,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{route('set')}}">Fechas</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('user')}}">Usuarios</a>
+            </li>
         @endif
     </ul>
 @endauth

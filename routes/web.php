@@ -30,6 +30,8 @@ Route::get('/sets/{id}/forecasts', 'ForecastController@showGameSetGamesForecasts
 Route::post('/games/{id}/forecast', 'ForecastController@forecastGame')->where('id', '[0-9]+')->name('forecast.game');
 
 // Admin routes
+Route::get('/users', 'UserController@index')->name('user');
+
 Route::get('/admin/sets', 'GameSetController@index')->name('set')->middleware('auth.admin');
 Route::get('/admin/sets/list', 'GameSetController@listAdmin')->name('set.list.admin')->middleware('auth.admin');
 Route::get('/admin/sets/create', 'GameSetController@showCreate')->name('set.create.show')->middleware('auth.admin');
