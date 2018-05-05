@@ -1,18 +1,18 @@
 <table class="table">
     <tbody>
-    @for ($i = 0; $i < $users->sortBy('points')->count(); $i++)
-        <tr class="{{$users[$i]->email == Auth::user()->email ? 'font-weight-bold' : ''}}">
+    @foreach($ranking as $position => $user)
+        <tr class="{{$user->email == Auth::user()->email ? 'font-weight-bold' : ''}}">
             <td>
-                {{ $i + 1 }}
+                {{ $position }}
             </td>
             <td>
-                <img src="{{ $users[$i]->picture_url }}" class="rounded" height="30px" alt="{{ $users[$i]->name }}">
-                {{ $users[$i]->name }}
+                <img src="{{ $user->picture_url }}" class="rounded" height="30px" alt="{{ $user->name }}">
+                {{ $user->name }}
             </td>
             <td>
-                {{$users[$i]->points}}
+                {{$user->points}}
             </td>
         </tr>
-    @endfor
+    @endforeach
     </tbody>
 </table>

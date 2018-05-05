@@ -29,7 +29,7 @@
         <div class="col-md-6">
             <div class="card p-3">
                 <h4 class="mb-4">Posiciones</h4>
-                @include('party.ranking', ['users' => $party->users])
+                @include('party.ranking', ['ranking' => new \Prode\Domain\Ranking($party->users)])
             </div>
         </div>
     </div>
