@@ -8,7 +8,7 @@ return [
     'teams' => [
           // Group A
           'RUS' => 'Rusia',
-          'KSA' => 'Arabia Saudita',
+          'KSA' => 'Arabia Saudí',
           'EGY' => 'Egipto',
           'URU' => 'Uruguay',
 
@@ -16,7 +16,7 @@ return [
           'POR' => 'Portugal',
           'ESP' => 'España',
           'MAR' => 'Marruecos',
-          'IRN' => 'Irán',
+          'IRN' => 'RI de Irán',
 
           // Group C
           'FRA' => 'Francia',
@@ -40,7 +40,7 @@ return [
           'GER' => 'Alemania',
           'MEX' => 'México',
           'SWE' => 'Suecia',
-          'KOR' => 'Corea del Sur',
+          'KOR' => 'República de Corea',
 
           // Group G
           'BEL' => 'Bélgica',

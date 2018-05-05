@@ -13,10 +13,12 @@ class GameResultTest extends TestCase
         $this->assertFalse(GameResult::resultIsValid(1, 1, true, 1, 1));
         $this->assertFalse(GameResult::resultIsValid(2, 1, true, 1, 1));
         $this->assertFalse(GameResult::resultIsValid(1, 2, true, 1, 1));
+        $this->assertFalse(GameResult::resultIsValid(1, 2, true, 1, 2));
     }
 
     public function testTieBreakResultsValid()
     {
+        $this->assertTrue(GameResult::resultIsValid(1, 2, true));
         $this->assertTrue(GameResult::resultIsValid(1, 1, true, 1, 2));
         $this->assertTrue(GameResult::resultIsValid(1, 1, true, 2, 1));
     }
