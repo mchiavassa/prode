@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\CreateParty;
 use App\Console\Commands\InviteUserToParty;
+use App\Console\Commands\NotifyGamesWithoutForecast;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         CreateParty::class,
         InviteUserToParty::class,
+        NotifyGamesWithoutForecast::class,
     ];
 
     /**
@@ -27,8 +29,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+         $schedule->command('notify:forecasts:pending')
+             ->everyThirtyMinutes()
+             ->timezone(config('app.timezone'))
+             ->between('5:30', '17:00');
     }
 
     /**
