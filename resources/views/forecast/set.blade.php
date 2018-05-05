@@ -13,5 +13,5 @@
         const games = JSON.parse('{!! $games->toJson() !!}');
         const forecasts = JSON.parse('{!! $forecasts->toJson() !!}');
     </script>
-    <script src="{{ asset('js/react-components/ForecastGameSet.js') }}"></script>
+    <script src="{{ mix('js/react-components/ForecastGameSet.js') }}"></script>
 @endpush
