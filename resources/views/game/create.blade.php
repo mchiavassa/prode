@@ -3,7 +3,7 @@
 @section('content')
     <h2 class="mb-4">{{ $gameSet->name }}</h2>
 
-    <div class="card col-md-6 offset-3">
+    <div class="card col-md-6 offset-md-3">
         <div class="card-body">
             <h4>Nuevo Partido</h4>
             <form method="POST" action="{{ route('game.create', ['id' =>  $gameSet->id]) }}">
