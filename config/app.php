@@ -213,7 +213,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-
     ],
 
 ];
