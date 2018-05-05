@@ -19,3 +19,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .react('resources/assets/js/components/ForecastForm.jsx', 'public/js/react-components')
     .react('resources/assets/js/components/ScoreDisplay.jsx', 'public/js/react-components')
     .react('resources/assets/js/components/TeamDisplay.jsx', 'public/js/react-components');
+
+
+if (mix.inProduction()) {
+    mix.version();
+}

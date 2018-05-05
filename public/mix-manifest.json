@@ -1,5 +1,9 @@
 {
     "/js/react-components/ForecastGameSet.js": "/js/react-components/ForecastGameSet.js",
+    "/js/react-components/ForecastGame.js": "/js/react-components/ForecastGame.js",
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/react-components/TeamDisplay.js": "/js/react-components/TeamDisplay.js",
+    "/js/react-components/ScoreDisplay.js": "/js/react-components/ScoreDisplay.js",
+    "/js/react-components/ForecastForm.js": "/js/react-components/ForecastForm.js"
 }
