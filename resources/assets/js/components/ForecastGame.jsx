@@ -102,12 +102,12 @@ export default class ForecastGame extends Component {
                             <Countdown className={'mt-2'}
                                        date={this.state.game.dateAndHour}
                                        onComplete={this.onCompleteCountdown}
-                                       renderer={({ hours, minutes, seconds, completed }) => {
+                                       renderer={({ days, hours, minutes, seconds, completed }) => {
                                             if (completed) {
                                                 return <span>El partido ya comenzó!</span>;
                                             } else {
                                                 return <span className={'text-muted'}>
-                                                    faltan <strong>{hours}h {minutes}m {seconds}s</strong> para el partido
+                                                    faltan <strong>{days}d {hours}h {minutes}m {seconds}s</strong> para el partido
                                                 </span>;
                                             }
                                        }}/>
