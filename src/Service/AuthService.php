@@ -24,10 +24,14 @@ class AuthService
      */
     public function findOrCreateUser(ExternalUser $externalUser, SocialNetworkProvider $provider)
     {
-        $user = $this->getUserByEmail($externalUser->getEmail());
+        $user = $this->getUserWithLogin($provider, $externalUser->getId());
 
         if (empty($user)) {
-            return $this->registerExternalUser($externalUser);
+            $user = $this->getUserByEmail($externalUser->getEmail());
+
+            if (empty($user)) {
+                return $this->registerExternalUser($externalUser);
+            }
         }
 
         $providerLogin = $user->logins
@@ -39,7 +43,6 @@ class AuthService
             $this->addProviderLogin($user, $externalUser);
         } else {
             $user->name = $externalUser->getName();
-            $user->email = $externalUser->getEmail();
             $user->picture_url = $externalUser->getPictureUrl();
             $user->save();
         }
