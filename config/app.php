@@ -153,6 +153,8 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class,
+        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -209,7 +211,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d60306fd857c1f629ea67e260bfbb85",
+    "content-hash": "5a15bf9a5d0541c5eebfa66ec51747e8",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1740,60 +1740,132 @@
             "time": "2018-01-20T00:28:24+00:00"
         },
         {
-            "name": "s-ichikawa/laravel-sendgrid-driver",
-            "version": "2.0.2",
+            "name": "sentry/sentry",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/s-ichikawa/laravel-sendgrid-driver.git",
-                "reference": "6091b0156e259879408f99d8e887d3e7684c32a4"
+                "url": "https://github.com/getsentry/sentry-php.git",
+                "reference": "c90567d78382b803e563939654d1563ddee61707"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/s-ichikawa/laravel-sendgrid-driver/zipball/6091b0156e259879408f99d8e887d3e7684c32a4",
-                "reference": "6091b0156e259879408f99d8e887d3e7684c32a4",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/c90567d78382b803e563939654d1563ddee61707",
+                "reference": "c90567d78382b803e563939654d1563ddee61707",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "~5.3|~6.2",
-                "illuminate/mail": "~5.5"
+                "ext-curl": "*",
+                "php": "^5.3|^7.0"
+            },
+            "conflict": {
+                "raven/raven": "*"
             },
             "require-dev": {
-                "illuminate/container": "~5.5",
-                "illuminate/filesystem": "~5.5",
-                "phpunit/phpunit": "~5.7"
+                "friendsofphp/php-cs-fixer": "^1.8.0",
+                "monolog/monolog": "*",
+                "phpunit/phpunit": "^4.8.35 || ^5.7"
             },
             "suggest": {
-                "s-ichikawa/sendgrid-api-builder": "support to build json for sendgrid api"
+                "ext-hash": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "monolog/monolog": "Automatically capture Monolog events as breadcrumbs"
             },
+            "bin": [
+                "bin/sentry"
+            ],
             "type": "library",
             "extra": {
-                "laravel": {
-                    "providers": [
-                        "Sichikawa\\LaravelSendgridDriver\\SendgridTransportServiceProvider"
-                    ]
+                "branch-alias": {
+                    "dev-master": "1.9.x-dev"
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Sichikawa\\LaravelSendgridDriver\\": "src"
+                "psr-0": {
+                    "Raven_": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
-                    "name": "shingo.ichikawa",
-                    "email": "ichikawa.shingo.0829@gmail.com"
+                    "name": "David Cramer",
+                    "email": "dcramer@gmail.com"
                 }
             ],
-            "description": "This library adds a 'sendgrid' mail driver to Laravel.",
+            "description": "A PHP client for Sentry (http://getsentry.com)",
+            "homepage": "http://getsentry.com",
             "keywords": [
-                "laravel",
-                "sendgrid"
+                "log",
+                "logging"
             ],
-            "time": "2017-12-28T14:54:25+00:00"
+            "time": "2018-05-03T12:06:52+00:00"
+        },
+        {
+            "name": "sentry/sentry-laravel",
+            "version": "0.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/getsentry/sentry-laravel.git",
+                "reference": "4b2a43c28bf8b4f72c2c32005ea75a72cd7f88ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/4b2a43c28bf8b4f72c2c32005ea75a72cd7f88ad",
+                "reference": "4b2a43c28bf8b4f72c2c32005ea75a72cd7f88ad",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*",
+                "php": "^5.4||^7.0",
+                "sentry/sentry": "^1.9.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "2.2.*",
+                "laravel/framework": "5.6.*",
+                "orchestra/testbench": "3.6.*",
+                "phpunit/phpunit": "7.0.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.9.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Sentry\\SentryLaravel\\SentryLaravelServiceProvider"
+                    ],
+                    "aliases": {
+                        "Sentry": "Sentry\\SentryLaravel\\SentryFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Sentry\\SentryLaravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Cramer",
+                    "email": "dcramer@gmail.com"
+                }
+            ],
+            "description": "Laravel integration for Sentry (https://sentry.io)",
+            "homepage": "https://sentry.io",
+            "keywords": [
+                "errors",
+                "laravel",
+                "logging",
+                "sentry"
+            ],
+            "time": "2018-05-03T13:05:35+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3841,6 +3913,62 @@
                 "xunit"
             ],
             "time": "2018-04-11T04:50:36+00:00"
+        },
+        {
+            "name": "s-ichikawa/laravel-sendgrid-driver",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/s-ichikawa/laravel-sendgrid-driver.git",
+                "reference": "6091b0156e259879408f99d8e887d3e7684c32a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/s-ichikawa/laravel-sendgrid-driver/zipball/6091b0156e259879408f99d8e887d3e7684c32a4",
+                "reference": "6091b0156e259879408f99d8e887d3e7684c32a4",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~5.3|~6.2",
+                "illuminate/mail": "~5.5"
+            },
+            "require-dev": {
+                "illuminate/container": "~5.5",
+                "illuminate/filesystem": "~5.5",
+                "phpunit/phpunit": "~5.7"
+            },
+            "suggest": {
+                "s-ichikawa/sendgrid-api-builder": "support to build json for sendgrid api"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Sichikawa\\LaravelSendgridDriver\\SendgridTransportServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sichikawa\\LaravelSendgridDriver\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "shingo.ichikawa",
+                    "email": "ichikawa.shingo.0829@gmail.com"
+                }
+            ],
+            "description": "This library adds a 'sendgrid' mail driver to Laravel.",
+            "keywords": [
+                "laravel",
+                "sendgrid"
+            ],
+            "time": "2017-12-28T14:54:25+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
