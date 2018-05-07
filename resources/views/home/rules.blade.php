@@ -22,8 +22,8 @@
     <h3>Puntajes</h3>
     <p>Por cada pronóstico enviado:</p>
     <ul>
-        <li>1 punto: acertado el resultado del partido (que equipo ganó o si terminó en empate)</li>
-        <li>2 puntos: acertado el marcador exacto del partido.</li>
+        <li>{{config('domain.points.result')}} puntos: acertado el resultado del partido (que equipo ganó o si terminó en empate)</li>
+        <li>{{config('domain.points.score')}} puntos: acertado el marcador exacto del partido.</li>
     </ul>
 
     <h4>Ejemplos</h4>
@@ -32,13 +32,13 @@
         Pronóstico: L:2 V:1
         Resultado oficial: L:3 V:0
 
-        - <strong>En este caso acertaste el resultado por lo que estarías recibiendo 1 punto.</strong>
+        - <strong>En este caso acertaste el resultado por lo que estarías recibiendo {{config('domain.points.result')}} puntos.</strong>
     </p>
    <p>
        Pronóstico: L:1 V:1
        Resultado oficial: L:1 V:1
 
-       - <strong>En este caso acertaste el resultado y además el marcado exacto del partido, por lo que estarías recibiendo 3 puntos.</strong>
+       - <strong>En este caso acertaste el resultado y además el marcado exacto del partido, por lo que estarías recibiendo {{config('domain.points.result') + config('domain.points.score')}} puntos.</strong>
    </p>
     <p>
         Pronóstico: L:2 V:1

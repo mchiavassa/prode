@@ -2,8 +2,8 @@
 
 return [
     'points' => [
-        'result' => 1,
-        'score' => 2,
+        'result' => 10,
+        'score' => 20,
     ],
     'teams' => [
           // Group A
