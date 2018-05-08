@@ -59,7 +59,14 @@
         </main>
     </div>
 
-    <!-- Scripts -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118928932-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-118928932-1');
+    </script>
     <script src="{{ mix('js/app.js') }}"></script>
     @include('common.messages')
     @stack('script')
