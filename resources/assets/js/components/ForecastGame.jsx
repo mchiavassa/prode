@@ -93,7 +93,7 @@ export default class ForecastGame extends Component {
 
     render() {
         return (
-            <div className={'card text-center mb-2'}>
+            <div className={'card masonry-brick text-center m-2'}>
                 <div className={'row text-center'}>
                     <div className={'col-md-12'}>
                         <div className={'text-muted mt-2'}>{this.state.game.group}</div>

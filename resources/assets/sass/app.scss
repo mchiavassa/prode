@@ -41,3 +41,9 @@ img.flag {
     opacity: 1;
   }
 }
+
+@media screen and (min-width: 768px) {
+  .bricklayer-column-sizer {
+    width: 33.3%;
+  }
+}

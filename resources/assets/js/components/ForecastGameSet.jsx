@@ -13,7 +13,7 @@ class ForecastGameSet extends Component {
 
     render() {
         return (
-            <div className={'card-columns'}>
+            <div className={'bricklayer'}>
                 {this.state.games.map(game => (
                     <ForecastGame
                         key={game.id}
