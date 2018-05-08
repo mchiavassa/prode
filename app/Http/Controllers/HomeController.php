@@ -37,7 +37,7 @@ class HomeController extends Controller
 
     public function stats()
     {
-        $todayForecasts = $this->forecast->whereDate('created_at', Carbon::now()->toDateString())->count();
+        $todayForecasts = $this->forecast->whereDate('created_at', Carbon::now()->toDateString())->get();
         $todayUsers = $this->user->whereDate('created_at', Carbon::now()->toDateString())->count();
         $totalPoints = $this->user->sum('points');
         $topUsers = $this->user->where('points', '>', 0)->orderBy('points', 'desc')->take(5)->get();
@@ -61,13 +61,21 @@ class HomeController extends Controller
             ]);
         }
 
+        $todayForecasters = collect();
+        foreach ($todayForecasts->groupBy('user_id') as $userId => $forecasts) {
+            $user = $forecasts->first()->user;
+            $user->points = $forecasts->count();
+            $todayForecasters->push($user);
+        }
+
         return view('home.stats', [
-            'todayForecasts' => $todayForecasts,
+            'todayForecasts' => $todayForecasts->count(),
             'todayUsers' => $todayUsers,
             'totalPoints' => $totalPoints,
             'topUsers' => $topUsers,
             'topGameSets' => $topGameSets->where('points', '>', 0)->take(5),
             'topGames' => $topGames->where('points', '>', 0)->take(5),
+            'todayForecasters' => $todayForecasters,
         ]);
     }
 }
