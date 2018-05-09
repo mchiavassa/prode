@@ -28,9 +28,11 @@ Route::get('/parties/{id}', 'PartyController@details')->where('id', '[0-9]+')->n
 
 Route::get('/sets/list', 'GameSetController@list')->name('set.list');
 Route::get('/sets/{id}/forecasts', 'ForecastController@showGameSetGamesForecasts')->where('id', '[0-9]+')->name('forecast.set');
+Route::get('/games/forecast/next', 'ForecastController@nextGameForecast')->name('forecast.next');
 
 Route::post('/games/{gameId}/forecast', 'ForecastController@forecastGame')->where('id', '[0-9]+')->name('forecast.game');
 Route::put('/games/{gameId}/forecast/{forecastId}', 'ForecastController@updateForecastGame')->where('id', '[0-9]+')->name('forecast.game.update');
+
 
 // Admin routes
 Route::get('/users', 'UserController@index')->name('user');

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 69);
+/******/ 	return __webpack_require__(__webpack_require__.s = 71);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -74,13 +74,13 @@
 if (false) {
   module.exports = require('./cjs/react.production.min.js');
 } else {
-  module.exports = __webpack_require__(10);
+  module.exports = __webpack_require__(15);
 }
 
 
 /***/ }),
 
-/***/ 10:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1723,7 +1723,7 @@ var ForecastForm = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row mt-4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6 border-right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row float-right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: !this.props.tieBreakRequired ? 'col-6 offset-6' : 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Goles'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row mt-4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6 border-right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: !this.props.tieBreakRequired ? 'col-6 offset-6' : 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Goles'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
                 name: 'homeScore',
                 className: 'form-control mb-2',
                 value: this.state.homeScore,
@@ -1962,7 +1962,7 @@ module.exports = checkPropTypes;
 
 /***/ }),
 
-/***/ 69:
+/***/ 71:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(38);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ForecastGame;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Prode\Domain\GameResult;
 use Prode\Domain\Model\Forecast;
@@ -30,26 +31,7 @@ class ForecastController extends Controller
         $gameSet = $this->gameSet->with('games')->where('status', GameSet::STATUS_ENABLED)->findOrFail($id);
 
         $games = $gameSet->games->map(function($game) {
-            return [
-                'id' => $game->id,
-                'dateAndHour' => $game->date_and_hour->timestamp * 1000,
-                'group' => $game->group,
-                'home' => $game->home,
-                'away' => $game->away,
-                'homeFullName' => config('domain.teams.'.$game->home),
-                'awayFullName' => config('domain.teams.'.$game->away),
-                'homeShield' => asset('img/flags/'.$game->home.'.svg'),
-                'awayShield' => asset('img/flags/'.$game->away.'.svg'),
-                'homeScore' => $game->home_score,
-                'awayScore' => $game->away_score,
-                'homeTieBreakScore' => $game->home_tie_break_score,
-                'awayTieBreakScore' => $game->away_tie_break_score,
-                'hasResult' => $game->hasResult(),
-                'canForecast' => $game->canForecast(),
-                'computed' => $game->computed,
-                'tieBreakRequired' => $game->tie_break_required,
-                'forecastUrl' => route('forecast.game', ['gameId' => $game->id])
-            ];
+            return $this->mapGameToForecast($game);
         });
 
         $forecasts = $this->forecast
@@ -57,19 +39,35 @@ class ForecastController extends Controller
             ->where('user_id', Auth::user()->id)
             ->get()
             ->mapWithKeys(function ($forecast) {
-                return [$forecast->game_id => [
-                    'id' => $forecast->id,
-                    'homeScore' => $forecast->home_score,
-                    'awayScore' => $forecast->away_score,
-                    'homeTieBreakScore' => $forecast->home_tie_break_score,
-                    'awayTieBreakScore' => $forecast->away_tie_break_score,
-                    'pointsEarned' => $forecast->points_earned,
-                ]];
+                return [$forecast->game_id => $this->mapForecast($forecast)];
             });
 
         return view(
             'forecast.set',
             ['gameSet' => $gameSet, 'games' => $games, 'forecasts' => $forecasts]
+        );
+    }
+
+    public function nextGameForecast()
+    {
+        $nextGame = $this->game
+            ->where('date_and_hour', '>', Carbon::now())
+            ->orderBy('date_and_hour')
+            ->take(1)
+            ->first();
+
+        if (!$nextGame) {
+            return null;
+        }
+
+        $forecast = $this->forecast
+            ->where('game_id', $nextGame->id)
+            ->where('user_id', Auth::user()->id)
+            ->first();
+
+        return view(
+            'forecast.next',
+            ['game' => $this->mapGameToForecast($nextGame), 'forecast' => $forecast ? $this->mapForecast($forecast) : null]
         );
     }
 
@@ -174,5 +172,49 @@ class ForecastController extends Controller
         if ($this->forecast->where('game_id', $game->id)->where('user_id', Auth::user()->id)->first()) {
             abort(400, 'Game already forecast by User.');
         }
+    }
+
+    /**
+     * @param Game $game
+     * @return array
+     */
+    private function mapGameToForecast(Game $game)
+    {
+        return [
+            'id' => $game->id,
+            'dateAndHour' => $game->date_and_hour->timestamp * 1000,
+            'group' => $game->group,
+            'home' => $game->home,
+            'away' => $game->away,
+            'homeFullName' => config('domain.teams.'.$game->home),
+            'awayFullName' => config('domain.teams.'.$game->away),
+            'homeShield' => asset('img/flags/'.$game->home.'.svg'),
+            'awayShield' => asset('img/flags/'.$game->away.'.svg'),
+            'homeScore' => $game->home_score,
+            'awayScore' => $game->away_score,
+            'homeTieBreakScore' => $game->home_tie_break_score,
+            'awayTieBreakScore' => $game->away_tie_break_score,
+            'hasResult' => $game->hasResult(),
+            'canForecast' => $game->canForecast(),
+            'computed' => $game->computed,
+            'tieBreakRequired' => $game->tie_break_required,
+            'forecastUrl' => route('forecast.game', ['gameId' => $game->id])
+        ];
+    }
+
+    /**
+     * @param Forecast $forecast
+     * @return array
+     */
+    private function mapForecast(Forecast $forecast)
+    {
+        return [
+            'id' => $forecast->id,
+            'homeScore' => $forecast->home_score,
+            'awayScore' => $forecast->away_score,
+            'homeTieBreakScore' => $forecast->home_tie_break_score,
+            'awayTieBreakScore' => $forecast->away_tie_break_score,
+            'pointsEarned' => $forecast->points_earned,
+        ];
     }
 }

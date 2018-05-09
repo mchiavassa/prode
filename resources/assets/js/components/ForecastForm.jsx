@@ -41,7 +41,7 @@ export default class ForecastForm extends Component {
             <div>
                 <div className={'row mt-4'}>
                     <div className={'col-6 border-right'}>
-                        <div className={'row float-right'}>
+                        <div className={'row'}>
                             <div className={!this.props.tieBreakRequired ? 'col-6 offset-6' : 'col-6'}>
                                 <label>Goles</label>
                                 <input type="text"
