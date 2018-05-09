@@ -10427,7 +10427,15 @@ img.flag {
   opacity: 1;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 990px) {
+  .bricklayer {
+    margin: 0 -0.5rem 0 -0.5rem;
+  }
+
+  .masonry-brick {
+    margin: 0.5rem !important;
+  }
+
   .bricklayer-column-sizer {
     width: 33.3%;
   }
