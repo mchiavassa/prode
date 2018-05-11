@@ -18,6 +18,7 @@ class CreatePartyUserTable extends Migration
 
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('party_id');
+            $table->boolean('is_admin')->default(false);
 
             $table->timestamps();
 

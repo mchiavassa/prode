@@ -20,7 +20,7 @@ class User extends Authenticatable
 
     public function parties()
     {
-        return $this->belongsToMany(Party::class);
+        return $this->belongsToMany(Party::class)->withPivot('is_admin');
     }
 
     /**

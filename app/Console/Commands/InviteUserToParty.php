@@ -56,7 +56,7 @@ class InviteUserToParty extends Command
 
         $this->table(['user', 'party'], [[$user->name, $party->name]]);
 
-        $party->users()->attach($user->id);
+        $party->users()->attach($user->id, ['is_admin' => false]);
         $party->save();
 
         $user->notify(new PartyInvitation($party));

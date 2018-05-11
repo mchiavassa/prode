@@ -1,6 +1,12 @@
 @if($parties->isEmpty())
-    <div class="text-center font-italic">
-        Actualmente no formás parte de ningún grupo.
+    <div class="text-center">
+        <div>
+            <a href="{{route('party.create.show')}}" class="btn btn-primary">Creá tu grupo</a>
+        </div>
+        <div>o</div>
+        <div>
+            <a href="{{route('party')}}" class="btn btn-default">Unite a uno existente</a>
+        </div>
     </div>
 @else
     @foreach ($parties as $party)
