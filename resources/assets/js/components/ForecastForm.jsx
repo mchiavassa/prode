@@ -44,7 +44,7 @@ export default class ForecastForm extends Component {
                         <div className={'row'}>
                             <div className={!this.props.tieBreakRequired ? 'col-6 offset-6' : 'col-6'}>
                                 <label>Goles</label>
-                                <input type="text"
+                                <input type="number"
                                        name="homeScore"
                                        className={'form-control mb-2'}
                                        value={this.state.homeScore}
@@ -54,7 +54,7 @@ export default class ForecastForm extends Component {
                             {this.props.tieBreakRequired === true &&
                                 <div className={'col-6'}>
                                     <label>Penales</label>
-                                    <input type="text"
+                                    <input type="number"
                                            name="homeTieBreakScore"
                                            value={this.state.homeTieBreakScore}
                                            className={'form-control mb-2'}
@@ -68,7 +68,7 @@ export default class ForecastForm extends Component {
                         <div className={'row'}>
                             <div className={'col-6'}>
                                 <label>Goles</label>
-                                <input type="text"
+                                <input type="number"
                                        name="awayScore"
                                        value={this.state.awayScore}
                                        className={'form-control mb-2'}
@@ -78,7 +78,7 @@ export default class ForecastForm extends Component {
                             {this.props.tieBreakRequired === true &&
                                 <div className={'col-6'}>
                                     <label>Penales</label>
-                                    <input type="text"
+                                    <input type="number"
                                            name="awayTieBreakScore"
                                            value={this.state.awayTieBreakScore}
                                            className={'form-control mb-2'}

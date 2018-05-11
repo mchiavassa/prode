@@ -3852,22 +3852,22 @@ var ForecastForm = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row mt-4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6 border-right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: !this.props.tieBreakRequired ? 'col-6 offset-6' : 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Goles'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row mt-4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6 border-right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: !this.props.tieBreakRequired ? 'col-6 offset-6' : 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Goles'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'number',
                 name: 'homeScore',
                 className: 'form-control mb-2',
                 value: this.state.homeScore,
                 onChange: this.handleInputChange
-            })), this.props.tieBreakRequired === true && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Penales'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
+            })), this.props.tieBreakRequired === true && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Penales'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'number',
                 name: 'homeTieBreakScore',
                 value: this.state.homeTieBreakScore,
                 className: 'form-control mb-2',
                 onChange: this.handleInputChange
-            })))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Goles'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
+            })))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Goles'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'number',
                 name: 'awayScore',
                 value: this.state.awayScore,
                 className: 'form-control mb-2',
                 onChange: this.handleInputChange
-            })), this.props.tieBreakRequired === true && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Penales'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
+            })), this.props.tieBreakRequired === true && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-6' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('label', null, 'Penales'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'number',
                 name: 'awayTieBreakScore',
                 value: this.state.awayTieBreakScore,
                 className: 'form-control mb-2',
