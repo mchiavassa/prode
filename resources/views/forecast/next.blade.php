@@ -1,4 +1,3 @@
-<p class="text-muted font-italic">Próximo partido...</p>
 <div id="next-game-forecast"></div>
 
 <script type="text/javascript">

@@ -6,7 +6,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card p-3 mb-3">
                 <h4 class="mb-4">Puntos</h4>
                 <h1>
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="next-game">
                 <div class="async-list" data-source-url="{{route('forecast.next')}}">
                 </div>
@@ -41,7 +41,8 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="col-md-4">
             <div class="card p-3">
                 <h4 class="mb-4">Fechas</h4>
                 <div class="async-list" data-source-url="{{route('set.list', ['enabled' => true])}}">
