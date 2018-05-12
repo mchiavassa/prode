@@ -301,7 +301,7 @@
                                 <tr>
                                     <td>
                                         <p>Hola!</p>
-                                        <p>Fuiste invitado al grupo <strong>{{$party->name}}</strong></p>
+                                        <p>Tu solicitud fue aceptada para el grupo <strong>{{$party->name}}</strong></p>
                                         <p>No te olvides de cargar tus pronósticos para los próximos partidos.</p>
                                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                             <tbody>

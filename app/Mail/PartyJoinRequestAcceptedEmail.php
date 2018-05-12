@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Prode\Domain\Model\Party;
 
-class PartyInvitationEmail extends Mailable
+class PartyJoinRequestAcceptedEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -25,6 +25,6 @@ class PartyInvitationEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.party-invitation', [ 'party' => $this->party ]);
+        return $this->view('email.party-welcome', [ 'party' => $this->party ]);
     }
 }

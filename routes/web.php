@@ -30,6 +30,10 @@ Route::get('/parties/{id}', 'PartyController@details')->where('id', '[0-9]+')->n
 Route::get('/parties/create', 'PartyController@showCreate')->name('party.create.show');
 Route::post('/parties/create', 'PartyController@create')->name('party.create');
 
+Route::get('/parties/{id}/joinRequests', 'PartyController@joinRequestList')->where('id', '[0-9]+')->name('party.joinRequest.list');
+Route::post('/parties/{id}/joinRequests', 'PartyController@requestJoin')->where('id', '[0-9]+')->name('party.requestJoin');
+Route::post('/parties/{partyId}/joinRequests/{joinRequestId}', 'PartyController@replyJoinRequest')->where('partyId', '[0-9]+')->where('joinRequestId', '[0-9]+')->name('party.joinRequest.reply');
+
 Route::get('/sets/list', 'GameSetController@list')->name('set.list');
 Route::get('/sets/{id}/forecasts', 'ForecastController@showGameSetGamesForecasts')->where('id', '[0-9]+')->name('forecast.set');
 Route::get('/games/forecast/next', 'ForecastController@nextGameForecast')->name('forecast.next');

@@ -2,13 +2,13 @@
 
 namespace App\Notifications;
 
-use App\Mail\PartyInvitationEmail;
+use App\Mail\PartyJoinRequestAcceptedEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Prode\Domain\Model\Party;
 
-class PartyInvitation extends Notification implements ShouldQueue
+class PartyJoinRequestAccepted extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -27,7 +27,7 @@ class PartyInvitation extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-        return (new PartyInvitationEmail($this->party))
+        return (new PartyJoinRequestAcceptedEmail($this->party))
             ->subject(sprintf('Bienvenido a %s', $this->party->name))
             ->to($notifiable->email);
     }

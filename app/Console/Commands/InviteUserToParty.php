@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Notifications\PartyInvitation;
+use App\Notifications\PartyJoinRequestAccepted;
 use Illuminate\Console\Command;
 use InvalidArgumentException;
 use Prode\Domain\Model\Party;
@@ -59,7 +59,7 @@ class InviteUserToParty extends Command
         $party->users()->attach($user->id, ['is_admin' => false]);
         $party->save();
 
-        $user->notify(new PartyInvitation($party));
+        $user->notify(new PartyJoinRequestAccepted($party));
 
         $this->info('User invited!');
     }

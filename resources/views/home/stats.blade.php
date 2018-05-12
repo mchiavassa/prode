@@ -17,7 +17,7 @@
             </div>
             <div class="card p-3 mb-3">
                 <h4 class="mb-4">Quienes pronosticaron</h4>
-                @include('party.ranking', ['ranking' => new \Prode\Domain\Ranking($todayForecasters)])
+                @include('common.user-ranking', ['ranking' => new \Prode\Domain\Ranking($todayForecasters)])
             </div>
             <div class="card p-3 mb-3">
                 <h4 class="mb-4">Top 5 fechas</h4>

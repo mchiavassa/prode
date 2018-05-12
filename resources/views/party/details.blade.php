@@ -25,6 +25,17 @@
                     </strong>
                 </h1>
             </div>
+            @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
+                <div class="async-list" data-source-url="{{route('party.joinRequest.list', ['id' => $party->id])}}">
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="loading text-center mt-1" style="display: none">
+                            <img class="small" src="{{asset('img/loading.svg')}}" />
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="col-md-6">
             <div class="card p-3">
