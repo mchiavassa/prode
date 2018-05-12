@@ -18,8 +18,8 @@
                         <span class="badge badge-pill badge-dark">{{$party->users->count()}} jugadores</span>
                     </div>
                     <div class="card-body float-right text-right">
-                        <span class="text-muted">Puntos</span>
-                        <h3 class="m-0">{{$party->users->sum('points')}}</h3>
+                        <span class="text-muted">Promedio</span>
+                        <h3 class="m-0">{{number_format($party->users->sum('points') / $party->users->count(), 2)}}</h3>
                     </div>
                 </a>
             </div>

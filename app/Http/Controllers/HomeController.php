@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Prode\Domain\Model\Forecast;
 use Prode\Domain\Model\Game;
 use Prode\Domain\Model\GameSet;
+use Prode\Domain\Model\Party;
 use Prode\Domain\Model\User;
 
 class HomeController extends Controller
@@ -14,8 +15,9 @@ class HomeController extends Controller
     private $user;
     private $gameSet;
     private $game;
+    private $party;
 
-    public function __construct(Forecast $forecast, User $user, GameSet $gameSet, Game $game)
+    public function __construct(Forecast $forecast, User $user, GameSet $gameSet, Game $game, Party $party)
     {
         $this->middleware('auth');
 
@@ -23,6 +25,7 @@ class HomeController extends Controller
         $this->user = $user;
         $this->gameSet = $gameSet;
         $this->game = $game;
+        $this->party = $party;
     }
 
     public function index()
@@ -37,10 +40,12 @@ class HomeController extends Controller
 
     public function stats()
     {
-        $todayForecasts = $this->forecast->whereDate('created_at', Carbon::now()->toDateString())->get();
+        $allUsers = $this->user->get();
+
         $todayUsers = $this->user->whereDate('created_at', Carbon::now()->toDateString())->count();
-        $totalPoints = $this->user->sum('points');
-        $topUsers = $this->user->where('points', '>', 0)->orderBy('points', 'desc')->take(5)->get();
+        $todayParties = $this->party->whereDate('created_at', Carbon::now()->toDateString())->count();
+        $totalPoints = $allUsers->sum('points');
+        $topUsers = $allUsers->where('points', '>', 0)->sortByDesc('points')->take(5);
 
         $topGameSets = collect();
         foreach ($this->gameSet->with('games', 'games.forecasts')->get() as $gameSet) {
@@ -61,17 +66,15 @@ class HomeController extends Controller
             ]);
         }
 
-        $todayForecasters = collect();
-        foreach ($todayForecasts->groupBy('user_id') as $userId => $forecasts) {
-            $user = $forecasts->first()->user;
-            $user->points = $forecasts->count();
-            $todayForecasters->push($user);
-        }
+        $todayForecasts = $this->forecast->with('user')->whereDate('created_at', Carbon::now()->toDateString())->get();
+        $todayForecasters = $allUsers->whereIn('id', $todayForecasts->groupBy('user_id')->keys()->all());
 
         return view('home.stats', [
             'todayForecasts' => $todayForecasts->count(),
             'todayUsers' => $todayUsers,
+            'todayParties' => $todayParties,
             'totalPoints' => $totalPoints,
+            'totalAverage' => number_format($totalPoints / $allUsers->count(), 2),
             'topUsers' => $topUsers,
             'topGameSets' => $topGameSets->where('points', '>', 0)->take(5),
             'topGames' => $topGames->where('points', '>', 0)->take(5),

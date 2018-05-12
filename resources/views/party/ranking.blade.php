@@ -13,7 +13,7 @@
                 @elseif($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
                     <form action="{{route('party.user.makeAdmin', ['partyId' => $user->pivot->party_id, 'userId' => $user->id])}}" method="POST" class="d-inline">
                         @csrf
-                        <input type="submit" style="font-size: 0.7em" value="Hacer Admin" />
+                        <input type="submit" class="btn" style="font-size: 0.7em" value="Hacer Admin" />
                     </form>
                 @endif
             </td>

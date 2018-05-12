@@ -310,7 +310,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td><a href="{{route('home')}}" target="_blank">Ir a Prode!</a></td>
+                                                            <td><a href="{{route('party.details', ['id' => $party->id])}}" target="_blank">Ir a Prode!</a></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
