@@ -122,6 +122,20 @@ class PartyController extends Controller
         return redirect()->route('party.details', ['id' => $partyId]);
     }
 
+    public function makeAdmin($partyId, $userId)
+    {
+        /** @var Party $party */
+        $party = $this->party
+            ->with('users')
+            ->findOrFail($partyId);
+
+        $this->assertLoggedUserIsPartyAdmin($party);
+
+        $party->users()->updateExistingPivot($userId, ['is_admin' => true]);
+
+        return redirect()->route('party.details', ['id' => $partyId]);
+    }
+
     public function joinRequestList($id)
     {
         /** @var Party $party */
@@ -143,6 +157,7 @@ class PartyController extends Controller
     public function list()
     {
         $parties = $this->party
+            ->with('users')
             ->get()
             ->sortBy('name');
 

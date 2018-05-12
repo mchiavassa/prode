@@ -15,9 +15,11 @@
                     <img class="float-left rounded p-2" height="50px" src="{{asset('img/logo.png')}}" alt="{{ $party->name }}">
                     <div class="card-body float-left">
                         <h5 class="card-title">{{ $party->name }}</h5>
-                        <span class="badge badge-pill badge-dark">
-                        {{$party->users->count()}} jugadores
-                    </span>
+                        <span class="badge badge-pill badge-dark">{{$party->users->count()}} jugadores</span>
+                    </div>
+                    <div class="card-body float-right text-right">
+                        <span class="text-muted">Puntos</span>
+                        <h3 class="m-0">{{$party->users->sum('points')}}</h3>
                     </div>
                 </a>
             </div>

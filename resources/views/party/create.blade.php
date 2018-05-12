@@ -20,7 +20,7 @@
                     {{ Form::text('name', '', ['class' => 'form-control mb-2', 'placeholder'=> 'Nombre']) }}
                 </div>
                 <input type="submit" class="btn btn-primary" value="Crear">
-                <a href="{{route('home')}}" class="btn btn-dark">Volver</a>
+                <a href="{{route('home')}}" class="btn btn-default">Volver</a>
             </form>
         </div>
     </div>
