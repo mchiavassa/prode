@@ -158,6 +158,7 @@ class PartyController extends Controller
     {
         $parties = $this->party
             ->with('users')
+            ->where('hidden', false)
             ->get()
             ->sortBy('name');
 
