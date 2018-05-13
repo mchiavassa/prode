@@ -8,13 +8,12 @@
     <h2>Bienvenido al PRODE</h2>
 
     <p>Con esta app vas a poder jugar con tu grupo de amigos realizando prónosticos de juegos de una competencia deportiva.</p>
-
-    <p>Los grupos son privados, por lo que necesitás invitación para participar. Ingresá con tu cuenta de Facebook y avisale a tu administrador para comenzar a jugar.</p>
-
+    <p>Comenzá <a href="{{route('party.create')}}">creando tu grupo</a>, compartile el link a tus amigos para que se sumen y comenzá a pronosticar.</p>
+    <p>Cada vez que finalice un partido computaremos todos los pronósticos recibidos, sumando puntos correspondientes a cada usuario.</p>
 
     <h3>Reglamento</h3>
     <ul>
-        <li>Los partidos a pronosticar se van a ir habilitando periódicamente por el administrador agruapdos en "fechas".</li>
+        <li>Los partidos a pronosticar se van a ir habilitando periódicamente agruapdos en "fechas".</li>
         <li>Cada partido puede ser pronosticado hasta la hora que comience.</li>
         <li>Los partidos que no lleguen a pronosticarse no computarán puntos.</li>
     </ul>
