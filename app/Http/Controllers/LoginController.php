@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
@@ -12,6 +13,15 @@ use Prode\Service\AuthService;
 
 class LoginController extends Controller
 {
+    use RedirectsUsers;
+
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+
     private $authService;
 
     public function __construct(AuthService $authService)
@@ -92,6 +102,6 @@ class LoginController extends Controller
 
         Auth::login($authUser, true);
 
-        return redirect('/');
+        return redirect()->intended($this->redirectPath());
     }
 }
