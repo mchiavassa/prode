@@ -7,8 +7,8 @@
 
     <a href="{{route('home')}}" class="btn btn-dark mb-3">Volver</a>
 
-    <div class="row text-center">
-        <div class="col-md-6">
+    <div class="row text-center mb-3">
+        <div class="col-md-4">
             <h4>Jugadores</h4>
             <h3>
                 <strong>
@@ -16,8 +16,16 @@
                 </strong>
             </h3>
         </div>
-        <div class="col-md-6">
-            <h4>Total puntos</h4>
+        <div class="col-md-4">
+            <h4>Promedio</h4>
+            <h3>
+                <strong>
+                    {{$party->users->isNotEmpty() ? number_format($party->users->sum('points') / $party->users->count(), 2) : 0}}
+                </strong>
+            </h3>
+        </div>
+        <div class="col-md-4">
+            <h4>Puntos</h4>
             <h3>
                 <strong>
                     {{$party->users->sum('points')}}

@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body float-right text-right">
                         <span class="text-muted">Promedio</span>
-                        <h3 class="m-0">{{number_format($party->users->sum('points') / $party->users->count(), 2)}}</h3>
+                        <h3 class="m-0">{{$party->users->isNotEmpty() ? number_format($party->users->sum('points') / $party->users->count(), 2) : 0}}</h3>
                     </div>
                 </a>
             </div>
