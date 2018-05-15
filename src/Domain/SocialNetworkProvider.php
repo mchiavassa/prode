@@ -7,11 +7,13 @@ use InvalidArgumentException;
 class SocialNetworkProvider
 {
     const FACEBOOK = 'facebook';
+    const GOOGLE = 'google';
 
     private $provider;
 
     private $types = [
         self::FACEBOOK,
+        self::GOOGLE,
     ];
 
     public function __construct($provider)

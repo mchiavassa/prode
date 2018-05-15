@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);/*!
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);@import url(https://use.fontawesome.com/releases/v5.0.13/css/all.css);/*!
  * Bootstrap v4.1.0 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
@@ -10386,6 +10386,27 @@ a.text-dark:focus {
   .table-bordered td {
     border: 1px solid #dee2e6 !important;
   }
+}
+
+.btn-facebook {
+  color: #fff;
+  background-color: #3b5998;
+  border-color: #3b5998;
+}
+
+.btn-facebook:hover {
+  color: #fff;
+  opacity: .9;
+}
+
+.btn-google {
+  color: #757575;
+  background-color: #fff;
+  border-color: #757575;
+}
+
+.btn-google:hover {
+  color: #D8612C;
 }
 
 .navbar-laravel {

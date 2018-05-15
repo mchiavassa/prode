@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">Promedo</h4>
+                <h4 class="mb-4">Promedio</h4>
                 <h1>
                     <strong>
                         {{number_format($party->users->sum('points') / $party->users->count(), 2)}}
