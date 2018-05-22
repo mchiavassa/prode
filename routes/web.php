@@ -35,6 +35,7 @@ Route::post('/parties/{id}/joinRequests', 'PartyController@requestJoin')->where(
 Route::post('/parties/{partyId}/joinRequests/{joinRequestId}', 'PartyController@replyJoinRequest')->where('partyId', '[0-9]+')->where('joinRequestId', '[0-9]+')->name('party.joinRequest.reply');
 Route::post('/parties/{partyId}/users/{userId}', 'PartyController@makeAdmin')->where('partyId', '[0-9]+')->where('userId', '[0-9]+')->name('party.user.makeAdmin');
 
+Route::get('/sets', 'GameSetController@index')->name('set');
 Route::get('/sets/list', 'GameSetController@list')->name('set.list');
 Route::get('/sets/{id}/forecasts', 'ForecastController@showGameSetGamesForecasts')->where('id', '[0-9]+')->name('forecast.set');
 Route::get('/games/forecast/next', 'ForecastController@nextGameForecast')->name('forecast.next');
@@ -46,7 +47,7 @@ Route::put('/games/{gameId}/forecast/{forecastId}', 'ForecastController@updateFo
 // Admin routes
 Route::get('/users', 'UserController@index')->name('user');
 
-Route::get('/admin/sets', 'GameSetController@index')->name('set')->middleware('auth.admin');
+Route::get('/admin/sets', 'GameSetController@indexAdmin')->name('set.admin')->middleware('auth.admin');
 Route::get('/admin/sets/list', 'GameSetController@listAdmin')->name('set.list.admin')->middleware('auth.admin');
 Route::get('/admin/sets/create', 'GameSetController@showCreate')->name('set.create.show')->middleware('auth.admin');
 Route::get('/admin/sets/{id}', 'GameSetController@showDetails')->where('id', '[0-9]+')->name('set.details')->middleware('auth.admin');

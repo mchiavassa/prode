@@ -3,7 +3,9 @@
 @section('content')
     <h2 class="mb-4">Fechas</h2>
 
-    <div class="async-list mt-4" data-source-url="{{route('set.list')}}">
+    <a href="{{route('set.create.show')}}" class="btn btn-primary">Nueva Fecha</a>
+
+    <div class="async-list mt-4" data-source-url="{{route('set.list.admin')}}">
     </div>
     <div class="row">
         <div class="col-md-12">

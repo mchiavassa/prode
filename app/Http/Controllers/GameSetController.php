@@ -22,6 +22,11 @@ class GameSetController extends Controller
         $this->user = $user;
     }
 
+    public function indexAdmin()
+    {
+        return view('set.index-admin');
+    }
+
     public function index()
     {
         return view('set.index');
@@ -48,7 +53,7 @@ class GameSetController extends Controller
         $gameSet->status = GameSet::STATUS_DRAFT;
         $gameSet->save();
 
-        return redirect()->route('set');
+        return redirect()->route('set.admin');
     }
 
     public function enable($id)
@@ -87,11 +92,9 @@ class GameSetController extends Controller
 
     public function list(Request $request)
     {
-        $gameSets = $this->gameSet->with('games');
-
-        if ($request->query('enabled')) {
-            $gameSets = $gameSets->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED]);
-        }
+        $gameSets = $this->gameSet
+            ->with('games')
+            ->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED]);
 
         return view('set.list', ['gameSets' => $gameSets->get()]);
     }

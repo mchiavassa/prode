@@ -10,7 +10,7 @@
         @endif
     @endif
 
-    <a href="{{route('set')}}" class="btn btn-dark mb-3">Volver</a>
+    <a href="{{route('set.admin')}}" class="btn btn-dark mb-3">Volver</a>
 
     <div class="async-list" data-source-url="{{route('game.list.admin', ['id' => $gameSet->id])}}">
     </div>
