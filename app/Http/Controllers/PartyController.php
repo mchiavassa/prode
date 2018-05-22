@@ -7,21 +7,35 @@ use App\Notifications\PartyJoinRequestAccepted;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Prode\Domain\Model\Forecast;
+use Prode\Domain\Model\Game;
+use Prode\Domain\Model\GameSet;
 use Prode\Domain\Model\Party;
 use Prode\Domain\Model\PartyJoinRequest;
+use Prode\Domain\Ranking;
 
 class PartyController extends Controller
 {
     private $party;
     private $partyJoinRequest;
+    private $forecast;
+    private $gameSet;
     private $db;
 
-    public function __construct(Party $party, PartyJoinRequest $partyJoinRequest, DatabaseManager $db)
+    public function __construct(
+        Party $party,
+        PartyJoinRequest $partyJoinRequest,
+        Forecast $forecast,
+        GameSet $gameSet,
+        DatabaseManager $db
+    )
     {
         $this->middleware('auth');
 
         $this->party = $party;
         $this->partyJoinRequest = $partyJoinRequest;
+        $this->forecast = $forecast;
+        $this->gameSet = $gameSet;
         $this->db = $db;
     }
 
@@ -63,6 +77,50 @@ class PartyController extends Controller
         }
 
         return view('party.details', ['party' => $party]);
+    }
+
+    public function partyRankings($id)
+    {
+        $party = $this->party->with('users')->findOrFail($id);
+        $partyUsers = $party->users;
+
+        $activeSets = $this->gameSet
+            ->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED])
+            ->get()
+            ->sortByDesc('created_at');
+
+        $setsForecasts = $this->forecast
+            ->whereIn('user_id', $partyUsers->pluck('id')->all())
+            ->whereHas('game', function($query) use ($activeSets) {
+            $query->whereIn('set_id', $activeSets->pluck('id'));
+        })->get();
+
+        $rankings = collect();
+        $rankings->push((object)[
+            'id' => 'general',
+            'name' => 'General',
+            'list' => new Ranking($partyUsers)
+        ]);
+
+        foreach ($activeSets as $set) {
+            $setForecasts = $setsForecasts->where('game.set_id', $set->id)->groupBy('user.id');
+
+            $users = $partyUsers->map(function($user) use ($setForecasts) {
+                $forecasts = array_get($setForecasts, $user->id);
+                $newUser = clone $user;
+                $newUser->points = $forecasts ? $forecasts->sum('points_earned') : 0;
+
+                return $newUser;
+            });
+
+            $rankings->push((object)[
+                'id' => $set->id,
+                'name' => $set->name,
+                'list' => new Ranking($users)
+            ]);
+        }
+
+        return view('party.rankings', ['rankings' => $rankings, 'party' => $party]);
     }
 
     public function requestJoin($id)

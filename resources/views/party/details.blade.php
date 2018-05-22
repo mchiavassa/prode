@@ -63,8 +63,15 @@
         </div>
         <div class="col-md-6">
             <div class="card p-3">
-                <h4 class="mb-4">Posiciones</h4>
-                @include('party.ranking', ['ranking' => new \Prode\Domain\Ranking($party->users)])
+                <div class="async-list" data-source-url="{{route('party.rankings', ['id' => $party->id])}}">
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="loading text-center mt-1" style="display: none">
+                            <img class="small" src="{{asset('img/loading.svg')}}" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

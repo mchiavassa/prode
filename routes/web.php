@@ -31,6 +31,7 @@ Route::get('/parties/create', 'PartyController@showCreate')->name('party.create.
 Route::post('/parties/create', 'PartyController@create')->name('party.create');
 
 Route::get('/parties/{id}/joinRequests', 'PartyController@joinRequestList')->where('id', '[0-9]+')->name('party.joinRequest.list');
+Route::get('/parties/{id}/rankings', 'PartyController@partyRankings')->where('id', '[0-9]+')->name('party.rankings');
 Route::post('/parties/{id}/joinRequests', 'PartyController@requestJoin')->where('id', '[0-9]+')->name('party.requestJoin');
 Route::post('/parties/{partyId}/joinRequests/{joinRequestId}', 'PartyController@replyJoinRequest')->where('partyId', '[0-9]+')->where('joinRequestId', '[0-9]+')->name('party.joinRequest.reply');
 Route::post('/parties/{partyId}/users/{userId}', 'PartyController@makeAdmin')->where('partyId', '[0-9]+')->where('userId', '[0-9]+')->name('party.user.makeAdmin');
