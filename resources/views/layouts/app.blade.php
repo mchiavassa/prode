@@ -85,6 +85,24 @@
 
         gtag('config', 'UA-118928932-1');
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.17/moment-timezone-with-data.min.js"></script>
+    <script>
+        const appTimeZone = '{{config('app.timezone')}}';
+        function getTimezoneNow() {
+            const nowInTimeZone = moment().tz(appTimeZone);
+
+            return new Date(
+                nowInTimeZone.year(),
+                nowInTimeZone.month(),
+                nowInTimeZone.date(),
+                nowInTimeZone.hour(),
+                nowInTimeZone.minutes(),
+                nowInTimeZone.seconds(),
+                nowInTimeZone.milliseconds()
+            );
+        }
+    </script>
     <script src="{{ mix('js/app.js') }}"></script>
     @include('common.messages')
     @stack('script')

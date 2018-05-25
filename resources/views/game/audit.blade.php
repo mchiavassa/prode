@@ -11,8 +11,8 @@
         <div class="col-md-4">
             <div class="card p-3 mb-3 text-center">
                 <h4>Partido</h4>
-                <div class="text-muted">{{$game->group}}</div>
-                <div class="text-muted">{{$game->date_and_hour->format('d/m/Y H:i')}}</div>
+                <div class="text-muted small">{{$game->group}}</div>
+                <div class="text-muted small">{{$game->date_and_hour->format('d/m/Y H:i')}} ({{config('app.timezone')}})</div>
                 <div class="row card-body">
                     <div class="col-5">
                         <img class="mb-2 img-fluid flag" src="{{ asset('img/flags/'.$game->home.'.svg') }}" />

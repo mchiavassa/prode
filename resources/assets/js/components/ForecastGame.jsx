@@ -110,6 +110,7 @@ export default class ForecastGame extends Component {
                         <div>
                             <Countdown className={'mt-2'}
                                        date={this.state.game.dateAndHour}
+                                       now={getTimezoneNow}
                                        onComplete={this.onCompleteCountdown}
                                        renderer={({ days, hours, minutes, seconds, completed }) => {
                                             if (completed) {

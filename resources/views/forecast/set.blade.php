@@ -19,6 +19,8 @@
     </script>
     <script src="{{ mix('js/react-components/ForecastGameSet.js') }}"></script>
     <script>
-        var bricklayer = new Bricklayer(document.querySelector('.bricklayer'))
+        $(function() {
+            var bricklayer = new Bricklayer(document.querySelector('.bricklayer'))
+        });
     </script>
 @endpush
