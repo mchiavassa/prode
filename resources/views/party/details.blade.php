@@ -41,16 +41,18 @@
                     </div>
                 </div>
             </div>
+            @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
             <div class="card p-3 mb-3">
-                @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
-                    <div id="editor" class="mb-2">
-                        {!! $party->description !!}
-                    </div>
-                    <button id="btnSaveDescription" class="btn btn-primary">Guardar</button>
-                @else
+                <div id="editor" class="mb-2">
                     {!! $party->description !!}
-                @endif
+                </div>
+                <button id="btnSaveDescription" class="btn btn-primary">Guardar</button>
             </div>
+            @elseif ($party->description)
+            <div class="card p-3 mb-3">
+                {!! $party->description !!}
+            </div>
+            @endif
             <div class="card p-3 mb-3">
                 <p class="text-muted">
                     Invitá a tus amigos compartiendo el link del grupo.
