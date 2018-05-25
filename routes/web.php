@@ -27,6 +27,7 @@ Route::get('/parties', 'PartyController@index')->name('party');
 Route::get('/parties/list', 'PartyController@list')->name('party.list');
 Route::get('/parties/list/mine', 'PartyController@listMine')->name('party.list.mine');
 Route::get('/parties/{id}', 'PartyController@details')->where('id', '[0-9]+')->name('party.details');
+Route::patch('/parties/{id}', 'PartyController@updateDescription')->where('id', '[0-9]+')->name('party.description');
 Route::get('/parties/create', 'PartyController@showCreate')->name('party.create.show');
 Route::post('/parties/create', 'PartyController@create')->name('party.create');
 

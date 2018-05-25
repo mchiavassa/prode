@@ -19,7 +19,7 @@ class Controller extends BaseController
      * @param array $data
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function jsonSuccess(array $data)
+    protected function jsonSuccess(array $data = [])
     {
         return response()->json([
             'metadata' => [

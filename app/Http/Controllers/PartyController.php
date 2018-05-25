@@ -63,6 +63,23 @@ class PartyController extends Controller
         return redirect()->route('party.details', ['id' => $party->id]);
     }
 
+    public function updateDescription(Request $request, $id)
+    {
+        /** @var Party $party */
+        $party = $this->party
+            ->with('users')
+            ->findOrFail($id);
+
+        if (!$this->loggedUserBelongsToParty($party)) {
+            return abort(404);
+        }
+
+        $party->description = array_get($request->all(), 'description');
+        $party->save();
+
+        return $this->jsonSuccess();
+    }
+
     public function details($id)
     {
         $party = $this->party
