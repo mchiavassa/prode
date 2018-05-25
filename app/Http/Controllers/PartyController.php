@@ -70,9 +70,7 @@ class PartyController extends Controller
             ->with('users')
             ->findOrFail($id);
 
-        if (!$this->loggedUserBelongsToParty($party)) {
-            return abort(404);
-        }
+        $this->assertLoggedUserIsPartyAdmin($party);
 
         $party->description = array_get($request->all(), 'description');
         $party->save();
