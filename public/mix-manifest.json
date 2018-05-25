@@ -1,6 +1,7 @@
 {
     "/js/react-components/NextForecastGame.js": "/js/react-components/NextForecastGame.js",
     "/js/react-components/ForecastGameSet.js": "/js/react-components/ForecastGameSet.js",
+    "/js/react-components/GameForecastsValidator.js": "/js/react-components/GameForecastsValidator.js",
     "/js/react-components/ForecastGame.js": "/js/react-components/ForecastGame.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",

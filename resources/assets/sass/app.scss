@@ -70,6 +70,15 @@ img.flag {
   }
 }
 
+.audit {
+  color: goldenrod;
+
+  &:hover {
+    color: gold;
+  }
+}
+
+
 @media screen and (min-width: 990px) {
   .bricklayer {
     margin: 0 -0.5rem 0 -0.5rem;

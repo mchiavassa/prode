@@ -5,23 +5,27 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGame;
 use App\Http\Requests\StoreGameResult;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Prode\Domain\GameResult;
 use Prode\Domain\Model\Game;
 use Prode\Domain\Model\GameSet;
+use Prode\Domain\Model\Party;
 use Prode\Service\ForecastService;
 
 class GameController extends Controller
 {
     private $game;
     private $gameSet;
+    private $party;
     private $forecastService;
 
-    public function __construct(GameSet $gameSet, Game $game, ForecastService $forecastService)
+    public function __construct(GameSet $gameSet, Game $game, Party $party, ForecastService $forecastService)
     {
         $this->middleware('auth');
 
         $this->game = $game;
         $this->gameSet = $gameSet;
+        $this->party = $party;
         $this->forecastService = $forecastService;
     }
 
@@ -98,5 +102,30 @@ class GameController extends Controller
         $games = $this->game->where('set_id', $id)->get();
 
         return view('game.list-admin', ['games' => $games]);
+    }
+
+    public function audit($id)
+    {
+        $game = $this->game->findOrFail($id);
+
+        if (!$game->isAuditable()) {
+            abort(404);
+        }
+
+        $parties = $this->party
+            ->whereHas('users', function($query) {
+                $query->where('user_id', Auth::user()->id);
+            })
+            ->orderBy('name')
+            ->get()
+            ->map(function ($party) use ($game) {
+                return [
+                    'id' => $party->id,
+                    'name' => $party->name,
+                    'gameForecastsUrl' => route('party.game.forecasts', ['gameId' => $game->id, 'partyId' => $party->id]),
+                ];
+            });
+
+        return view('game.audit', ['parties' => $parties, 'game' => $game]);
     }
 }

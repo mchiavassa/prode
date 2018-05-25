@@ -32,6 +32,7 @@ Route::post('/parties/create', 'PartyController@create')->name('party.create');
 
 Route::get('/parties/{id}/joinRequests', 'PartyController@joinRequestList')->where('id', '[0-9]+')->name('party.joinRequest.list');
 Route::get('/parties/{id}/rankings', 'PartyController@partyRankings')->where('id', '[0-9]+')->name('party.rankings');
+Route::get('/parties/{partyId}/games/{gameId}/forecasts', 'PartyController@gameForecastsOfPartyUsers')->where('partyId', '[0-9]+')->where('gameId', '[0-9]+')->name('party.game.forecasts');
 Route::post('/parties/{id}/joinRequests', 'PartyController@requestJoin')->where('id', '[0-9]+')->name('party.requestJoin');
 Route::post('/parties/{partyId}/joinRequests/{joinRequestId}', 'PartyController@replyJoinRequest')->where('partyId', '[0-9]+')->where('joinRequestId', '[0-9]+')->name('party.joinRequest.reply');
 Route::post('/parties/{partyId}/users/{userId}', 'PartyController@makeAdmin')->where('partyId', '[0-9]+')->where('userId', '[0-9]+')->name('party.user.makeAdmin');
@@ -39,10 +40,12 @@ Route::post('/parties/{partyId}/users/{userId}', 'PartyController@makeAdmin')->w
 Route::get('/sets', 'GameSetController@index')->name('set');
 Route::get('/sets/list', 'GameSetController@list')->name('set.list');
 Route::get('/sets/{id}/forecasts', 'ForecastController@showGameSetGamesForecasts')->where('id', '[0-9]+')->name('forecast.set');
-Route::get('/games/forecast/next', 'ForecastController@nextGameForecast')->name('forecast.next');
 
-Route::post('/games/{gameId}/forecast', 'ForecastController@forecastGame')->where('id', '[0-9]+')->name('forecast.game');
-Route::put('/games/{gameId}/forecast/{forecastId}', 'ForecastController@updateForecastGame')->where('id', '[0-9]+')->name('forecast.game.update');
+Route::get('/games/forecast/next', 'ForecastController@nextGameForecast')->name('forecast.next');
+Route::get('/games/{id}', 'GameController@audit')->where('id', '[0-9]+')->name('game.audit');
+
+Route::post('/games/{gameId}/forecast', 'ForecastController@forecastGame')->where('gameId', '[0-9]+')->name('forecast.game');
+Route::put('/games/{gameId}/forecast/{forecastId}', 'ForecastController@updateForecastGame')->where('gameId', '[0-9]+')->where('forecastId', '[0-9]+')->name('forecast.game.update');
 
 
 // Admin routes

@@ -43,6 +43,22 @@ class Game extends Model
      */
     public function canForecast()
     {
-        return !$this->computed && !$this->hasResult() && $this->date_and_hour > Carbon::now();
+        return !$this->computed && !$this->hasResult() && !$this->hasStarted();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStarted()
+    {
+        return $this->date_and_hour <= Carbon::now();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAuditable()
+    {
+        return $this->hasStarted() || $this->hasResult();
     }
 }

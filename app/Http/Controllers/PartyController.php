@@ -69,8 +69,7 @@ class PartyController extends Controller
             ->with('users')
             ->findOrFail($id);
 
-        if ($party->users->where('id', Auth::user()->id)->isEmpty()) {
-
+        if (!$this->loggedUserBelongsToParty($party)) {
             $joinRequest = $this->partyJoinRequest->where('user_id', Auth::user()->id)->first();
 
             return view('party.apply', ['party' => $party, 'joinRequest' => $joinRequest]);
@@ -129,7 +128,7 @@ class PartyController extends Controller
             ->with('users')
             ->findOrFail($id);
 
-        if ($party->users->where('id', Auth::user()->id)->isNotEmpty()) {
+        if ($this->loggedUserBelongsToParty($party)) {
             return redirect()->route('party.details', ['id' => $id])->with(
                 self::ERROR_MESSAGE,
                 'Ya pertenecés a este equipo.'
@@ -235,6 +234,40 @@ class PartyController extends Controller
         return view('party.list', ['parties' => $parties]);
     }
 
+    public function gameForecastsOfPartyUsers($partyId, $gameId)
+    {
+        /** @var Party $party */
+        $party = $this->party
+            ->with('users')
+            ->findOrFail($partyId);
+
+        if (!$this->loggedUserBelongsToParty($party)) {
+            abort(404);
+        }
+
+        $partyUsersGameForecasts = $this->forecast
+            ->where('game_id', $gameId)
+            ->whereIn('user_id', $party->users->pluck('id'))
+            ->get();
+
+        $forecasts = $partyUsersGameForecasts->map(function (Forecast $forecast) use ($party) {
+            $user = $party->users->where('id', $forecast->user_id)->first();
+
+            $homeScore = $forecast->home_score.($forecast->home_tie_break_score ? '('.$forecast->home_tie_break_score.')' : '');
+            $awayScore = $forecast->away_score.($forecast->away_tie_break_score ? '('.$forecast->away_tie_break_score.')' : '');
+            $score = sprintf('%s-%s', $homeScore, $awayScore);
+
+            return sprintf('#%s %s %s', $user->id, $user->name, $score);
+        });
+
+        $formatted = implode(' | ', $forecasts->all());
+
+        return $this->jsonSuccess([
+            'forecasts' => $formatted,
+        ]);
+    }
+
+
     private function assertLoggedUserIsPartyAdmin(Party $party)
     {
         $partyUser = $party->users->where('id', Auth::user()->id)->first();
@@ -242,5 +275,14 @@ class PartyController extends Controller
         if (!$partyUser || !$partyUser->pivot->is_admin) {
             abort(401);
         }
+    }
+
+    /**
+     * @param Party $party
+     * @return boolean
+     */
+    private function loggedUserBelongsToParty(Party $party)
+    {
+        return $party->users->where('id', Auth::user()->id)->isNotEmpty();
     }
 }

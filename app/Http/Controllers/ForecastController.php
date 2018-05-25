@@ -95,26 +95,12 @@ class ForecastController extends Controller
             $forecast->home_tie_break_score,
             $forecast->away_tie_break_score
         )) {
-            return response()->json([
-                'metadata' => [
-                    'code' => 400,
-                    'message' => 'BadRequest',
-                ],
-                'error' => [
-                    'message' => 'El resultado es inválido',
-                ],
-            ], 400);
+            return $this->jsonError(400, 'El resultado es inválido');
         }
 
         $forecast->save();
 
-        return response()->json([
-            'metadata' => [
-                'code' => 200,
-                'message' => 'OK',
-            ],
-            'data' => json_decode($forecast, true)
-        ]);
+        return $this->jsonSuccess(json_decode($forecast, true));
     }
 
     public function updateForecastGame(ForecastGame $request, $gameId, $forecastId)
@@ -159,7 +145,6 @@ class ForecastController extends Controller
         ]);
     }
 
-
     private function assertGameCanBeForecast(Game $game)
     {
         if (!$game->canForecast()) {
@@ -196,9 +181,11 @@ class ForecastController extends Controller
             'awayTieBreakScore' => $game->away_tie_break_score,
             'hasResult' => $game->hasResult(),
             'canForecast' => $game->canForecast(),
+            'isAuditable' => $game->isAuditable(),
             'computed' => $game->computed,
             'tieBreakRequired' => $game->tie_break_required,
-            'forecastUrl' => route('forecast.game', ['gameId' => $game->id])
+            'forecastUrl' => route('forecast.game', ['gameId' => $game->id]),
+            'auditUrl' => route('game.audit', ['id' => $game->id]),
         ];
     }
 

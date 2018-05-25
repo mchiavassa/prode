@@ -96,7 +96,16 @@ export default class ForecastGame extends Component {
             <div className={'card masonry-brick text-center mb-2'}>
                 <div className={'row text-center'}>
                     <div className={'col-md-12'}>
-                        <div className={'text-muted mt-2'}>{this.state.game.group}</div>
+                        {this.state.game.isAuditable &&
+                        <div className={'text-muted position-absolute m-2'}>
+                            <a href={this.state.game.auditUrl} alt={'Auditar'}>
+                                <i className={'fas fa-lock audit'}/>
+                            </a>
+                        </div>
+                        }
+                        <div className={'text-muted mt-2'}>
+                            {this.state.game.group}
+                        </div>
                         {!this.state.game.computed && !this.state.game.hasResult &&
                         <div>
                             <Countdown className={'mt-2'}
