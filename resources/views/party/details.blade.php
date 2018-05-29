@@ -53,16 +53,9 @@
                 {!! $party->description !!}
             </div>
             @endif
-            <div class="card p-3 mb-3">
-                <p class="text-muted">
-                    Invitá a tus amigos compartiendo el link del grupo.
-                    Una vez enviada su solicitud cualquier Admin del grupo podrán aceptarla.
-                </p>
-                <input id="link" value="{{route('party.details', ['id' => $party->id])}}" class="form-control mb-1">
-                <button class="share btn btn-light" data-clipboard-target="#link">
-                    Copiar
-                </button>
-            </div>
+
+        </div>
+        <div class="col-md-6">
             @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
                 <div class="async-list" data-source-url="{{route('party.joinRequest.list', ['id' => $party->id])}}">
                 </div>
@@ -74,9 +67,7 @@
                     </div>
                 </div>
             @endif
-        </div>
-        <div class="col-md-6">
-            <div class="card p-3">
+            <div class="card p-3 mb-3">
                 <div class="async-list" data-source-url="{{route('party.rankings', ['id' => $party->id])}}">
                 </div>
                 <div class="row">
@@ -86,6 +77,16 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="card p-3 mb-3">
+                <p class="text-muted">
+                    Invitá a tus amigos compartiendo el link del grupo.
+                    Una vez enviada su solicitud cualquier Admin del grupo podrán aceptarla.
+                </p>
+                <input id="link" value="{{route('party.details', ['id' => $party->id])}}" class="form-control mb-1">
+                <button class="share btn btn-light" data-clipboard-target="#link">
+                    Copiar
+                </button>
             </div>
         </div>
     </div>

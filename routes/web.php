@@ -43,7 +43,7 @@ Route::get('/sets/list', 'GameSetController@list')->name('set.list');
 Route::get('/sets/{id}/forecasts', 'ForecastController@showGameSetGamesForecasts')->where('id', '[0-9]+')->name('forecast.set');
 
 Route::get('/games/forecast/next', 'ForecastController@nextGameForecast')->name('forecast.next');
-Route::get('/games/{id}', 'GameController@audit')->where('id', '[0-9]+')->name('game.audit');
+Route::get('/games/{id}/audit', 'GameController@audit')->where('id', '[0-9]+')->name('game.audit');
 
 Route::post('/games/{gameId}/forecast', 'ForecastController@forecastGame')->where('gameId', '[0-9]+')->name('forecast.game');
 Route::put('/games/{gameId}/forecast/{forecastId}', 'ForecastController@updateForecastGame')->where('gameId', '[0-9]+')->where('forecastId', '[0-9]+')->name('forecast.game.update');
