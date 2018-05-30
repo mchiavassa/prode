@@ -1,21 +1,22 @@
-@auth
+
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
             <a class="nav-link" href="{{route('rules')}}">Reglamento</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('party')}}">Grupos</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{Auth::user()->isAdmin() ? route('set.admin') : route('set')}}">Fechas</a>
-        </li>
-        @if(Auth::user()->isAdmin())
+        @auth
             <li class="nav-item">
-                <a class="nav-link" href="{{route('user')}}">Usuarios</a>
+                <a class="nav-link" href="{{route('party')}}">Grupos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('stats')}}">Estadísticas</a>
+                <a class="nav-link" href="{{Auth::user()->isAdmin() ? route('set.admin') : route('set')}}">Fechas</a>
             </li>
-        @endif
+            @if(Auth::user()->isAdmin())
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('user')}}">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('stats')}}">Estadísticas</a>
+                </li>
+            @endif
+        @endauth
     </ul>
-@endauth

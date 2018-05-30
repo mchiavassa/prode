@@ -19,7 +19,7 @@ class HomeController extends Controller
 
     public function __construct(Forecast $forecast, User $user, GameSet $gameSet, Game $game, Party $party)
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('rules');
 
         $this->forecast = $forecast;
         $this->user = $user;
