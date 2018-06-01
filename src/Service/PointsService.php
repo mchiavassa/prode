@@ -2,33 +2,29 @@
 
 namespace Prode\Service;
 
-use Prode\Domain\Model\Forecast;
-use Prode\Domain\Model\Game;
+use Prode\Domain\ForecastResult;
 
 class PointsService
 {
     /**
-     * @param Forecast $forecast
-     * @param Game $game
+     * @param ForecastResult $forecastResult
      *
      * @return int
      */
-    public function resolveForecastPoints(Forecast $forecast, Game $game)
+    public function getForecastResultPoints(ForecastResult $forecastResult)
     {
-        $points = 0;
+        return $this->getResultPointsMap()[(string) $forecastResult];
+    }
 
-        if ($forecast->getResult() === $game->getResult()) {
-            $points += config('domain.points.result');
-
-            if ($forecast->home_score === $game->home_score &&
-                $forecast->away_score === $game->away_score &&
-                $forecast->home_tie_brek_score === $game->home_tie_brek_score &&
-                $forecast->away_tie_brek_score === $game->away_tie_brek_score
-            ) {
-                $points += config('domain.points.score');
-            }
-        }
-
-        return $points;
+    /**
+     * @return array
+     */
+    private function getResultPointsMap()
+    {
+        return [
+            ForecastResult::MATCH_RESULT => config('domain.points.result'),
+            ForecastResult::MATCH_SCORE => config('domain.points.result') + config('domain.points.score'),
+            ForecastResult::NO_MATCH => 0,
+        ];
     }
 }

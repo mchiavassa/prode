@@ -2,176 +2,50 @@
 
 namespace Test\unit\Service;
 
-use Prode\Domain\Model\Forecast;
-use Prode\Domain\Model\Game;
+use Prode\Domain\ForecastResult;
 use Prode\Service\PointsService;
 use Test\TestCase;
 
 class PointsServiceTest extends TestCase
 {
-    public function testPointsForResult()
+    public function testMatchResultResultPoints()
     {
-        $service = new PointsService();
+        $service = $this->getService();
 
-        $forecast = new Forecast();
-        $forecast->home_score = 1;
-        $forecast->away_score = 8;
+        $forecastResult = new ForecastResult(ForecastResult::MATCH_RESULT);
 
-        $game = new Game();
-        $game->home_score = 3;
-        $game->away_score = 5;
-
-        $points = $service->resolveForecastPoints($forecast, $game);
+        $points = $service->getForecastResultPoints($forecastResult);
 
         $this->assertEquals(config('domain.points.result'), $points);
     }
 
-    public function testPointsForResultTied()
+    public function testMatchScoreResultPoints()
     {
-        $service = new PointsService();
+        $service = $this->getService();
 
-        $forecast = new Forecast();
-        $forecast->home_score = 1;
-        $forecast->away_score = 1;
+        $forecastResult = new ForecastResult(ForecastResult::MATCH_SCORE);
 
-        $game = new Game();
-        $game->home_score = 3;
-        $game->away_score = 3;
-
-        $points = $service->resolveForecastPoints($forecast, $game);
-
-        $this->assertEquals(config('domain.points.result'), $points);
-    }
-
-    public function testPointsForResultWithForecastTieBreak()
-    {
-        $service = new PointsService();
-
-        $forecast = new Forecast();
-        $forecast->home_score = 1;
-        $forecast->away_score = 1;
-        $forecast->home_tie_break_score = 4;
-        $forecast->away_tie_break_score = 5;
-
-        $game = new Game();
-        $game->home_score = 3;
-        $game->away_score = 5;
-
-        $points = $service->resolveForecastPoints($forecast, $game);
-
-        $this->assertEquals(config('domain.points.result'), $points);
-    }
-
-    public function testPointsForResultWithGameTieBreak()
-    {
-        $service = new PointsService();
-
-        $forecast = new Forecast();
-        $forecast->home_score = 1;
-        $forecast->away_score = 2;
-
-        $game = new Game();
-        $game->home_score = 3;
-        $game->away_score = 3;
-        $game->home_tie_break_score = 4;
-        $game->away_tie_break_score = 5;
-
-        $points = $service->resolveForecastPoints($forecast, $game);
-
-        $this->assertEquals(config('domain.points.result'), $points);
-    }
-
-
-    public function testPointsForResultAndScore()
-    {
-        $service = new PointsService();
-
-        $forecast = new Forecast();
-        $forecast->home_score = 1;
-        $forecast->away_score = 8;
-
-        $game = new Game();
-        $game->home_score = 1;
-        $game->away_score = 8;
-
-        $points = $service->resolveForecastPoints($forecast, $game);
+        $points = $service->getForecastResultPoints($forecastResult);
 
         $this->assertEquals(config('domain.points.result') + config('domain.points.score'), $points);
     }
 
-    public function testPointsForResultAndScoreTied()
+    public function testNoMatchResultPoints()
     {
-        $service = new PointsService();
+        $service = $this->getService();
 
-        $forecast = new Forecast();
-        $forecast->home_score = 1;
-        $forecast->away_score = 1;
+        $forecastResult = new ForecastResult(ForecastResult::NO_MATCH);
 
-        $game = new Game();
-        $game->home_score = 1;
-        $game->away_score = 1;
-
-        $points = $service->resolveForecastPoints($forecast, $game);
-
-        $this->assertEquals(config('domain.points.result') + config('domain.points.score'), $points);
-    }
-
-    public function testPointsForResultAndScoreWithTieBreak()
-    {
-        $service = new PointsService();
-
-        $forecast = new Forecast();
-        $forecast->home_score = 1;
-        $forecast->away_score = 1;
-        $forecast->home_tie_break_score = 4;
-        $forecast->away_tie_break_score = 5;
-
-        $game = new Game();
-        $game->home_score = 1;
-        $game->away_score = 1;
-        $game->home_tie_break_score = 4;
-        $game->away_tie_break_score = 5;
-
-        $points = $service->resolveForecastPoints($forecast, $game);
-
-        $this->assertEquals(config('domain.points.result') + config('domain.points.score'), $points);
-    }
-
-    public function testNoPoints()
-    {
-        $service = new PointsService();
-
-        $forecast = new Forecast();
-        $forecast->home_score = 1;
-        $forecast->away_score = 2;
-
-        $game = new Game();
-        $game->home_score = 2;
-        $game->away_score = 1;
-
-        $points = $service->resolveForecastPoints($forecast, $game);
+        $points = $service->getForecastResultPoints($forecastResult);
 
         $this->assertEquals(0, $points);
     }
 
-    public function testNoPointsWithTieBreak()
+    /**
+     * @return PointsService
+     */
+    private function getService()
     {
-        $service = new PointsService();
-
-        $forecast = new Forecast();
-        $forecast->home_score = 1;
-        $forecast->away_score = 1;
-        $forecast->home_tie_break_score = 5;
-        $forecast->away_tie_break_score = 2;
-
-        $game = new Game();
-        $game->home_score = 1;
-        $game->away_score = 1;
-        $game->home_tie_break_score = 4;
-        $game->away_tie_break_score = 5;
-
-        $points = $service->resolveForecastPoints($forecast, $game);
-
-        $this->assertEquals(0, $points);
+        return new PointsService();
     }
 }
