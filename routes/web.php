@@ -20,7 +20,8 @@ Route::get('login/{provider}/callback', 'LoginController@handleProviderCallback'
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/rules', 'HomeController@rules')->name('rules');
-Route::get('/stats', 'HomeController@stats')->name('stats')->middleware('auth.admin');
+Route::get('/admin/stats', 'StatsController@admin')->name('stats.admin')->middleware('auth.admin');
+Route::get('/me/stats', 'StatsController@mine')->name('stats.mine');
 
 
 Route::get('/parties', 'PartyController@index')->name('party');

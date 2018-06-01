@@ -15,7 +15,7 @@
                     <a class="nav-link" href="{{route('user')}}">Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('stats')}}">Estadísticas</a>
+                    <a class="nav-link" href="{{route('stats.admin')}}">Estadísticas</a>
                 </li>
             @endif
         @endauth
