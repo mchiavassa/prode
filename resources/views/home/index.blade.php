@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <div class="card p-3">
+            <div class="card p-3 mb-3">
                 <h4 class="mb-4">Fechas</h4>
                 <div class="async-list" data-source-url="{{route('set.list')}}">
                 </div>
