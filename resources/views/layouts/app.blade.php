@@ -99,15 +99,7 @@
         function getTimezoneNow() {
             const nowInTimeZone = moment().tz(appTimeZone);
 
-            return new Date(
-                nowInTimeZone.year(),
-                nowInTimeZone.month(),
-                nowInTimeZone.date(),
-                nowInTimeZone.hour(),
-                nowInTimeZone.minutes(),
-                nowInTimeZone.seconds(),
-                nowInTimeZone.milliseconds()
-            );
+            return new Date(Date.parse(moment().tz(appTimeZone).toString()));
         }
     </script>
     <script src="{{ mix('js/app.js') }}"></script>
