@@ -6,6 +6,7 @@
         <thead>
         <tr>
             <th scope="col">Nombre</th>
+            <th scope="col">Logins</th>
             <th scope="col">Email</th>
             <th scope="col">Grupos</th>
         </tr>
@@ -18,10 +19,17 @@
                     {{ $user->name }} <span class="caret"></span>
                 </td>
                 <td>
+                    @foreach($user->logins as $login)
+                        <i class="fab fa-{{$login->provider}}"></i>
+                    @endforeach
+                </td>
+                <td>
                     {{$user->email}}
                 </td>
                 <td>
-                    {{implode(',', $user->parties->pluck('name')->all())}}
+                    @foreach($user->parties->pluck('name') as $group)
+                        <div>{{$group}}</div>
+                    @endforeach
                 </td>
             </tr>
         @endforeach

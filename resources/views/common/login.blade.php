@@ -6,6 +6,11 @@
         </a>
 
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <span class="dropdown-item-text text-muted text-center">
+                @foreach(Auth::user()->logins as $login)
+                    <i class="fab fa-{{$login->provider}}"></i>
+                @endforeach
+            </span>
             <span class="dropdown-item-text text-muted">{{ Auth::user()->email }}</span>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ route('logout') }}"

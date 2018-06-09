@@ -42,9 +42,10 @@
                         <h4 class="mb-4">Usuarios hoy</h4>
                         <h1>
                             <strong>
-                                {{$todayUsers}}
+                                {{$todayUsers->count()}}
                             </strong>
                         </h1>
+                        @include('common.user-grid', ['users' => $todayUsers])
                     </div>
                 </div>
                 <div class="col-md-6">
