@@ -34,7 +34,7 @@ class StatsController extends Controller
     {
         $allUsers = $this->user->get();
 
-        $todayUsers = $this->user->whereDate('created_at', Carbon::now()->toDateString());
+        $todayUsers = $this->user->whereDate('created_at', Carbon::now()->toDateString())->get();
         $todayParties = $this->party->whereDate('created_at', Carbon::now()->toDateString())->count();
         $totalPoints = $allUsers->sum('points');
         $topUsers = $allUsers->where('points', '>', 0)->sortByDesc('points')->take(5);
