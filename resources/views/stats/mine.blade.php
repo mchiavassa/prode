@@ -19,7 +19,7 @@
     <h6 class="mb-4">Acertaste el resultado de</h6>
     <h3>
         <strong>{{$matchResultForecastsCount}}</strong>
-        <small>({{number_format($matchResultForecastsPercentage, 0)}}%)</small>
+        <small class="text-muted">({{number_format($matchResultForecastsPercentage, 0)}}%)</small>
     </h3>
 </div>
 
@@ -27,7 +27,7 @@
     <h6 class="mb-4">Acertaste el marcador de</h6>
     <h3>
         <strong>{{$matchScoreForecastsCount}}</strong>
-        <small>({{number_format($matchScoreForecastsPercentage, 0)}}%)</small>
+        <small class="text-muted">({{number_format($matchScoreForecastsPercentage, 0)}}%)</small>
     </h3>
 </div>
 
@@ -35,6 +35,6 @@
     <h6 class="mb-4">No acertados</h6>
     <h3>
         <strong>{{$noMatchForecastsCount}}</strong>
-        <small>({{number_format($noMatchForecastsPercentage, 0)}}%)</small>
+        <small class="text-muted">({{number_format($noMatchForecastsPercentage, 0)}}%)</small>
     </h3>
 </div>
