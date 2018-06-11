@@ -8,6 +8,8 @@
         @if($gameSet->games->isNotEmpty())
             <a href="{{route('set.enable', ['id' => $gameSet->id])}}" class="btn btn-success mb-3">Habilitar</a>
         @endif
+    @elseif ($gameSet->isEnabled() && $gameSet->games->where('computed', false)->isEmpty())
+        <a href="{{route('set.finish', ['id' => $gameSet->id])}}" class="btn btn-primary mb-3">Finalizar</a>
     @endif
 
     <a href="{{route('set.admin')}}" class="btn btn-dark mb-3">Volver</a>

@@ -28,7 +28,10 @@ class ForecastController extends Controller
     public function showGameSetGamesForecasts($id)
     {
         /** @var GameSet $gameSet */
-        $gameSet = $this->gameSet->with('games')->where('status', GameSet::STATUS_ENABLED)->findOrFail($id);
+        $gameSet = $this->gameSet
+            ->with('games')
+            ->whereIn('status', [GameSet::STATUS_ENABLED,GameSet::STATUS_FINISHED])
+            ->findOrFail($id);
 
         $games = $gameSet->games->sortBy('group')->values()->map(function($game) {
             return $this->mapGameToForecast($game);

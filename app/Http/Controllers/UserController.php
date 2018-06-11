@@ -19,8 +19,8 @@ class UserController extends Controller
     {
         $users = $this->user
             ->with('parties')
-            ->get()
-            ->sortBy('name');
+            ->orderBy('name')
+            ->get();
 
         return view('user.index', ['users' => $users]);
     }

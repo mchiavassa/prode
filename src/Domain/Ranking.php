@@ -15,10 +15,10 @@ class Ranking extends Collection
     {
         $sortedUsers = $users->sort(function ($a, $b) {
             if($a->points === $b->points) {
-                if($a->name === $b->name) {
+                if(strtolower($a->name) === strtolower($b->name)) {
                     return 0;
                 }
-                return $a->name < $b->name ? -1 : 1;
+                return strtolower($a->name) < strtolower($b->name) ? -1 : 1;
             }
             return $a->points > $b->points ? -1 : 1;
         });

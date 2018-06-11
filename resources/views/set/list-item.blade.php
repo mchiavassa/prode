@@ -4,9 +4,9 @@
         <div class="card-body float-left">
             <h5 class="card-title">{{ $gameSet->name }}</h5>
             <p class="card-text">
-                        <span class="badge badge-pill badge-dark">
-                            {{$gameSet->games->count()}} partidos
-                        </span>
+                <span class="badge badge-pill badge-dark">
+                    {{$gameSet->games->count()}} partidos
+                </span>
                 @component('set.status') {{ $gameSet->status }} @endcomponent
             </p>
         </div>
