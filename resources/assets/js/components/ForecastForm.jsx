@@ -4,10 +4,10 @@ export default class ForecastForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            homeScore: props.homeScore || '',
-            awayScore: props.awayScore || '',
-            homeTieBreakScore: props.homeTieBreakScore || '',
-            awayTieBreakScore: props.awayTieBreakScore || ''
+            homeScore: isNaN(props.homeScore) ?  '' : props.homeScore,
+            awayScore: isNaN(props.awayScore) ? '' : props.awayScore,
+            homeTieBreakScore: isNaN(props.homeTieBreakScore) ? '' : props.homeTieBreakScore,
+            awayTieBreakScore: isNaN(props.awayTieBreakScore) ? '' : props.awayTieBreakScore
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -24,7 +24,7 @@ export default class ForecastForm extends Component {
         }
 
         this.setState({
-            [name]: value ? parseInt(value) : ''
+            [name]: parseInt(value)
         });
     }
 
