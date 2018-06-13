@@ -91,6 +91,7 @@ class GameController extends Controller
         $game->group = array_get($validated, 'group');
         $game->tie_break_required = array_get($validated, 'tie_break_required');
         $game->date_and_hour = Carbon::parse(array_get($validated, 'date_and_hour'));
+        $game->info_url = array_get($validated, 'info_url');
         $game->set()->associate($gameSet);
         $game->save();
 

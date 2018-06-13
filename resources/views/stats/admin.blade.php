@@ -9,7 +9,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card p-3 mb-3">
+                    <div class="card p-3 mb-3 bg-dark text-white">
                         <h4 class="mb-4">Puntos</h4>
                         <h1>
                             <strong>
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card p-3 mb-3">
+                    <div class="card p-3 mb-3 bg-light">
                         <h4 class="mb-4">Promedio</h4>
                         <h1>
                             <strong>

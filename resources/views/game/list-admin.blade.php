@@ -11,6 +11,7 @@
                         <div class="badge badge-pill badge-dark">{{$game->tie_break_required ? 'Incluye penales': ''}}</div>
                     </div>
                 </div>
+
                 <div class="row card-body">
                     <div class="col-md-4">
                         <img class="float-left mr-2 flag" src="{{ asset('img/flags/'.$game->home.'.svg') }}" height="50" />
@@ -35,7 +36,10 @@
                         @if($game->computed)
                             <span class="badge badge-pill badge-primary mb-2">Computado</span>
                         @endif
-                        <div class="text-muted">{{$game->group}} - {{$game->date_and_hour->format('d/m/Y H:i')}}</div>
+                        <div class="text-muted">{{$game->group}} - {{$game->date_and_hour->format('d/m/Y H:i')}}
+                            @if($game->info_url)
+                                - <a href="{{$game->info_url}}" target="_blank">Ver info</a>
+                            @endif</div>
                     </div>
                 </div>
             </a>

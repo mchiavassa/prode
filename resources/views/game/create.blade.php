@@ -37,11 +37,15 @@
                     {{ Form::text('group', '', ['class' => 'form-control']) }}
                 </div>
                 <div class="form-group">
+                    <label for="infoUrl">Info URL</label>
+                    {{ Form::text('info_url', '', ['class' => 'form-control']) }}
+                </div>
+                <div class="form-group">
                     <label for="away">Incluye penales</label>
                     {{ Form::select('tie_break_required', [1 => 'Si', 0 => 'No'], old('tie_break_required'), ['class' => 'form-control mb-2']) }}
                 </div>
                 <input type="submit" class="btn btn-primary" value="Crear">
-                <a href="{{ route('set.details', ['id' => $gameSet->id]) }}" class="btn btn-dark">Volver</a>
+                <a href="{{ route('set.details', ['id' => $gameSet->id]) }}" class="btn">Volver</a>
             </form>
         </div>
     </div>

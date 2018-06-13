@@ -96,15 +96,28 @@ export default class ForecastGame extends Component {
             <div className={'card text-center mb-2'}>
                 <div className={'row text-center'}>
                     <div className={'col-md-12'}>
-                        {this.state.game.isAuditable &&
-                        <div className={'text-muted position-absolute m-2'}>
-                            <a href={this.state.game.auditUrl} alt={'Auditar'}>
-                                <i className={'fas fa-lock audit'}/>
-                            </a>
-                        </div>
-                        }
-                        <div className={'text-muted mt-2'}>
-                            {this.state.game.group}
+                        <div className={'row mt-2 ml-1 mr-1'}>
+                            <div className={'col-4 text-left'}>
+                                {this.state.game.isAuditable &&
+                                <div className={'text-muted'}>
+                                    <a href={this.state.game.auditUrl} alt={'Auditar'}>
+                                        <i className={'fas fa-lock audit'}/>
+                                    </a>
+                                </div>
+                                }
+                            </div>
+                            <div className={'col-4'}>
+                                <div className={'text-muted'}>{this.state.game.group}</div>
+                            </div>
+                            <div className={'col-4 text-right'}>
+                                {this.state.game.infoUrl &&
+                                <div className={'text-muted'}>
+                                    <a href={this.state.game.infoUrl} alt={'Información'} target={'_blank'}>
+                                        <i className={'fas fa-chart-line'}/>
+                                    </a>
+                                </div>
+                                }
+                            </div>
                         </div>
                         {!this.state.game.computed && !this.state.game.hasResult &&
                         <div>

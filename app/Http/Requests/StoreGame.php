@@ -29,6 +29,7 @@ class StoreGame extends FormRequest
             'date_and_hour' => 'required|date_format:Y-m-d H:i:s',
             'group' => 'nullable|string|max:150',
             'tie_break_required' => 'required|boolean',
+            'info_url' => 'url|max:250',
         ];
     }
 }

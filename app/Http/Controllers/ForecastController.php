@@ -174,6 +174,7 @@ class ForecastController extends Controller
             'group' => $game->group,
             'home' => $game->home,
             'away' => $game->away,
+            'infoUrl' => $game->info_url,
             'homeFullName' => config('domain.teams.'.$game->home),
             'awayFullName' => config('domain.teams.'.$game->away),
             'homeShield' => asset('img/flags/'.$game->home.'.svg'),

@@ -22,6 +22,7 @@ class CreateGamesTable extends Migration
 
             $table->string('group', 150)->nullable();
             $table->dateTime('date_and_hour');
+            $table->string('info_url', 250)->nullable();
             $table->boolean('tie_break_required');
             $table->boolean('computed')->default(false);
 
