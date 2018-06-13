@@ -24,7 +24,7 @@ export default class ForecastForm extends Component {
         }
 
         this.setState({
-            [name]: parseInt(value)
+            [name]: value ? parseInt(value) : ''
         });
     }
 
@@ -48,6 +48,7 @@ export default class ForecastForm extends Component {
                                        name="homeScore"
                                        className={'form-control mb-2'}
                                        value={this.state.homeScore}
+                                       autoComplete={'off'}
                                        onChange={this.handleInputChange}
                                 />
                             </div>
@@ -57,6 +58,7 @@ export default class ForecastForm extends Component {
                                     <input type="number"
                                            name="homeTieBreakScore"
                                            value={this.state.homeTieBreakScore}
+                                           autoComplete={'off'}
                                            className={'form-control mb-2'}
                                            onChange={this.handleInputChange}
                                     />
@@ -71,6 +73,7 @@ export default class ForecastForm extends Component {
                                 <input type="number"
                                        name="awayScore"
                                        value={this.state.awayScore}
+                                       autoComplete={'off'}
                                        className={'form-control mb-2'}
                                        onChange={this.handleInputChange}
                                 />
@@ -81,6 +84,7 @@ export default class ForecastForm extends Component {
                                     <input type="number"
                                            name="awayTieBreakScore"
                                            value={this.state.awayTieBreakScore}
+                                           autoComplete={'off'}
                                            className={'form-control mb-2'}
                                            onChange={this.handleInputChange}
                                     />
