@@ -9,6 +9,14 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+.bg-logo {
+  background: url(/../img/competition-bg.png) repeat-y 0 0;
+}
+
+.card {
+  opacity: .92;
+}
+
 .btn-facebook {
   color: #fff;
   background-color: #3b5998;

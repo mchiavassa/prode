@@ -60,7 +60,7 @@
         </nav>
 
         <main class="container">
-            <div class="my-4 p-4 bg-white box-shadow rounded">
+            <div class="my-4 p-4 bg-white box-shadow rounded bg-logo">
                 @yield('content')
             </div>
         </main>

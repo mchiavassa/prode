@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-4">
-        <h2>Mundial Rusia 2018</h2>
+    <div class="row mb-4">
+        <div class="offset-md-5 col-md-2 text-center">
+            <img src="{{asset('img/competition-logo.png')}}" class="img-fluid" />
+        </div>
     </div>
 
     <div class="row">
