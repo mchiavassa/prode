@@ -62,7 +62,7 @@ export default class ForecastGame extends Component {
                 });
             })
             .catch(function (error) {
-                toastr.error(error.response.data.error.message || 'An unexpected error occurred.');
+                toastr.error(error.response.data.message || error.response.data.error.message || 'Ups! ocurrió un error inesperado.');
             });
     }
 
@@ -86,14 +86,14 @@ export default class ForecastGame extends Component {
                 });
             })
             .catch(function (error) {
-                toastr.error(error.response.data.error.message || 'An unexpected error occurred.');
+                toastr.error(error.response.data.message || error.response.data.error.message || 'Ups! ocurrió un error inesperado.');
             });
     }
 
 
     render() {
         return (
-            <div className={'card text-center mb-2'}>
+            <div className={'card text-center mb-2 ' + (this.state.game.computed ? 'bg-light' : '')}>
                 <div className={'row text-center'}>
                     <div className={'col-md-12'}>
                         <div className={'row mt-2 ml-1 mr-1'}>

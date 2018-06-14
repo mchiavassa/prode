@@ -81,7 +81,6 @@ class ForecastController extends Controller
         $game = $this->game->findOrFail($gameId);
 
         $this->assertGameCanBeForecast($game);
-        $this->assertGameIsNotForecastedByUser($game);
 
         $forecast = new Forecast();
         $forecast->game_id = $gameId;
@@ -100,6 +99,8 @@ class ForecastController extends Controller
         )) {
             return $this->jsonError(400, 'El resultado es inválido');
         }
+
+        $this->assertGameIsNotForecastedByUser($game);
 
         $forecast->save();
 
@@ -151,14 +152,14 @@ class ForecastController extends Controller
     private function assertGameCanBeForecast(Game $game)
     {
         if (!$game->canForecast()) {
-            abort(400, 'Game cannot be forecast.');
+            abort(400, 'El partido no puede ser pronosticado.');
         }
     }
 
     private function assertGameIsNotForecastedByUser(Game $game)
     {
         if ($this->forecast->where('game_id', $game->id)->where('user_id', Auth::user()->id)->first()) {
-            abort(400, 'Game already forecast by User.');
+            abort(400, 'Ya pronosticaste este partido.');
         }
     }
 

@@ -111,7 +111,7 @@
         })(window);
         (function(opts) {
             opts.traits = {
-                'user_id': '{{Auth::user()->id}}'
+                'user_id': '#{{Auth::user()->id}} {{Auth::user()->name}}'
             };
         })(window._sva = window._sva || {});
     </script>

@@ -31,7 +31,6 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('notify:forecasts:pending')
              ->everyThirtyMinutes()
-             ->timezone(config('app.timezone'))
              ->between('5:30', '17:00');
     }
 
