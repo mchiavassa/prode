@@ -80,8 +80,8 @@
             </div>
             <div class="card p-3 mb-3">
                 <p class="text-muted">
-                    Invitá a tus amigos compartiendo el link del grupo.
-                    Una vez enviada su solicitud cualquier Admin del grupo podrán aceptarla.
+                    Invitá a tus amigos compartiendo el siguiente link.
+                    Una vez enviada su solicitud cualquier Admin del grupo podrá aceptarla.
                 </p>
                 <input id="link" value="{{route('party.details', ['id' => $party->id])}}" class="form-control mb-1">
                 <button class="share btn btn-light" data-clipboard-target="#link">

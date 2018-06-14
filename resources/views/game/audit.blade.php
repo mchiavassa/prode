@@ -40,7 +40,7 @@
                 <div class="text-justify">
                     <h4 class="mb-2">Prevención de fraude</h4>
                     <p>Con el objetivo de fomentar la transparecia en el juego, dejamos a tu disposición el listado de pronósticos de todos los participantes del grupo para este partido.</p>
-                    <p>Estos datos están representados en un formato estándar de texto plano. Para garantizar que ningún pronóstico sea alterado una vez computado el partido, te recomendamos que guardes una copia de esta información, la cual podrás validar en cualquier momento en este mismo lugar.</p>
+                    <p>Estos pronósticos están representados en un formato estándar de texto plano. Para garantizar que ningún pronóstico sea alterado una vez computado el partido, te recomendamos que <strong>guardes una copia de ellos</strong>, para luego validar en cualquier momento posterior al partido.</p>
                     <p>Ayudanos a promover un juego limpio y prevenir cualquier tipo de fraude!</p>
                     <p><strong>Prode Team</strong></p>
                 </div>

@@ -28,13 +28,6 @@
     @stack('css')
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-9628103456409647",
-            enable_page_level_ads: true
-        });
-    </script>
 </head>
 <body>
     <div id="app">
@@ -106,4 +99,22 @@
     @include('common.messages')
     @stack('script')
 </body>
+@auth
+    <!-- Start of Survicate (www.survicate.com) code -->
+    <script type="text/javascript">
+        (function (w) {
+            var s = document.createElement('script');
+            s.src = '//survey.survicate.com/workspaces/d592f450357baa2167bac4ca620bfa15/web_surveys.js';
+            s.async = true;
+            var e = document.getElementsByTagName('script')[0];
+            e.parentNode.insertBefore(s, e);
+        })(window);
+        (function(opts) {
+            opts.traits = {
+                'user_id': '{{Auth::user()->id}}'
+            };
+        })(window._sva = window._sva || {});
+    </script>
+    <!-- End of Survicate code -->
+@endauth
 </html>
