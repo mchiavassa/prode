@@ -59,21 +59,24 @@
             @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
                 <div class="async-list" data-source-url="{{route('party.joinRequest.list', ['id' => $party->id])}}">
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="loading text-center mt-1" style="display: none">
-                            <img class="small" src="{{asset('img/loading.svg')}}" />
-                        </div>
-                    </div>
-                </div>
             @endif
             <div class="card p-3 mb-3">
-                <div class="async-list" data-source-url="{{route('party.rankings', ['id' => $party->id])}}">
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="loading text-center mt-1" style="display: none">
-                            <img class="small" src="{{asset('img/loading.svg')}}" />
+                <h4 class="mb-4">Posiciones</h4>
+
+                <form class="mb-4">
+                    <select id='rankings-select' class="form-control">
+                        @foreach($sets as $set)
+                            <option value="{{$set->id}}">{{$set->name}}</option>
+                        @endforeach
+                    </select>
+                </form>
+
+                <div class="tab-content" id="rankings">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="loading-rankings" class="text-center mt-1" style="display: none">
+                                <img class="small" src="{{asset('img/loading.svg')}}" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -127,7 +130,6 @@
                         dataType: 'json',
                         data: {description: $('.ql-editor').html()},
                         success: function (response) {
-                            console.log(response);
                             if (response.metadata.code === 200) {
                                 toastr.success("Descripción guardada.");
                             } else {
@@ -144,4 +146,39 @@
             });
         </script>
     @endif
+    <script type="text/javascript">
+        $(function () {
+            $('#rankings-select').on('change', function (e) {
+                const setId = $(this).val();
+                $('.tab-pane').hide();
+
+                const ranking = $('#ranking-' + $(this).val());
+                if (ranking.length !== 0) {
+                    ranking.show();
+
+                    return;
+                }
+
+                let options = {
+                    url: '{{route('party.ranking', ['id' => $party->id])}}' + '?setId=' + setId,
+                    success: function (response) {
+                        $('#rankings').append('<div class="tab-pane" id="ranking-' + setId + '">' + response + '</div>');
+                        $('#ranking-' + setId).show();
+                    },
+                    error: function () {
+                        toastr.error("Ocurrió un error al intentar traer el ranking.");
+                    }
+                };
+
+                const loading = $('#loading-rankings');
+                loading.show();
+
+                $.ajax(options).done(function () {
+                    loading.hide();
+                });
+            });
+
+            $('#rankings-select').change();
+        });
+    </script>
 @endpush
