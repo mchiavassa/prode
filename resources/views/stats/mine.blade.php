@@ -29,7 +29,7 @@
     </div>
     <div class="col-md-3">
         <div class="card p-3 mb-3 bg-light border-danger">
-            <h6>No acertados</h6>
+            <h6>No acertaste</h6>
             <h3>
                 <strong>{{$noMatchForecastsCount}}</strong>
                 <small class="text-muted">({{number_format($noMatchForecastsPercentage, 0)}}%)</small>
