@@ -1,7 +1,8 @@
-<div id="next-game-forecast"></div>
+<div id="game-set-forecast"></div>
 
 <script type="text/javascript">
-    const nextGame = JSON.parse('{!! json_encode($game) !!}');
-    const nextGameForecast = JSON.parse('{!! json_encode($forecast) !!}');
+    const games = JSON.parse('{!! $games->toJson() !!}');
+    const forecasts = JSON.parse('{!! $forecasts->toJson() !!}');
 </script>
-<script src="{{ mix('js/react-components/NextForecastGame.js') }}"></script>
+<script src="{{ mix('js/react-components/ForecastGameSet.js') }}"></script>
+

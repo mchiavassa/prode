@@ -13,12 +13,13 @@ class ForecastGameSet extends Component {
 
     render() {
         return (
-            <div className={'bricklayer'}>
+            <div className={'row justify-content-center'}>
                 {this.state.games.map(game => (
                     <ForecastGame
                         key={game.id}
                         game={game}
                         forecast={forecasts[game.id]}
+                        className={'col-md-4'}
                     />
                 ))}
             </div>

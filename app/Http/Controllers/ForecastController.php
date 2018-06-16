@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ForecastGame;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Prode\Domain\GameResult;
 use Prode\Domain\Model\Forecast;
@@ -30,7 +31,7 @@ class ForecastController extends Controller
         /** @var GameSet $gameSet */
         $gameSet = $this->gameSet
             ->with('games')
-            ->whereIn('status', [GameSet::STATUS_ENABLED,GameSet::STATUS_FINISHED])
+            ->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED])
             ->findOrFail($id);
 
         $games = $gameSet->games->sortBy('group')->values()->map(function($game) {
@@ -51,26 +52,29 @@ class ForecastController extends Controller
         );
     }
 
-    public function nextGameForecast()
+    public function nextGamesForecast()
     {
-        $nextGame = $this->game
-            ->where('date_and_hour', '>', Carbon::now())
-            ->orderBy('date_and_hour')
-            ->take(1)
-            ->first();
+        $nextGames = $this->getUpcommingGamesToForecast();
 
-        if (!$nextGame) {
+        if (!$nextGames) {
             return null;
         }
 
-        $forecast = $this->forecast
-            ->where('game_id', $nextGame->id)
+        $nextGames = $nextGames->map(function($game) {
+            return $this->mapGameToForecast($game);
+        });
+
+        $forecasts = $this->forecast
+            ->whereIn('game_id', $nextGames->pluck('id')->all())
             ->where('user_id', Auth::user()->id)
-            ->first();
+            ->get()
+            ->mapWithKeys(function ($forecast) {
+                return [$forecast->game_id => $this->mapForecast($forecast)];
+            });
 
         return view(
             'forecast.next',
-            ['game' => $this->mapGameToForecast($nextGame), 'forecast' => $forecast ? $this->mapForecast($forecast) : null]
+            ['games' => $nextGames, 'forecasts' => $forecasts]
         );
     }
 
@@ -161,6 +165,27 @@ class ForecastController extends Controller
         if ($this->forecast->where('game_id', $game->id)->where('user_id', Auth::user()->id)->first()) {
             abort(400, 'Ya pronosticaste este partido.');
         }
+    }
+
+    /**
+     * @return Collection
+     */
+    private function getUpcommingGamesToForecast()
+    {
+        $nextGames = $this->game
+            ->whereDate('date_and_hour', Carbon::now()->toDateString())
+            ->orderBy('date_and_hour')
+            ->get();
+
+        if ($nextGames->where('computed', 0)->isNotEmpty()
+            || Carbon::now()->diffInHours($nextGames->last()->date_and_hour) < 2) { // display the results of today for two hours
+            return $nextGames;
+        }
+
+        return $this->game
+            ->whereDate('date_and_hour', Carbon::now()->addDay(1)->toDateString())
+            ->orderBy('date_and_hour')
+            ->get();
     }
 
     /**

@@ -84,8 +84,6 @@ class StatsController extends Controller
 
         return view('stats.mine', [
             'points' => Auth::user()->points,
-            'forecastsCount' => $userForecasts->count(),
-            'forecastComputedCount' => $userForecastsComputedCount,
             'matchResultForecastsCount' => $matchResultForecastsCount,
             'matchResultForecastsPercentage' => $userForecastsComputedCount == 0 ? 0 : ($matchResultForecastsCount / $userForecastsComputedCount) * 100,
             'matchScoreForecastsCount' => $matchScoreForecastsCount,

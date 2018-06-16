@@ -7,8 +7,28 @@
         </div>
     </div>
 
+    <div class="async-list" data-source-url="{{route('stats.mine')}}">
+    </div>
     <div class="row">
-        <div class="col-md-4 order-2 order-lg-1">
+        <div class="col-md-12">
+            <div class="loading text-center mt-1" style="display: none">
+                <img class="small" src="{{asset('img/loading.svg')}}" />
+            </div>
+        </div>
+    </div>
+
+    <div class="async-list" data-source-url="{{route('forecast.next')}}">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="loading text-center mt-1" style="display: none">
+                <img class="small" src="{{asset('img/loading.svg')}}" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
             <div class="card p-3 mb-3">
                 <h4 class="mb-4">Mis grupos</h4>
                 <div class="async-list" data-source-url="{{route('party.list.mine')}}">
@@ -22,30 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 order-3 order-lg-2">
-            <div class="async-list" data-source-url="{{route('stats.mine')}}">
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="loading text-center mt-1" style="display: none">
-                        <img class="small" src="{{asset('img/loading.svg')}}" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 order-1 order-lg-3">
-            <div class="next-game">
-                <div class="async-list" data-source-url="{{route('forecast.next')}}">
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="loading text-center mt-1" style="display: none">
-                            <img class="small" src="{{asset('img/loading.svg')}}" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="col-md-6">
             <div class="card p-3 mb-3">
                 <h4 class="mb-4">Fechas</h4>
                 <div class="async-list" data-source-url="{{route('set.list')}}">
