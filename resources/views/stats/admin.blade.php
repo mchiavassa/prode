@@ -32,7 +32,7 @@
 
             <div class="card p-3 mb-3">
                 <h4 class="mb-4">Top 5 usuarios</h4>
-                @include('common.user-ranking', ['ranking' => new \Prode\Domain\Ranking($topUsers)])
+                @include('common.user-ranking', ['ranking' => new \Prode\Domain\Ranking($usersWithPoints, 5)])
             </div>
         </div>
         <div class="col-md-6">

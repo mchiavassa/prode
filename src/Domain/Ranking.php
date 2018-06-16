@@ -10,8 +10,9 @@ class Ranking extends Collection
      * Ranking constructor.
      *
      * @param Collection $users
+     * @param int $limit
      */
-    public function __construct(Collection $users)
+    public function __construct(Collection $users, $limit = null)
     {
         $sortedUsers = $users->sort(function ($a, $b) {
             if($a->points === $b->points) {
@@ -25,6 +26,10 @@ class Ranking extends Collection
 
         $ranking = [];
         $position = 1;
+
+        if ($limit) {
+            $sortedUsers = $sortedUsers->take($limit);
+        }
 
         foreach ($sortedUsers as $user) {
             $ranking[$position] = $user;

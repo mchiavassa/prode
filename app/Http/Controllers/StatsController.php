@@ -37,7 +37,7 @@ class StatsController extends Controller
         $todayUsers = $this->user->whereDate('created_at', Carbon::now()->toDateString())->get();
         $todayParties = $this->party->whereDate('created_at', Carbon::now()->toDateString())->count();
         $totalPoints = $allUsers->sum('points');
-        $topUsers = $allUsers->where('points', '>', 0)->sortByDesc('points')->take(5);
+        $usersWithPoints = $allUsers->where('points', '>', 0);
 
         $topGameSets = collect();
         foreach ($this->gameSet->with('games', 'games.forecasts')->get() as $gameSet) {
@@ -67,7 +67,7 @@ class StatsController extends Controller
             'todayParties' => $todayParties,
             'totalPoints' => $totalPoints,
             'totalAverage' => number_format($totalPoints / $allUsers->count(), 2),
-            'topUsers' => $topUsers,
+            'usersWithPoints' => $usersWithPoints,
             'topGameSets' => $topGameSets->where('points', '>', 0)->take(5),
             'topGames' => $topGames->where('points', '>', 0)->take(5),
             'todayForecasters' => $todayForecasters,
