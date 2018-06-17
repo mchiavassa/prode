@@ -4,6 +4,8 @@ return [
     'points' => [
         'result' => 10,
         'score' => 10,
+        'tiebreak_score' => 10,
+        'tiebreak_existence' => 5,
     ],
     'teams' => [
           // Group A

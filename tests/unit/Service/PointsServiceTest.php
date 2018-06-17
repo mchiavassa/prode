@@ -2,41 +2,62 @@
 
 namespace Test\unit\Service;
 
-use Prode\Domain\ForecastResult;
+use Prode\Domain\ForecastAssertion;
 use Prode\Service\PointsService;
 use Test\TestCase;
 
 class PointsServiceTest extends TestCase
 {
-    public function testMatchResultResultPoints()
+    public function testGetAssertionsPointsResult()
     {
         $service = $this->getService();
 
-        $forecastResult = new ForecastResult(ForecastResult::MATCH_RESULT);
-
-        $points = $service->getForecastResultPoints($forecastResult);
+        $points = $service->getAssertionsPoints(collect(ForecastAssertion::RESULT));
 
         $this->assertEquals(config('domain.points.result'), $points);
     }
 
-    public function testMatchScoreResultPoints()
+    public function testGetAssertionsPointsScore()
     {
         $service = $this->getService();
 
-        $forecastResult = new ForecastResult(ForecastResult::MATCH_SCORE);
+        $points = $service->getAssertionsPoints(collect(ForecastAssertion::SCORE));
 
-        $points = $service->getForecastResultPoints($forecastResult);
+        $this->assertEquals(config('domain.points.score'), $points);
+    }
+
+    public function testGetAssertionsPointsTieBreakScore()
+    {
+        $service = $this->getService();
+
+        $points = $service->getAssertionsPoints(collect(ForecastAssertion::TIEBREAK_SCORE));
+
+        $this->assertEquals(config('domain.points.tiebreak_score'), $points);
+    }
+
+    public function testGetAssertionsPointsTieBreakExistence()
+    {
+        $service = $this->getService();
+
+        $points = $service->getAssertionsPoints(collect(ForecastAssertion::TIEBREAK_EXISTENCE));
+
+        $this->assertEquals(config('domain.points.tiebreak_existence'), $points);
+    }
+
+    public function testGetAssertionsPointsSum()
+    {
+        $service = $this->getService();
+
+        $points = $service->getAssertionsPoints(collect([ForecastAssertion::RESULT, ForecastAssertion::SCORE]));
 
         $this->assertEquals(config('domain.points.result') + config('domain.points.score'), $points);
     }
 
-    public function testNoMatchResultPoints()
+    public function testGetAssertionsPointsNoAssertions()
     {
         $service = $this->getService();
 
-        $forecastResult = new ForecastResult(ForecastResult::NO_MATCH);
-
-        $points = $service->getForecastResultPoints($forecastResult);
+        $points = $service->getAssertionsPoints(collect());
 
         $this->assertEquals(0, $points);
     }

@@ -23,7 +23,7 @@ class CreateForecastsTable extends Migration
             $table->string('away_score', 50)->nullable();
             $table->string('home_tie_break_score', 50)->nullable();
             $table->string('away_tie_break_score', 50)->nullable();
-            $table->string('result', 50)->nullable();
+            $table->json('assertions')->nullable();
             $table->integer('points_earned')->nullable();
 
             $table->timestamps();

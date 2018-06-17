@@ -98,7 +98,7 @@ class GameForecastsValidator extends Component {
                 <div className={'col-md-4'}>
                     <div className={'card p-3 mb-3' + (this.state.valid ? ' border-success' : '') + (!this.state.valid && this.state.userForecasts ? ' border-danger' : '')}>
                         <h4 className={'mb-2'}>Validación</h4>
-                        <p className={'text-muted'}>Si te guardaste una copia de los pronósticos, ingresala debajo para validar su integridad.</p>
+                        <p className={'text-muted'}>Si guardaste una copia de los pronósticos, ingresala debajo para validar su integridad.</p>
                         <textarea onChange={this.onUserForecastsChanged} rows={'10'} value={this.state.userForecasts} className={'form-control mb-2'} style={{resize: 'none'}} />
                     </div>
                 </div>

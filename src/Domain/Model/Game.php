@@ -61,4 +61,12 @@ class Game extends Model
     {
         return $this->hasStarted() || $this->hasResult();
     }
+
+    /**
+     * @return bool
+     */
+    public function hasResultWithTieBreak()
+    {
+        return $this->hasResult() && $this->home_tie_break_score !== null;
+    }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Prode\Domain\ForecastResult;
+use Prode\Domain\ForecastAssertion;
 use Prode\Domain\Model\Forecast;
 use Prode\Domain\Model\Game;
 use Prode\Domain\Model\GameSet;
@@ -76,20 +76,29 @@ class StatsController extends Controller
 
     public function mine()
     {
-        $userForecasts = $this->forecast->where('user_id', Auth::user()->id)->get();
-        $userForecastsComputedCount = $userForecasts->where('result', '<>', null)->count();
-        $matchResultForecastsCount = $userForecasts->where('result', (string) (new ForecastResult(ForecastResult::MATCH_RESULT)))->count();
-        $matchScoreForecastsCount = $userForecasts->where('result', (string) (new ForecastResult(ForecastResult::MATCH_SCORE)))->count();
-        $noMatchForecastsCount = $userForecasts->where('result', (string) (new ForecastResult(ForecastResult::NO_MATCH)))->count();
+        $userForecastsComputed = $this->forecast->where('user_id', Auth::user()->id)->where('assertions', '<>', null)->get();
+        $userForecastsComputedCount = $userForecastsComputed->count();
+        $matchResultForecastsCount = $userForecastsComputed
+            ->where('assertions', [ForecastAssertion::RESULT])->count();
+        $matchScoreForecastsCount = $userForecastsComputed
+            ->where('assertions', [ForecastAssertion::RESULT, ForecastAssertion::SCORE])->count();
+        $noMatchForecastsCount = $userForecastsComputed
+            ->where('assertions', [])->count();
 
         return view('stats.mine', [
             'points' => Auth::user()->points,
             'matchResultForecastsCount' => $matchResultForecastsCount,
-            'matchResultForecastsPercentage' => $userForecastsComputedCount == 0 ? 0 : ($matchResultForecastsCount / $userForecastsComputedCount) * 100,
+            'matchResultForecastsPercentage' => $userForecastsComputedCount == 0
+                ? 0
+                : ($matchResultForecastsCount / $userForecastsComputedCount) * 100,
             'matchScoreForecastsCount' => $matchScoreForecastsCount,
-            'matchScoreForecastsPercentage' => $userForecastsComputedCount == 0 ? 0 : ($matchScoreForecastsCount / $userForecastsComputedCount) * 100,
+            'matchScoreForecastsPercentage' => $userForecastsComputedCount == 0
+                ? 0
+                : ($matchScoreForecastsCount / $userForecastsComputedCount) * 100,
             'noMatchForecastsCount' => $noMatchForecastsCount,
-            'noMatchForecastsPercentage' => $userForecastsComputedCount == 0 ? 0 : ($noMatchForecastsCount / $userForecastsComputedCount) * 100,
+            'noMatchForecastsPercentage' => $userForecastsComputedCount == 0
+                ? 0
+                : ($noMatchForecastsCount / $userForecastsComputedCount) * 100,
         ]);
     }
 }

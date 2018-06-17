@@ -30,22 +30,22 @@
                     </div>
                     <div class="{{$game->tie_break_required ? 'col-md-1' : 'col-md-1 offset-1 border-right'}}">
                         <label>Goles</label>
-                        {{ Form::number('home_score', $game->home_score, ['class' => 'form-control mb-2']) }}
+                        {{ Form::number('home_score', $game->home_score, ['class' => 'form-control mb-2', 'autocomplete' => 'off']) }}
                     </div>
                     @if($game->tie_break_required)
                         <div class="col-md-1 border-right">
                             <label>Penales</label>
-                            {{ Form::number('home_tie_break_score', $game->home_tie_break_score, ['class' => 'form-control mb-2']) }}
+                            {{ Form::number('home_tie_break_score', $game->home_tie_break_score, ['class' => 'form-control mb-2', 'autocomplete' => 'off']) }}
                         </div>
                     @endif
                     <div class="col-md-1">
                         <label>Goles</label>
-                        {{ Form::number('away_score', $game->away_score, ['class' => 'form-control mb-2']) }}
+                        {{ Form::number('away_score', $game->away_score, ['class' => 'form-control mb-2', 'autocomplete' => 'off']) }}
                     </div>
                     @if($game->tie_break_required)
                         <div class="col-md-1">
                             <label>Penales</label>
-                            {{ Form::number('away_tie_break_score',  $game->away_tie_break_score, ['class' => 'form-control mb-2']) }}
+                            {{ Form::number('away_tie_break_score',  $game->away_tie_break_score, ['class' => 'form-control mb-2', 'autocomplete' => 'off']) }}
                        </div>
                     @endif
                     <div class="col-md-4">

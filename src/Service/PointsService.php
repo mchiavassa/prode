@@ -2,18 +2,25 @@
 
 namespace Prode\Service;
 
-use Prode\Domain\ForecastResult;
+use Illuminate\Support\Collection;
+use Prode\Domain\ForecastAssertion;
 
 class PointsService
 {
     /**
-     * @param ForecastResult $forecastResult
+     * @param Collection $assertions
      *
      * @return int
      */
-    public function getForecastResultPoints(ForecastResult $forecastResult)
+    public function getAssertionsPoints(Collection $assertions)
     {
-        return $this->getResultPointsMap()[(string) $forecastResult];
+        $points = 0;
+
+        foreach ($assertions as $assertion) {
+            $points += $this->getResultPointsMap()[(string) $assertion];
+        }
+
+        return $points;
     }
 
     /**
@@ -22,9 +29,10 @@ class PointsService
     private function getResultPointsMap()
     {
         return [
-            ForecastResult::MATCH_RESULT => config('domain.points.result'),
-            ForecastResult::MATCH_SCORE => config('domain.points.result') + config('domain.points.score'),
-            ForecastResult::NO_MATCH => 0,
+            ForecastAssertion::RESULT => config('domain.points.result'),
+            ForecastAssertion::SCORE => config('domain.points.score'),
+            ForecastAssertion::TIEBREAK_SCORE => config('domain.points.tiebreak_score'),
+            ForecastAssertion::TIEBREAK_EXISTENCE => config('domain.points.tiebreak_existence'),
         ];
     }
 }
