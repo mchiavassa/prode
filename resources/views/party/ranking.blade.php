@@ -1,24 +1,24 @@
 <table class="table">
     <tbody>
-    @foreach($ranking as $position => $user)
-        <tr class="{{$user->email == Auth::user()->email ? 'font-weight-bold' : ''}}">
+    @foreach($ranking as $rankingUser)
+        <tr class="{{$rankingUser->item->email == Auth::user()->email ? 'font-weight-bold' : ''}}">
             <td>
-                {{ $position }}
+                {{ $rankingUser->position }}
             </td>
             <td>
-                <img src="{{ $user->picture_url }}" class="rounded" height="30px" alt="{{ $user->name }}">
-                {{ $user->name }}
-                @if($user->pivot->is_admin)
+                <img src="{{ $rankingUser->item->picture_url }}" class="rounded" height="30px" alt="{{ $rankingUser->item->name }}">
+                {{ $rankingUser->item->name }}
+                @if($rankingUser->item->pivot->is_admin)
                     <span class="badge badge-pill badge-success">Admin</span>
                 @elseif($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
-                    <form action="{{route('party.user.makeAdmin', ['partyId' => $user->pivot->party_id, 'userId' => $user->id])}}" method="POST" class="d-inline">
+                    <form action="{{route('party.user.makeAdmin', ['partyId' => $rankingUser->item->pivot->party_id, 'userId' => $rankingUser->item->id])}}" method="POST" class="d-inline">
                         @csrf
                         <input type="submit" class="btn" style="font-size: 0.7em" value="Hacer Admin" />
                     </form>
                 @endif
             </td>
             <td>
-                {{ $user->points }}
+                {{ $rankingUser->item->points }}
             </td>
         </tr>
     @endforeach

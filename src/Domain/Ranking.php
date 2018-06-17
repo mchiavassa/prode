@@ -9,12 +9,12 @@ class Ranking extends Collection
     /**
      * Ranking constructor.
      *
-     * @param Collection $users
+     * @param Collection $item
      * @param int $limit
      */
-    public function __construct(Collection $users, $limit = null)
+    public function __construct(Collection $item, $limit = null)
     {
-        $sortedUsers = $users->sort(function ($a, $b) {
+        $sortedItems = $item->sort(function ($a, $b) {
             if($a->points === $b->points) {
                 if(strtolower($a->name) === strtolower($b->name)) {
                     return 0;
@@ -25,15 +25,21 @@ class Ranking extends Collection
         });
 
         $ranking = [];
-        $position = 1;
 
         if ($limit) {
-            $sortedUsers = $sortedUsers->take($limit);
+            $sortedItems = $sortedItems->take($limit);
         }
 
-        foreach ($sortedUsers as $user) {
-            $ranking[$position] = $user;
-            $position++;
+        $position = 1;
+        $currentPoints = $sortedItems->first()->points;
+
+        foreach ($sortedItems as $item) {
+            if ($item->points < $currentPoints) {
+                $currentPoints = $item->points;
+                $position++;
+            }
+
+            $ranking[] = (object) ['position' => $position, 'item' => $item];
         }
 
         parent::__construct($ranking);

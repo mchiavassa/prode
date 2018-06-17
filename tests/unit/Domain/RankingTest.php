@@ -8,7 +8,7 @@ use Test\TestCase;
 
 class RankingTest extends TestCase
 {
-    public function testSortByPointsAndThenByName()
+    public function testSortByPointsAndThenByNameGroupingByPoints()
     {
         $user1 = new User();
         $user1->name = 'Maxi Chiavassa';
@@ -22,22 +22,24 @@ class RankingTest extends TestCase
         $user3->name = 'Gonzi Chiavassa';
         $user3->points = 3;
 
-        $users = collect([$user1, $user2, $user3]);
+        $user4 = new User();
+        $user4->name = 'Other';
+        $user4->points = 1;
+
+        $users = collect([$user1, $user2, $user3, $user4]);
 
         $ranking = new Ranking($users);
 
-        foreach ($ranking as $position => $user) {
-            switch ($position) {
-                case 1:
-                    $this->assertEquals($user3, $user);
-                    break;
-                case 2:
-                    $this->assertEquals($user2, $user);
-                    break;
-                case 3:
-                    $this->assertEquals($user1, $user);
-                    break;
-            }
-        }
+        $this->assertEquals($user3, $ranking[0]->item);
+        $this->assertEquals(1, $ranking[0]->position);
+
+        $this->assertEquals($user2, $ranking[1]->item);
+        $this->assertEquals(2, $ranking[1]->position);
+
+        $this->assertEquals($user1, $ranking[2]->item);
+        $this->assertEquals(2, $ranking[2]->position);
+
+        $this->assertEquals($user4, $ranking[3]->item);
+        $this->assertEquals(3, $ranking[3]->position);
     }
 }

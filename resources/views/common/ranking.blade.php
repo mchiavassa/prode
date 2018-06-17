@@ -1,15 +1,15 @@
 <table class="table">
     <tbody>
-    @foreach($ranking as $position => $item)
+    @foreach($ranking as $rankingItem)
         <tr>
             <td>
-                {{ $position }}
+                {{ $rankingItem->position }}
             </td>
             <td>
-                {{ $item->name }}
+                {{ $rankingItem->item->name }}
             </td>
             <td>
-                {{ $item->points }}
+                {{ $rankingItem->item->points }}
             </td>
         </tr>
     @endforeach

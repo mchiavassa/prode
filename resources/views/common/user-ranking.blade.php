@@ -1,16 +1,16 @@
 <table class="table">
     <tbody>
-    @foreach($ranking as $position => $user)
-        <tr class="{{$user->email == Auth::user()->email ? 'font-weight-bold' : ''}}">
+    @foreach($ranking as $rankingUser)
+        <tr class="{{$rankingUser->item->email == Auth::user()->email ? 'font-weight-bold' : ''}}">
             <td>
-                {{ $position }}
+                {{ $rankingUser->position }}
             </td>
             <td>
-                <img src="{{ $user->picture_url }}" class="rounded" height="30px" alt="{{ $user->name }}">
-                {{ $user->name }}
+                <img src="{{ $rankingUser->item->picture_url }}" class="rounded" height="30px" alt="{{ $rankingUser->item->name }}">
+                {{ $rankingUser->item->name }}
             </td>
             <td>
-                {{ $user->points }}
+                {{ $rankingUser->item->points }}
             </td>
         </tr>
     @endforeach
