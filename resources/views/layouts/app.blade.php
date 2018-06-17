@@ -57,6 +57,12 @@
                 @yield('content')
             </div>
         </main>
+        <footer class="bd-footer text-muted">
+            <div class="container text-center mb-3">
+                <div>Hecho en <i class="fas fa-map-marker"></i> Córdoba, Argentina</div>
+                <div><a href="mailto:info@argendev.com">info@argendev.com</a></div>
+            </div>
+        </footer>
     </div>
 
     <script type="text/javascript">
