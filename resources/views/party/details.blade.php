@@ -8,7 +8,7 @@
     <a href="{{route('home')}}" class="btn btn-dark mb-3">Volver</a>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 order-2 order-md-1">
             <div class="row">
                 <div class="col-md-4">
                     <div class="card p-3 mb-3">
@@ -55,7 +55,7 @@
             @endif
 
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 order-1 order-md-2">
             @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
                 <div class="async-list" data-source-url="{{route('party.joinRequest.list', ['id' => $party->id])}}">
                 </div>

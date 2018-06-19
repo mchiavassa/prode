@@ -54,7 +54,7 @@ class ForecastController extends Controller
 
     public function nextGamesForecast()
     {
-        $nextGames = $this->getUpcommingGamesToForecast();
+        $nextGames = $this->getUpcomingGamesToForecast();
 
         if (!$nextGames) {
             return null;
@@ -170,7 +170,7 @@ class ForecastController extends Controller
     /**
      * @return Collection
      */
-    private function getUpcommingGamesToForecast()
+    private function getUpcomingGamesToForecast()
     {
         $nextGames = $this->game
             ->whereDate('date_and_hour', Carbon::now()->toDateString())

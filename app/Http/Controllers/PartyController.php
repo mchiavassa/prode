@@ -287,7 +287,7 @@ class PartyController extends Controller
             return sprintf('#%s %s %s', $user->id, $user->name, $score);
         });
 
-        $formatted = implode(' | ', $forecasts->all());
+        $formatted = implode("\n", $forecasts->all());
 
         return $this->jsonSuccess([
             'forecasts' => $formatted,
