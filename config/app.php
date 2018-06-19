@@ -154,6 +154,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class,
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
+        Webup\LaravelSendinBlue\SendinBlueServiceProvider::class,
 
         /*
          * Application Service Providers...

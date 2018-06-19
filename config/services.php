@@ -29,4 +29,9 @@ return [
     'sendgrid' => [
         'api_key' => env('SENDGRID_API_KEY'),
     ],
+
+    'sendinblue' => [
+        'url' => 'https://api.sendinblue.com/v2.0',
+        'key' => env('SENDINBLUE_KEY'),
+    ],
 ];
