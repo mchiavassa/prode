@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Horizon\Horizon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
         {
             $url->forceScheme('https');
         }
+
+        Horizon::auth(function ($request) {
+            return $request->user() && $request->user()->isAdmin();
+        });
+        Horizon::routeMailNotificationsTo(config('auth.admins')[0]);
     }
 
     /**
