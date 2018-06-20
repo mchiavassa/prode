@@ -173,9 +173,16 @@ class ForecastController extends Controller
     private function getUpcomingGamesToForecast()
     {
         $nextGames = $this->game
+            ->whereHas('set', function($query) {
+                $query->where('status', GameSet::STATUS_ENABLED);
+            })
             ->whereDate('date_and_hour', Carbon::now()->toDateString())
             ->orderBy('date_and_hour')
             ->get();
+
+        if ($nextGames->isEmpty()) {
+            return $nextGames;
+        }
 
         if ($nextGames->where('computed', 0)->isNotEmpty()
             || Carbon::now()->diffInHours($nextGames->last()->date_and_hour) < 2) { // display the results of today for two hours

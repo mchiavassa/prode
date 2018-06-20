@@ -45,6 +45,8 @@ class NotifyGamesWithoutForecast extends Command
             ->whereBetween('date_and_hour', [Carbon::now()->addMinutes(10), Carbon::now()->addMinutes(40)])
             ->get();
 
+        $this->info(sprintf('Games Found: %s', $gamesAboutToStart->count()));
+
         $allUsers = $this->user->get();
 
         $usersToNotify = [];
@@ -57,6 +59,8 @@ class NotifyGamesWithoutForecast extends Command
                 $usersToNotify[$user->id][] = $game;
             }
         }
+
+        $this->info(sprintf('User to notify: %s', count($usersToNotify)));
 
         foreach ($usersToNotify as $id => $games) {
             $allUsers->where('id', $id)->first()->notify(new GameForecastsPending(collect($games)));
