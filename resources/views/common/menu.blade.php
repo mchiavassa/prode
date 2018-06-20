@@ -9,12 +9,15 @@
         <li class="nav-item">
             <a class="nav-link" href="{{Auth::user()->isAdmin() ? route('set.admin') : route('set')}}">Fechas</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('stats')}}">Estadísticas</a>
+        </li>
         @if(Auth::user()->isAdmin())
             <li class="nav-item">
                 <a class="nav-link" href="{{route('user')}}">Usuarios</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('stats.admin')}}">Estadísticas</a>
+                <a class="nav-link" href="{{route('stats.admin')}}">Admin</a>
             </li>
         @endif
     @endauth

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="mb-4">
-        <h2>Estadísticas</h2>
+        <h2>Admin</h2>
     </div>
 
     <div class="row">
@@ -29,11 +29,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="card p-3 mb-3">
-                <h4 class="mb-4">Top 5 usuarios</h4>
-                @include('common.user-ranking', ['ranking' => new \Prode\Domain\Ranking($usersWithPoints, 5)])
-            </div>
         </div>
         <div class="col-md-6">
             <div class="row">
@@ -59,7 +54,10 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <div class="card p-3 mb-3">
                 <h4 class="mb-4">Pronósticos enviados hoy</h4>
                 <h1>
@@ -74,14 +72,14 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">Top 5 fechas</h4>
-                @include('common.ranking', ['ranking' => new \Prode\Domain\Ranking($topGameSets)])
+                <h4 class="mb-4">Top 5 partidos</h4>
+                @include('common.ranking', ['ranking' => new \Prode\Domain\Ranking($games, null, 5)])
             </div>
         </div>
         <div class="col-md-6">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">Top 5 partidos</h4>
-                @include('common.ranking', ['ranking' => new \Prode\Domain\Ranking($topGames)])
+                <h4 class="mb-4">Top fechas</h4>
+                @include('common.ranking', ['ranking' => new \Prode\Domain\Ranking($gameSets)])
             </div>
         </div>
     </div>

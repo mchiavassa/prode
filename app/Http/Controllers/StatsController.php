@@ -10,6 +10,7 @@ use Prode\Domain\Model\Game;
 use Prode\Domain\Model\GameSet;
 use Prode\Domain\Model\Party;
 use Prode\Domain\Model\User;
+use Prode\Domain\Ranking;
 
 class StatsController extends Controller
 {
@@ -30,6 +31,23 @@ class StatsController extends Controller
         $this->party = $party;
     }
 
+    public function index()
+    {
+        $allUsers = $this->user->get();
+
+        $allParties = $this->party->with('users')->has('users', '>=', 2)->get()->map(function($party) {
+            return (object) [
+                'name' => $party->name,
+                'points' => number_format($party->users->sum('points') / $party->users->count(), 2)
+            ];
+        });
+
+        return view('stats.index', [
+            'usersRanking' => new Ranking($allUsers, null, 5),
+            'partiesRanking' => new Ranking($allParties, null, 5),
+        ]);
+    }
+
     public function admin()
     {
         $allUsers = $this->user->get();
@@ -39,20 +57,23 @@ class StatsController extends Controller
         $totalPoints = $allUsers->sum('points');
         $usersWithPoints = $allUsers->where('points', '>', 0);
 
-        $topGameSets = collect();
+        $gameSets = collect();
         foreach ($this->gameSet->with('games', 'games.forecasts')->get() as $gameSet) {
             $points = $gameSet->games->map(function ($game) {
                 return $game->forecasts->sum('points_earned');
             })->sum();
 
-            $topGameSets->push((object)['name' => $gameSet->name, 'points' => $points]);
+            $gameSets->push((object)[
+                'name' => $gameSet->name,
+                'points' => $points ? number_format($points / $gameSet->games->count(), 2) : 0
+            ]);
         }
 
-        $topGames = collect();
+        $games = collect();
         foreach($this->game->with('forecasts')->get() as $game) {
             $points = $game->forecasts->sum('points_earned');
 
-            $topGames->push((object)[
+            $games->push((object)[
                 'name' => sprintf('%s - %s', config('domain.teams.'.$game->home), config('domain.teams.'.$game->away)),
                 'points' => $points
             ]);
@@ -68,8 +89,8 @@ class StatsController extends Controller
             'totalPoints' => $totalPoints,
             'totalAverage' => number_format($totalPoints / $allUsers->count(), 2),
             'usersWithPoints' => $usersWithPoints,
-            'topGameSets' => $topGameSets->where('points', '>', 0)->take(5),
-            'topGames' => $topGames->where('points', '>', 0)->take(5),
+            'gameSets' => $gameSets->where('points', '>', 0),
+            'games' => $games->where('points', '>', 0),
             'todayForecasters' => $todayForecasters,
         ]);
     }

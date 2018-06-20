@@ -11,8 +11,9 @@ class Ranking extends Collection
      *
      * @param Collection $item
      * @param int $limit
+     * @param null $positions
      */
-    public function __construct(Collection $item, $limit = null)
+    public function __construct(Collection $item, $limit = null, $positions = null)
     {
         $sortedItems = $item->sort(function ($a, $b) {
             if($a->points === $b->points) {
@@ -24,19 +25,21 @@ class Ranking extends Collection
             return $a->points > $b->points ? -1 : 1;
         });
 
-        $ranking = [];
-
         if ($limit) {
             $sortedItems = $sortedItems->take($limit);
         }
 
+        $ranking = [];
+
         $position = 1;
-        $currentPoints = $sortedItems->first()->points;
+        $currentPoints = $sortedItems->isNotEmpty() ? $sortedItems->first()->points : 0;
 
         foreach ($sortedItems as $item) {
             if ($item->points < $currentPoints) {
                 $currentPoints = $item->points;
                 $position++;
+
+                if ($positions && $position > $positions) break;
             }
 
             $ranking[] = (object) ['position' => $position, 'item' => $item];
