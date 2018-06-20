@@ -34,4 +34,9 @@ return [
         'url' => 'https://api.sendinblue.com/v2.0',
         'key' => env('SENDINBLUE_KEY'),
     ],
+
+    'mailgun' => [
+        'domain' => env('MAILGUN_DOMAIN'),
+        'secret' => env('MAILGUN_KEY'),
+    ],
 ];
