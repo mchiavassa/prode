@@ -43,7 +43,7 @@ class StatsController extends Controller
         });
 
         return view('stats.index', [
-            'usersRanking' => new Ranking($allUsers, null, 5),
+            'usersRanking' => new Ranking($allUsers, null, 3),
             'partiesRanking' => new Ranking($allParties, null, 5),
         ]);
     }

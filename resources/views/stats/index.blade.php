@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">Top 5 usuarios</h4>
+                <h4 class="mb-4">Top 3 usuarios</h4>
                 @include('common.user-ranking', ['ranking' => $usersRanking])
             </div>
         </div>
