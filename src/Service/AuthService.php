@@ -32,6 +32,10 @@ class AuthService
             if (empty($user)) {
                 return $this->registerExternalUser($externalUser);
             }
+
+            if ($user->trashed()) {
+                $user->restore();
+            }
         }
 
         $providerLogin = $user->logins
@@ -58,6 +62,7 @@ class AuthService
     private function getUserByEmail($email)
     {
         return $this->user
+            ->withTrashed()
             ->with('logins')
             ->where('email', $email)
             ->first();

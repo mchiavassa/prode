@@ -325,6 +325,12 @@
                             </table>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <hr/>
+                            <p>Si no jugás más al prode, ingresá a la app y <a href="{{route('delete.show')}}">eliminá tu cuenta</a>.</p>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </td>

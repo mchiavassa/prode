@@ -13,6 +13,9 @@
             </span>
             <span class="dropdown-item-text text-muted">{{ Auth::user()->email }}</span>
             <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ route('delete.show') }}">
+                Eliminar cuenta
+            </a>
             <a class="dropdown-item" href="{{ route('logout') }}"
                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 Salir

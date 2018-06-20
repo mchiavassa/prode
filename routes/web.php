@@ -18,6 +18,9 @@ Route::post('logout', 'LoginController@logout')->name('logout');;
 Route::get('login/{provider}', 'LoginController@redirectToProvider')->name('login.external');
 Route::get('login/{provider}/callback', 'LoginController@handleProviderCallback');
 
+Route::get('/delete', 'UserController@showDelete')->name('delete.show');
+Route::post('/delete', 'UserController@delete')->name('delete');
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/rules', 'HomeController@rules')->name('rules');
 Route::get('/stats', 'StatsController@index')->name('stats');
