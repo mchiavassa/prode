@@ -39,4 +39,8 @@ return [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_KEY'),
     ],
+
+    'sparkpost' => [
+        'secret' => env('SPARKPOST_KEY'),
+    ],
 ];
