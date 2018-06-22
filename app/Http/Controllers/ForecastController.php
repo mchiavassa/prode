@@ -34,7 +34,7 @@ class ForecastController extends Controller
             ->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED])
             ->findOrFail($id);
 
-        $games = $gameSet->games->sortBy('group')->values()->map(function($game) {
+        $games = $gameSet->games->sortBy('date_and_hour')->values()->map(function($game) {
             return $this->mapGameToForecast($game);
         });
 

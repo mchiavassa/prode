@@ -31,8 +31,7 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('notify:forecasts:pending')
              ->everyThirtyMinutes()
-             ->between('5:30', '17:00')
-             ->emailOutputTo(config('auth.admins'));
+             ->between('5:30', '17:00');
     }
 
     /**
