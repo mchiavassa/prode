@@ -8,4 +8,13 @@ return [
             \Prode\Domain\Model\GameSet::STATUS_FINISHED => 'Finalizada',
         ],
     ],
+
+    'forecast' => [
+        'assertion' => [
+            \Prode\Domain\ForecastAssertion::RESULT => 'Resultado',
+            \Prode\Domain\ForecastAssertion::SCORE => 'Marcador',
+            \Prode\Domain\ForecastAssertion::TIEBREAK_EXISTENCE => 'Existencia de penales',
+            \Prode\Domain\ForecastAssertion::TIEBREAK_SCORE => 'Marcador de penales',
+        ],
+    ],
 ];
