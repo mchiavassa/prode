@@ -148,12 +148,15 @@ export default class ForecastGame extends Component {
                                 </div>
                                 <div className={'col-4 font-weight-bold'}>
                                     {this.state.game.computed &&
-                                    <span data-tip data-for={'points-' + this.state.game.id}>
+                                    <span>
                                         Puntos <h1>{this.state.forecast ? this.state.forecast.pointsEarned : 0}</h1>
                                         {this.state.forecast && this.state.forecast.assertions.length > 0 &&
-                                            <ReactTooltip id={'points-' + this.state.game.id} place={'bottom'} type={'dark'} effect={'float'}>
-                                                {this.state.forecast.assertions}
-                                            </ReactTooltip>
+                                            <span>
+                                                <i className={'fas fa-question-circle text-muted'} data-tip data-for={'points-' + this.state.game.id} />
+                                                <ReactTooltip id={'points-' + this.state.game.id} place={'bottom'} type={'dark'} effect={'solid'}>
+                                                    {this.state.forecast.assertions}
+                                                </ReactTooltip>
+                                            </span>
                                         }
                                     </span>
                                     }
