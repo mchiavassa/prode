@@ -6,6 +6,6 @@
         <span class="badge badge-pill badge-success">{{ucfirst(__('domain.set.status.'.$slot))}}</span>
         @break
     @case(\Prode\Domain\Model\GameSet::STATUS_FINISHED)
-        <span class="badge badge-pill badge-primary">{{ucfirst(__('domain.set.status.'.$slot))}}</span>
+        <span class="badge badge-pill badge-light">{{ucfirst(__('domain.set.status.'.$slot))}}</span>
         @break
 @endswitch

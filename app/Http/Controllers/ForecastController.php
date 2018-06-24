@@ -178,14 +178,14 @@ class ForecastController extends Controller
         do {
             $nextGames = $this->game
                 ->whereHas('set', function ($query) {
-                    $query->where('status', GameSet::STATUS_ENABLED);
+                    $query->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED]);
                 })
                 ->whereDate('date_and_hour', Carbon::now()->addDay($currentDay)->toDateString())
                 ->orderBy('date_and_hour')
                 ->get();
 
             // if games are for today
-            if ($nextGames->isNotEmpty() && Carbon::now()->diffInDays($nextGames->last()->date_and_hour) === 0) {
+            if ($nextGames->isNotEmpty() && Carbon::now()->toDateString() === $nextGames->last()->date_and_hour->toDateString()) {
                 // display the results up to two hours from the last game
                 if (Carbon::now()->diffInHours($nextGames->last()->date_and_hour) < 2) {
                     return $nextGames;
