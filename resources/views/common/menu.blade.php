@@ -1,6 +1,6 @@
 <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-        <a class="nav-link" href="{{route('rules')}}">Reglamento</a>
+        <a class="nav-link" href="{{route('rules')}}">Reglamento <strong class="text-success">(Penales!)</strong></a>
     </li>
     @auth
         <li class="nav-item">
