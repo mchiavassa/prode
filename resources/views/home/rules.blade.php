@@ -46,8 +46,56 @@
 
             - <strong>En este caso no acertaste el resultado, por lo que no recibirás puntos por este pronóstico.</strong>
         </p>
-        <hr>
 
+        <h4>Penales</h4>
+        <div class="row mb-4">
+            <div class="col-md-4 offset-md-4">
+                <img src="https://i.imgur.com/lrEshg0.png" class="img-fluid">
+            </div>
+        </div>
+        <p>
+            Para los partidos que no puedan terminar en empate, vas a tener la posibilidad de pronosticar penales aumentando la cantidad de puntos que podés obtener de la siguiente forma:
+        </p>
+        <ul>
+            <li><strong>{{config('domain.points.result')}} puntos</strong>, acertando el resultado del partido (que equipo ganó o si terminó en empate),</li>
+            <li><strong>{{config('domain.points.score')}} puntos</strong>, acertando el marcador exacto del partido dentro de los 120 minutos de juego.</li>
+            <li><strong>{{config('domain.points.tiebreak_existence')}} puntos</strong>, si acertaste que el partido iba a ir a penales.</li>
+            <li><strong>{{config('domain.points.tiebreak_score')}} puntos</strong>, acertando la cantidad exacta de penales para cada uno de los equipos.</li>
+        </ul>
+        <h5>Por ejemplo:</h5>
+
+        <p>
+            Pronóstico: L:1(5) V:1(3)
+            Resultado oficial: L:1(5) V:1(3)
+
+            - <strong>En este caso acertaste: resultado, marcador exacto en los 120 minutos, existencia de penales y cantidad exacta de penales, por lo que estarías recibiendo {{config('domain.points.result') + config('domain.points.tiebreak_existence') + config('domain.points.score') + config('domain.points.tiebreak_score')}} puntos.</strong>
+        </p>
+        <p>
+            Pronóstico: L:1(5) V:1(3)
+            Resultado oficial: L:1(7) V:1(4)
+
+            - <strong>En este caso acertaste el resultado, marcador exacto en los 120 minutos y que el partido iba a ir a penales por lo que estarías recibiendo {{config('domain.points.result') + config('domain.points.score') + config('domain.points.tiebreak_existence')}} puntos.</strong>
+        </p>
+        <p>
+            Pronóstico: L:1(5) V:1(3)
+            Resultado oficial: L:2(5) V:2(3)
+
+            - <strong>En este caso acertaste el resultado, cantidad exacta de penales y que el partido iba a ir a penales por lo que estarías recibiendo {{config('domain.points.result') + config('domain.points.tiebreak_score') + config('domain.points.tiebreak_existence')}} puntos.</strong>
+        </p>
+        <p>
+            Pronóstico: L:1(5) V:1(3)
+            Resultado oficial: L:2(7) V:2(4)
+
+            - <strong>En este caso acertaste el resultado, y que el partido iba a ir a penales por lo que estarías recibiendo {{config('domain.points.result') + config('domain.points.tiebreak_existence')}} puntos.</strong>
+        </p>
+        <p>
+            Pronóstico: L:1(5) V:1(3)
+            Resultado oficial: L:2(3) V:2(5)
+
+            - <strong>En este caso sólo acertaste que el partido iba a ir a penales por lo que estarías recibiendo {{config('domain.points.tiebreak_existence')}} puntos.</strong>
+        </p>
+
+        <hr />
         <h3>Prevención de fraude</h3>
         <p>
             Con el objetivo de fomentar la transparecia en el juego, una vez comenzado cada partido dejaremos a tu disposición

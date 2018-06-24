@@ -13,8 +13,8 @@ return [
         'assertion' => [
             \Prode\Domain\ForecastAssertion::RESULT => 'Resultado',
             \Prode\Domain\ForecastAssertion::SCORE => 'Marcador',
-            \Prode\Domain\ForecastAssertion::TIEBREAK_EXISTENCE => 'Existencia de penales',
-            \Prode\Domain\ForecastAssertion::TIEBREAK_SCORE => 'Marcador de penales',
+            \Prode\Domain\ForecastAssertion::TIEBREAK_EXISTENCE => 'Hay penales',
+            \Prode\Domain\ForecastAssertion::TIEBREAK_SCORE => 'Penales',
         ],
     ],
 ];

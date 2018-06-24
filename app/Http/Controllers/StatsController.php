@@ -99,23 +99,36 @@ class StatsController extends Controller
     {
         $userForecastsComputed = $this->forecast->where('user_id', Auth::user()->id)->where('assertions', '<>', null)->get();
         $userForecastsComputedCount = $userForecastsComputed->count();
-        $matchResultForecastsCount = $userForecastsComputed
-            ->where('assertions', [ForecastAssertion::RESULT])->count();
-        $matchScoreForecastsCount = $userForecastsComputed
-            ->where('assertions', [ForecastAssertion::RESULT, ForecastAssertion::SCORE])->count();
+        $matchResultForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::RESULT, $forecast->assertions);})->count();
+        $matchScoreForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::SCORE, $forecast->assertions);})->count();
+        $matchTieBreakExistenceForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::TIEBREAK_EXISTENCE, $forecast->assertions);})->count();
+        $matchTieBreakScoreForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::TIEBREAK_SCORE, $forecast->assertions);})->count();
         $noMatchForecastsCount = $userForecastsComputed
             ->where('assertions', [])->count();
 
         return view('stats.mine', [
             'points' => Auth::user()->points,
+
             'matchResultForecastsCount' => $matchResultForecastsCount,
             'matchResultForecastsPercentage' => $userForecastsComputedCount == 0
                 ? 0
                 : ($matchResultForecastsCount / $userForecastsComputedCount) * 100,
+
             'matchScoreForecastsCount' => $matchScoreForecastsCount,
             'matchScoreForecastsPercentage' => $userForecastsComputedCount == 0
                 ? 0
                 : ($matchScoreForecastsCount / $userForecastsComputedCount) * 100,
+
+            'matchTieBreakExistenceForecastsCount' => $matchTieBreakExistenceForecastsCount,
+            'matchTieBreakExistenceForecastsPercentage' => $matchTieBreakExistenceForecastsCount == 0
+                ? 0
+                : ($matchTieBreakExistenceForecastsCount / $userForecastsComputedCount) * 100,
+
+            'matchTieBreakScoreForecastsCount' => $matchTieBreakScoreForecastsCount,
+            'matchTieBreakScoreForecastsPercentage' => $matchTieBreakScoreForecastsCount == 0
+                ? 0
+                : ($matchTieBreakScoreForecastsCount / $userForecastsComputedCount) * 100,
+
             'noMatchForecastsCount' => $noMatchForecastsCount,
             'noMatchForecastsPercentage' => $userForecastsComputedCount == 0
                 ? 0

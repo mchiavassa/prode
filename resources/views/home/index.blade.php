@@ -7,19 +7,9 @@
         </div>
     </div>
 
-    <div class="async-list" data-source-url="{{route('stats.mine')}}">
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="loading text-center mt-1" style="display: none">
-                <img class="small" src="{{asset('img/loading.svg')}}" />
-            </div>
-        </div>
-    </div>
-
     <div class="async-list" data-source-url="{{route('forecast.next')}}">
     </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-md-12">
             <div class="loading text-center mt-1" style="display: none">
                 <img class="small" src="{{asset('img/loading.svg')}}" />
@@ -27,7 +17,17 @@
         </div>
     </div>
 
-    <div class="row mt-4">
+    <div class="async-list" data-source-url="{{route('stats.mine')}}">
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="loading text-center mt-1" style="display: none">
+                <img class="small" src="{{asset('img/loading.svg')}}" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-6">
             <div class="card p-3 mb-3">
                 <h4 class="mb-4">Mis grupos</h4>

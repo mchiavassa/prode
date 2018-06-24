@@ -102,6 +102,7 @@
         }
     </script>
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     @include('common.messages')
     @stack('script')
 </body>

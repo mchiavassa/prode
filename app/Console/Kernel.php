@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\CreateParty;
 use App\Console\Commands\InviteUserToParty;
 use App\Console\Commands\NotifyGamesWithoutForecast;
+use App\Console\Commands\NotifyTieBreakRules;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
         CreateParty::class,
         InviteUserToParty::class,
         NotifyGamesWithoutForecast::class,
+        NotifyTieBreakRules::class,
     ];
 
     /**

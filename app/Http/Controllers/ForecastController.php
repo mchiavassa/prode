@@ -173,33 +173,33 @@ class ForecastController extends Controller
     private function getUpcomingGamesToForecast()
     {
         $daysAheadToCheck = 3;
+        $currentDay = 0;
 
         do {
             $nextGames = $this->game
-                ->whereHas('set', function($query) {
+                ->whereHas('set', function ($query) {
                     $query->where('status', GameSet::STATUS_ENABLED);
                 })
-                ->whereDate('date_and_hour', Carbon::now()->toDateString())
+                ->whereDate('date_and_hour', Carbon::now()->addDay($currentDay)->toDateString())
                 ->orderBy('date_and_hour')
                 ->get();
 
-            $daysAheadToCheck--;
-        } while ($nextGames->isEmpty() && $daysAheadToCheck > 0);
+            // if games are for today
+            if ($nextGames->isNotEmpty() && Carbon::now()->diffInDays($nextGames->last()->date_and_hour) === 0) {
+                // display the results up to two hours from the last game
+                if (Carbon::now()->diffInHours($nextGames->last()->date_and_hour) < 2) {
+                    return $nextGames;
+                } else {
+                    // otherwise clean the list and look for next day
+                    $nextGames = collect();
+                }
+            }
+
+            $currentDay++;
+        } while ($nextGames->isEmpty() && $daysAheadToCheck > $currentDay);
 
 
-        if ($nextGames->isEmpty()) {
-            return $nextGames;
-        }
-
-        if ($nextGames->where('computed', 0)->isNotEmpty()
-            || Carbon::now()->diffInHours($nextGames->last()->date_and_hour) < 2) { // display the results of today for two hours
-            return $nextGames;
-        }
-
-        return $this->game
-            ->whereDate('date_and_hour', Carbon::now()->addDay(1)->toDateString())
-            ->orderBy('date_and_hour')
-            ->get();
+        return $nextGames;
     }
 
     /**

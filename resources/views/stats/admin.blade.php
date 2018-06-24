@@ -86,7 +86,6 @@
 @endsection
 
 @push('script')
-    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
