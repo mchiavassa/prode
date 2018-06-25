@@ -185,15 +185,15 @@ class ForecastController extends Controller
                 ->get();
 
             // if games are for today
-            // if ($nextGames->isNotEmpty() && Carbon::now()->toDateString() === $nextGames->last()->date_and_hour->toDateString()) {
+            if ($nextGames->isNotEmpty() && Carbon::now()->toDateString() === $nextGames->last()->date_and_hour->toDateString()) {
                 // display the results up to two hours from the last game
-                // if (Carbon::now()->diffInHours($nextGames->last()->date_and_hour) < 2) {
-                //     return $nextGames;
-               // } else {
+                if (Carbon::now()->diffInHours($nextGames->last()->date_and_hour) < 2) {
+                    return $nextGames;
+                } else {
                     // otherwise clean the list and look for next day
-               //      $nextGames = collect();
-              //  }
-          //  }
+                    $nextGames = collect();
+                }
+            }
 
             $currentDay++;
         } while ($nextGames->isEmpty() && $daysAheadToCheck > $currentDay);
