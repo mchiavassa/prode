@@ -54,10 +54,10 @@
             </div>
         </div>
         <p>
-            Para los partidos que no puedan terminar en empate, vas a tener la posibilidad de pronosticar penales aumentando la cantidad de puntos que podés obtener de la siguiente forma:
+            Para los partidos que no puedan terminar en empate vas a tener la posibilidad de pronosticar penales, aumentando las chances de sumar puntos de la siguiente forma:
         </p>
         <ul>
-            <li><strong>{{config('domain.points.result')}} puntos</strong>, acertando el resultado del partido (que equipo ganó o si terminó en empate),</li>
+            <li><strong>{{config('domain.points.result')}} puntos</strong>, acertando el resultado del partido (equipo que ganó)</li>
             <li><strong>{{config('domain.points.score')}} puntos</strong>, acertando el marcador exacto del partido dentro de los 120 minutos de juego.</li>
             <li><strong>{{config('domain.points.tiebreak_existence')}} puntos</strong>, si acertaste que el partido iba a ir a penales.</li>
             <li><strong>{{config('domain.points.tiebreak_score')}} puntos</strong>, acertando la cantidad exacta de penales para cada uno de los equipos.</li>
