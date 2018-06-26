@@ -99,7 +99,7 @@ export default class ForecastGame extends Component {
                     <div className={'row text-center'}>
                         <div className={'col-md-12'}>
                             <div className={'row mt-2 ml-1 mr-1'}>
-                                <div className={'col-4 text-left'}>
+                                <div className={'col-2 text-left'}>
                                     {this.state.game.isAuditable &&
                                     <div className={'text-muted'}>
                                         <a href={this.state.game.auditUrl} alt={'Auditar'}>
@@ -108,10 +108,10 @@ export default class ForecastGame extends Component {
                                     </div>
                                     }
                                 </div>
-                                <div className={'col-4'}>
+                                <div className={'col-8'}>
                                     <div className={'text-muted'}>{this.state.game.group}</div>
                                 </div>
-                                <div className={'col-4 text-right'}>
+                                <div className={'col-2 text-right'}>
                                     {this.state.game.infoUrl &&
                                     <div className={'text-muted'}>
                                         <a href={this.state.game.infoUrl} alt={'Información'} target={'_blank'}>
@@ -120,6 +120,12 @@ export default class ForecastGame extends Component {
                                     </div>
                                     }
                                 </div>
+                            </div>
+                            <div className={'row text-muted'}>
+                                <div className={'col-12'}>
+                                    {moment(this.state.game.dateAndHour).format('DD/MM HH:mm')} hs
+                                </div>
+
                             </div>
                             {!this.state.game.computed && !this.state.game.hasResult &&
                             <div>
