@@ -31,10 +31,19 @@
                 <div class="row text-center">
                     <div class="col-12">
                         @if($game->hasResult() && !$game->computed)
-                            <a href="{{route('game.compute', ['id' => $game->id])}}" class="btn btn-warning mb-2">Computar</a>
+                            <form action="{{route('game.compute', ['id' => $game->id])}}" method="POST">
+                                @csrf
+                                <input type="submit" class="btn btn-warning mb-2" value="Computar" />
+                            </form>
                         @endif
                         @if($game->computed)
                             <span class="badge badge-pill badge-primary mb-2">Computado</span>
+                            <div>
+                                <form action="{{route('game.revert', ['id' => $game->id])}}" method="POST">
+                                    @csrf
+                                    <input type="submit" class="btn btn-danger mb-2" value="Revertir" />
+                                </form>
+                            </div>
                         @endif
                         <div class="text-muted">{{$game->group}} - {{$game->date_and_hour->format('d/m/Y H:i')}}
                             @if($game->info_url)

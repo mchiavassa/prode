@@ -71,12 +71,38 @@ class GameController extends Controller
 
     public function compute($id)
     {
-        $game = $this->game->findOrFail($id);
+        $game = $this->game
+            ->where('computed', 0)
+            ->where('id', $id)
+            ->first();
+
+        if (!$game) {
+            return redirect()->route('set.details', ['id' => $game->set->id])
+                ->with(self::ERROR_MESSAGE, 'El juego ya está computado');
+        }
 
         $this->forecastService->computeGame($game);
 
         return redirect()->route('set.details', ['id' => $game->set->id])
             ->with(self::SUCCESS_MESSAGE, 'Juego computado!');
+    }
+
+    public function revertComputed($id)
+    {
+        $game = $this->game
+            ->where('computed', 1)
+            ->where('id', $id)
+            ->first();
+
+        if (!$game) {
+            return redirect()->route('set.details', ['id' => $game->set->id])
+                ->with(self::ERROR_MESSAGE, 'El juego no está computado');
+        }
+
+        $this->forecastService->revertComputedGame($game);
+
+        return redirect()->route('set.details', ['id' => $game->set->id])
+            ->with(self::SUCCESS_MESSAGE, 'Computo revertido!');
     }
 
     public function create(StoreGame $request, $id)

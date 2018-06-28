@@ -63,4 +63,33 @@ class ForecastService
             $game->save();
         });
     }
+
+    /**
+     * @param Game $game
+     */
+    public function revertComputedGame(Game $game)
+    {
+        $forecasts = $this->forecast
+            ->with('user')
+            ->where('game_id', $game->id)
+            ->get();
+
+        $this->db->connection()->transaction(function () use ($game, $forecasts) {
+            /** @var Forecast $forecast */
+            foreach ($forecasts as $forecast) {
+
+                $forecast->user->points -= $forecast->points_earned;
+                $forecast->user->save();
+
+                /** @var Collection $assertions */
+                $forecast->points_earned = null;
+                $forecast->assertions = null;
+
+                $forecast->save();
+            }
+
+            $game->computed = false;
+            $game->save();
+        });
+    }
 }

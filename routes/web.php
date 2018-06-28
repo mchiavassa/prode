@@ -69,6 +69,7 @@ Route::get('/admin/sets/{id}/games/list', 'GameController@listAdmin')->where('id
 Route::get('/admin/sets/{id}/games/create', 'GameController@showCreate')->where('id', '[0-9]+')->name('game.create.show')->middleware('auth.admin');
 Route::post('/admin/sets/{id}/games/create', 'GameController@create')->where('id', '[0-9]+')->name('game.create')->middleware('auth.admin');
 
-Route::get('/admin/games/{id}/compute', 'GameController@compute')->where('id', '[0-9]+')->name('game.compute')->middleware('auth.admin');
+Route::post('/admin/games/{id}/compute', 'GameController@compute')->where('id', '[0-9]+')->name('game.compute')->middleware('auth.admin');
+Route::post('/admin/games/{id}/revert', 'GameController@revertComputed')->where('id', '[0-9]+')->name('game.revert')->middleware('auth.admin');
 Route::get('/admin/games/{id}', 'GameController@showResultSet')->where('id', '[0-9]+')->name('game.result.show');
 Route::post('/admin/games/{id}', 'GameController@setResult')->where('id', '[0-9]+')->name('game.result');
