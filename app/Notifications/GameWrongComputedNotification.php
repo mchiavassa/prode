@@ -24,7 +24,7 @@ class GameWrongComputedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new GameWrongComputedEmail())
-            ->subject('Fe de erratas: juego mal computaado!')
+            ->subject('Fe de erratas: juego mal computado!')
             ->to($notifiable->email);
     }
 }

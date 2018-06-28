@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\AdjustUserPoints;
 use App\Console\Commands\CreateParty;
 use App\Console\Commands\InviteUserToParty;
 use App\Console\Commands\NotifyGameComputedWrong;
@@ -24,7 +25,8 @@ class Kernel extends ConsoleKernel
         NotifyGamesWithoutForecast::class,
         NotifyTieBreakRules::class,
         NotifyGameComputedWrong::class,
-        TestEmailProvider::class
+        TestEmailProvider::class,
+        AdjustUserPoints::class,
     ];
 
     /**
