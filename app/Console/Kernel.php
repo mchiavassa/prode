@@ -4,8 +4,10 @@ namespace App\Console;
 
 use App\Console\Commands\CreateParty;
 use App\Console\Commands\InviteUserToParty;
+use App\Console\Commands\NotifyGameComputedWrong;
 use App\Console\Commands\NotifyGamesWithoutForecast;
 use App\Console\Commands\NotifyTieBreakRules;
+use App\Console\Commands\TestEmailProvider;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -21,6 +23,8 @@ class Kernel extends ConsoleKernel
         InviteUserToParty::class,
         NotifyGamesWithoutForecast::class,
         NotifyTieBreakRules::class,
+        NotifyGameComputedWrong::class,
+        TestEmailProvider::class
     ];
 
     /**
