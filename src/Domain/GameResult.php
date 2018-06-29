@@ -40,7 +40,7 @@ class GameResult
         $awayTieBreakScore = null
     ) {
         if ($homeScore === $awayScore && $tie_break_required) {
-            return $homeTieBreakScore != null && $awayTieBreakScore != null && $homeTieBreakScore != $awayTieBreakScore;
+            return $homeTieBreakScore !== null && $awayTieBreakScore !== null && $homeTieBreakScore != $awayTieBreakScore;
         }
 
         return $homeTieBreakScore == null && $awayTieBreakScore == null;

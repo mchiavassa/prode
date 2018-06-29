@@ -9,7 +9,7 @@ export default class ScoreDisplay extends Component {
         return (
             <span>
                 {this.isNullOrEmpty(this.props.score) ? '-' : this.props.score}
-                {this.props.tieBreakScore ? '(' + this.props.tieBreakScore + ')' : ''}
+                {!this.isNullOrEmpty(this.props.tieBreakScore) ? '(' + this.props.tieBreakScore + ')' : ''}
             </span>
         );
     }

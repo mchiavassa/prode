@@ -21,6 +21,7 @@ class GameResultTest extends TestCase
         $this->assertTrue(GameResult::resultIsValid(1, 2, true));
         $this->assertTrue(GameResult::resultIsValid(1, 1, true, 1, 2));
         $this->assertTrue(GameResult::resultIsValid(1, 1, true, 2, 1));
+        $this->assertTrue(GameResult::resultIsValid(1, 1, true, 2, 0));
     }
 
     public function testNonTieBreakResultsInvalid()
