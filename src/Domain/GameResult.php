@@ -43,7 +43,7 @@ class GameResult
             return $homeTieBreakScore !== null && $awayTieBreakScore !== null && $homeTieBreakScore != $awayTieBreakScore;
         }
 
-        return $homeTieBreakScore == null && $awayTieBreakScore == null;
+        return $homeTieBreakScore === null && $awayTieBreakScore === null;
     }
 
     /**
