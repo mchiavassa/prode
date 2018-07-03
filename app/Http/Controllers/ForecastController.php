@@ -172,7 +172,7 @@ class ForecastController extends Controller
      */
     private function getUpcomingGamesToForecast()
     {
-        $daysAheadToCheck = 3;
+        $daysAheadToCheck = 4;
         $currentDay = 0;
 
         do {
