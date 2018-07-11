@@ -49,7 +49,7 @@ export default class ForecastGame extends Component {
             'home_score': parseInt(forecast.homeScore),
             'away_score': parseInt(forecast.awayScore),
             'home_tie_break_score': parseInt(forecast.homeTieBreakScore),
-            'away_tie_break_score': parseInt(forecast.awayTieBreakScore),
+            'away_tie_break_score': parseInt(forecast.awayTieBreakScore)
         };
 
         let self = this;
@@ -69,10 +69,10 @@ export default class ForecastGame extends Component {
 
     onForecastUpdate(forecast) {
         let data = {
-            'home_score': forecast.homeScore,
-            'away_score': forecast.awayScore,
-            'home_tie_break_score': forecast.homeTieBreakScore,
-            'away_tie_break_score': forecast.awayTieBreakScore,
+            'home_score': parseInt(forecast.homeScore),
+            'away_score': parseInt(forecast.awayScore),
+            'home_tie_break_score': parseInt(forecast.homeTieBreakScore),
+            'away_tie_break_score': parseInt(forecast.awayTieBreakScore)
         };
 
         let self = this;
