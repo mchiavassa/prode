@@ -1,5 +1,7 @@
 # Prode
 
+![](resources/assets/img/favicon/apple-touch-icon-120x120.png)
+
 Web application to play [PRODE](https://bit.ly/2HDeWPa) with friends.
 
 ## Requirements
