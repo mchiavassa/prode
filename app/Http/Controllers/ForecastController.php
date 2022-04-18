@@ -3,30 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ForecastGame;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
+use App\Models\Forecast;
+use App\Models\Game;
+use App\Models\GameResult;
+use App\Models\GameSet;
+use App\Services\GameService;
+use App\Utils\DateTimes;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Prode\Domain\GameResult;
-use Prode\Domain\Model\Forecast;
-use Prode\Domain\Model\Game;
-use Prode\Domain\Model\GameSet;
 
 class ForecastController extends Controller
 {
-    private $gameSet;
-    private $game;
-    private $forecast;
+    private GameSet $gameSet;
+    private Game $game;
+    private Forecast $forecast;
+    private GameService $gameService;
 
-    public function __construct(GameSet $gameSet, Game $game, Forecast $forecast)
+    public function __construct(GameSet $gameSet, Game $game, Forecast $forecast, GameService $gameService)
     {
         $this->middleware('auth');
 
         $this->gameSet = $gameSet;
         $this->game = $game;
         $this->forecast = $forecast;
+        $this->gameService = $gameService;
     }
 
-    public function showGameSetGamesForecasts($id)
+    /**
+     * Displays a view with all games available to forecast from a particular game set
+     *
+     * @param int $id the id of the game set
+     */
+    public function showGameSetGamesForecasts(int $id)
     {
         /** @var GameSet $gameSet */
         $gameSet = $this->gameSet
@@ -48,13 +56,20 @@ class ForecastController extends Controller
 
         return view(
             'forecast.set',
-            ['gameSet' => $gameSet, 'games' => $games, 'forecasts' => $forecasts]
+            [
+                'gameSet' => $gameSet,
+                'games' => $games,
+                'forecasts' => $forecasts
+            ]
         );
     }
 
+    /**
+     * Displays a partial view (used in the home page) with the upcoming games to forecast
+     */
     public function nextGamesForecast()
     {
-        $nextGames = $this->getUpcomingGamesToForecast();
+        $nextGames = $this->gameService->getUpcomingGamesToForecast();
 
         if (!$nextGames) {
             return null;
@@ -74,11 +89,17 @@ class ForecastController extends Controller
 
         return view(
             'forecast.next',
-            ['games' => $nextGames, 'forecasts' => $forecasts]
+            [
+                'games' => $nextGames,
+                'forecasts' => $forecasts
+            ]
         );
     }
 
-    public function forecastGame(ForecastGame $request, $gameId)
+    /**
+     * POST operation that receives and creates a forecast of a particular game from the logged user
+     */
+    public function forecastGame(ForecastGame $request, int $gameId)
     {
         $validated = $request->validated();
 
@@ -89,10 +110,10 @@ class ForecastController extends Controller
         $forecast = new Forecast();
         $forecast->game_id = $gameId;
         $forecast->user()->associate(Auth::user());
-        $forecast->home_score = array_get($validated, 'home_score');
-        $forecast->away_score = array_get($validated, 'away_score');
-        $forecast->home_tie_break_score = array_get($validated, 'home_tie_break_score');
-        $forecast->away_tie_break_score = array_get($validated, 'away_tie_break_score');
+        $forecast->home_score = Arr::get($validated, 'home_score');
+        $forecast->away_score = Arr::get($validated, 'away_score');
+        $forecast->home_tie_break_score = Arr::get($validated, 'home_tie_break_score');
+        $forecast->away_tie_break_score = Arr::get($validated, 'away_tie_break_score');
 
         if (!GameResult::resultIsValid(
             $forecast->home_score,
@@ -101,7 +122,7 @@ class ForecastController extends Controller
             $forecast->home_tie_break_score,
             $forecast->away_tie_break_score
         )) {
-            return $this->jsonError(400, 'El resultado es inválido');
+            return $this->jsonError(400, __('game.result.invalid'));
         }
 
         $this->assertGameIsNotForecastedByUser($game);
@@ -111,7 +132,10 @@ class ForecastController extends Controller
         return $this->jsonSuccess(json_decode($forecast, true));
     }
 
-    public function updateForecastGame(ForecastGame $request, $gameId, $forecastId)
+    /**
+     * POST operation that updates a forecast of a particular game from the logged user
+     */
+    public function updateForecastGame(ForecastGame $request, int $gameId, int $forecastId)
     {
         $validated = $request->validated();
 
@@ -119,10 +143,10 @@ class ForecastController extends Controller
 
         $this->assertGameCanBeForecast($forecast->game);
 
-        $forecast->home_score = array_get($validated, 'home_score');
-        $forecast->away_score = array_get($validated, 'away_score');
-        $forecast->home_tie_break_score = array_get($validated, 'home_tie_break_score');
-        $forecast->away_tie_break_score = array_get($validated, 'away_tie_break_score');
+        $forecast->home_score = Arr::get($validated, 'home_score');
+        $forecast->away_score = Arr::get($validated, 'away_score');
+        $forecast->home_tie_break_score = Arr::get($validated, 'home_tie_break_score');
+        $forecast->away_tie_break_score = Arr::get($validated, 'away_tie_break_score');
 
         if (!GameResult::resultIsValid(
             $forecast->home_score,
@@ -137,7 +161,7 @@ class ForecastController extends Controller
                     'message' => 'BadRequest',
                 ],
                 'error' => [
-                    'message' => 'El resultado es inválido',
+                    'message' => __('game.result.invalid'),
                 ],
             ], 400);
         }
@@ -156,67 +180,28 @@ class ForecastController extends Controller
     private function assertGameCanBeForecast(Game $game)
     {
         if (!$game->canForecast()) {
-            abort(400, 'El partido no puede ser pronosticado.');
+            abort(400, __('game.forecasts.closed'));
         }
     }
 
     private function assertGameIsNotForecastedByUser(Game $game)
     {
         if ($this->forecast->where('game_id', $game->id)->where('user_id', Auth::user()->id)->first()) {
-            abort(400, 'Ya pronosticaste este partido.');
+            abort(400, __('game.forecasts.exists'));
         }
     }
 
-    /**
-     * @return Collection
-     */
-    private function getUpcomingGamesToForecast()
-    {
-        $daysAheadToCheck = 4;
-        $currentDay = 0;
-
-        do {
-            $nextGames = $this->game
-                ->whereHas('set', function ($query) {
-                    $query->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED]);
-                })
-                ->whereDate('date_and_hour', Carbon::now()->addDay($currentDay)->toDateString())
-                ->orderBy('date_and_hour')
-                ->get();
-
-                // if we have games
-            if ($nextGames->isNotEmpty()
-                // for today
-                && Carbon::now()->toDateString() === $nextGames->last()->date_and_hour->toDateString()
-                // and it's been more than 2 hours since the last one finished
-                && Carbon::now()->addHours(-2)->greaterThanOrEqualTo($nextGames->last()->date_and_hour)
-            ) {
-                // clean the list and look for tomorrow's games
-                $nextGames = collect();
-            }
-
-            $currentDay++;
-        } while ($nextGames->isEmpty() && $daysAheadToCheck > $currentDay);
-
-
-        return $nextGames;
-    }
-
-    /**
-     * @param Game $game
-     * @return array
-     */
     private function mapGameToForecast(Game $game)
     {
         return [
             'id' => $game->id,
-            'dateAndHour' => $game->date_and_hour->timestamp * 1000,
+            'dateAndHour' => DateTimes::toTimestamp($game->date_and_hour),
             'group' => $game->group,
             'home' => $game->home,
             'away' => $game->away,
             'infoUrl' => $game->info_url,
-            'homeFullName' => config('domain.teams.'.$game->home),
-            'awayFullName' => config('domain.teams.'.$game->away),
+            'homeFullName' => __('domain.teams.'.$game->home),
+            'awayFullName' => __('domain.teams.'.$game->away),
             'homeShield' => asset('img/flags/'.$game->home.'.svg'),
             'awayShield' => asset('img/flags/'.$game->away.'.svg'),
             'homeScore' => $game->home_score,
@@ -229,14 +214,10 @@ class ForecastController extends Controller
             'computed' => $game->computed,
             'tieBreakRequired' => $game->tie_break_required,
             'forecastUrl' => route('forecast.game', ['gameId' => $game->id]),
-            'auditUrl' => route('game.audit', ['id' => $game->id]),
+            'forecastsUrl' => route('game.forecasts', ['id' => $game->id]),
         ];
     }
 
-    /**
-     * @param Forecast $forecast
-     * @return array
-     */
     private function mapForecast(Forecast $forecast)
     {
         return [
@@ -247,7 +228,11 @@ class ForecastController extends Controller
             'awayTieBreakScore' => $forecast->away_tie_break_score,
             'pointsEarned' => $forecast->points_earned,
             'assertions' => collect($forecast->assertions)->map(function($assertion) {
-                return __('domain.forecast.assertion.'.$assertion);
+                return sprintf(
+                    '%s (%s)',
+                    __('domain.forecast.assertion.'.$assertion),
+                    config('domain.points.'.$assertion)
+                );
             })->implode(' + ')
         ];
     }

@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Forecast;
+use App\Models\ForecastAssertion;
+use App\Models\Game;
+use App\Models\GameSet;
+use App\Models\Party;
+use App\Models\Ranking;
+use App\Models\User;
+use App\Utils\DateTimes;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Prode\Domain\ForecastAssertion;
-use Prode\Domain\Model\Forecast;
-use Prode\Domain\Model\Game;
-use Prode\Domain\Model\GameSet;
-use Prode\Domain\Model\Party;
-use Prode\Domain\Model\User;
-use Prode\Domain\Ranking;
 
 class StatsController extends Controller
 {
-    private $forecast;
-    private $user;
-    private $gameSet;
-    private $game;
-    private $party;
+    private Forecast $forecast;
+    private User $user;
+    private GameSet $gameSet;
+    private Game $game;
+    private Party $party;
 
     public function __construct(Forecast $forecast, User $user, GameSet $gameSet, Game $game, Party $party)
     {
@@ -52,8 +53,8 @@ class StatsController extends Controller
     {
         $allUsers = $this->user->get();
 
-        $todayUsers = $this->user->whereDate('created_at', Carbon::now()->toDateString())->get();
-        $todayParties = $this->party->whereDate('created_at', Carbon::now()->toDateString())->count();
+        $todayUsers = $this->user->whereDate('created_at', DateTimes::now()->toDateString())->get();
+        $todayParties = $this->party->whereDate('created_at', DateTimes::now()->toDateString())->count();
         $totalPoints = $allUsers->sum('points');
         $usersWithPoints = $allUsers->where('points', '>', 0);
 
@@ -74,12 +75,12 @@ class StatsController extends Controller
             $points = $game->forecasts->sum('points_earned');
 
             $games->push((object)[
-                'name' => sprintf('%s - %s', config('domain.teams.'.$game->home), config('domain.teams.'.$game->away)),
+                'name' => sprintf('%s - %s', __('domain.teams.'.$game->home), __('domain.teams.'.$game->away)),
                 'points' => $points
             ]);
         }
 
-        $todayForecasts = $this->forecast->with('user')->whereDate('created_at', Carbon::now()->toDateString())->get();
+        $todayForecasts = $this->forecast->with('user')->whereDate('created_at', DateTimes::now()->toDateString())->get();
         $todayForecasters = $allUsers->whereIn('id', $todayForecasts->groupBy('user_id')->keys()->all());
 
         return view('stats.admin', [

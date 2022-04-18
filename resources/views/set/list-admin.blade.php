@@ -1,6 +1,6 @@
 @if($gameSets->isEmpty())
     <div class="text-center font-italic">
-        Aún no hay fechas cargadas
+        {{__('party.list.empty')}}
     </div>
 @else
     @foreach ($gameSets->sortByDesc('created_at') as $gameSet)

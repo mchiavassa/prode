@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card p-3 mb-3 bg-dark text-white">
-                        <h4 class="mb-4">Puntos</h4>
+                        <h4 class="mb-4">{{__('stats.points')}}</h4>
                         <h1>
                             <strong>
                                 {{$totalPoints}}
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card p-3 mb-3 bg-light">
-                        <h4 class="mb-4">Promedio</h4>
+                        <h4 class="mb-4">{{__('stats.average')}}</h4>
                         <h1>
                             <strong>
                                 {{$totalAverage}}
@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card p-3 mb-3">
-                        <h4 class="mb-4">Usuarios hoy</h4>
+                        <h4 class="mb-4">{{__('stats.users')}}</h4>
                         <h1>
                             <strong>
                                 {{$todayUsers->count()}}
@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card p-3 mb-3">
-                        <h4 class="mb-4">Grupos hoy</h4>
+                        <h4 class="mb-4">{{__('stats.parties')}}</h4>
                         <h1>
                             <strong>
                                 {{$todayParties}}
@@ -59,7 +59,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">Pronósticos enviados hoy</h4>
+                <h4 class="mb-4">{{__('stats.forecasts')}}</h4>
                 <h1>
                     <strong>
                         {{$todayForecasts}}
@@ -72,21 +72,21 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">Top 5 partidos</h4>
-                @include('common.ranking', ['ranking' => new \Prode\Domain\Ranking($games, null, 5)])
+                <h4 class="mb-4">{{__('stats.top_matches')}}</h4>
+                @include('common.ranking', ['ranking' => new \App\Models\Ranking($games, null, 5)])
             </div>
         </div>
         <div class="col-md-6">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">Top fechas</h4>
-                @include('common.ranking', ['ranking' => new \Prode\Domain\Ranking($gameSets)])
+                <h4 class="mb-4">{{__('stats.top_sets')}}</h4>
+                @include('common.ranking', ['ranking' => new \App\Models\Ranking($gameSets)])
             </div>
         </div>
     </div>
 @endsection
 
 @push('script')
-    <script>
+    <script type="text/javascript">
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });

@@ -8,11 +8,27 @@ return [
     |--------------------------------------------------------------------------
     |
     | This file is for storing the credentials for third party services such
-    | as Stripe, Mailgun, SparkPost and others. This file provides a sane
-    | default location for this type of information, allowing packages
-    | to have a conventional place to find your various credentials.
+    | as Mailgun, Postmark, AWS and more. This file provides the de facto
+    | location for this type of information, allowing packages to have
+    | a conventional file to locate the various service credentials.
     |
     */
+
+    'mailgun' => [
+        'domain' => env('MAILGUN_DOMAIN'),
+        'secret' => env('MAILGUN_SECRET'),
+        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+        'scheme' => 'https',
+    ],
+
+    'sendgrid' => [
+        'api_key' => env('SENDGRID_API_KEY'),
+    ],
+
+    'sendinblue' => [
+        'url' => 'https://api.sendinblue.com/v2.0',
+        'key' => env('SENDINBLUE_KEY'),
+    ],
 
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
@@ -26,21 +42,9 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URL'),
     ],
 
-    'sendgrid' => [
-        'api_key' => env('SENDGRID_API_KEY'),
-    ],
-
-    'sendinblue' => [
-        'url' => 'https://api.sendinblue.com/v2.0',
-        'key' => env('SENDINBLUE_KEY'),
-    ],
-
-    'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_KEY'),
-    ],
-
-    'sparkpost' => [
-        'secret' => env('SPARKPOST_KEY'),
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_REDIRECT_URL'),
     ],
 ];

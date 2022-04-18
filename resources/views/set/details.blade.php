@@ -4,15 +4,13 @@
     @include('set.header', ['gameSet' => $gameSet])
 
     @if($gameSet->isDraft())
-        <a href="{{route('game.create.show', ['id' => $gameSet->id])}}" class="btn btn-primary mb-3">Agregar Partido</a>
+        <a href="{{route('game.create.show', ['id' => $gameSet->id])}}" class="btn btn-primary mb-3">{{__('set.actions.add')}}</a>
         @if($gameSet->games->isNotEmpty())
-            <a href="{{route('set.enable', ['id' => $gameSet->id])}}" class="btn btn-success mb-3">Habilitar</a>
+            <a href="{{route('set.enable', ['id' => $gameSet->id])}}" class="btn btn-success mb-3">{{__('set.actions.enable')}}</a>
         @endif
     @elseif ($gameSet->isEnabled() && $gameSet->games->where('computed', false)->isEmpty())
-        <a href="{{route('set.finish', ['id' => $gameSet->id])}}" class="btn btn-primary mb-3">Finalizar</a>
+        <a href="{{route('set.finish', ['id' => $gameSet->id])}}" class="btn btn-primary mb-3">{{__('set.actions.finish')}}</a>
     @endif
-
-    <a href="{{route('set.admin')}}" class="btn btn-dark mb-3">Volver</a>
 
     <div class="async-list" data-source-url="{{route('game.list.admin', ['id' => $gameSet->id])}}">
     </div>

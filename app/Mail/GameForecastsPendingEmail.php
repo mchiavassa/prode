@@ -11,7 +11,7 @@ class GameForecastsPendingEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $games;
+    private Collection $games;
 
     public function __construct(Collection $games)
     {

@@ -300,18 +300,14 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Hola!</p>
-                                        <p>Estos partidos están a punto de comenzar! No te olvides de cargar tus pronósticos.</p>
+                                        <p>{{__('emails.common.hello')}}</p>
+                                        <p>{{__('emails.forecasts.message')}}</p>
                                         <br>
                                         <div style="text-align: center">
                                         @foreach($games as $game)
                                             <strong>
-                                                {{ config('domain.teams.'.$game->home) }} - {{ config('domain.teams.'.$game->away) }}
+                                                {{ __('domain.teams.'.$game->home) }} - {{ __('domain.teams.'.$game->away) }}
                                             </strong>
-                                                <br>
-                                            <span>
-                                                {{$game->date_and_hour->format('d/m/Y H:i')}}
-                                            </span>
                                             <hr />
                                         @endforeach
                                         </div>
@@ -322,7 +318,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td><a href="{{route('home')}}" target="_blank">Ir a Prode!</a></td>
+                                                            <td><a href="{{route('home')}}" target="_blank">{{__('emails.common.go')}}</a></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -330,8 +326,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <p>Saludos!</p>
-                                        <p><strong>Prode Team</strong></p>
+                                        <p>{{__('emails.common.salute')}}</p>
                                     </td>
                                 </tr>
                             </table>
@@ -340,7 +335,7 @@
                     <tr>
                         <td>
                             <hr/>
-                            <p>Si no jugás más al prode, ingresá a la app y <a href="{{route('delete.show')}}">eliminá tu cuenta</a>.</p>
+                            <p>{{__('emails.common.delete1')}}<a href="{{route('delete.show')}}">{{__('emails.common.delete2')}}</a></p>
                         </td>
                     </tr>
                 </table>

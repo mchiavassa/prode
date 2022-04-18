@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Countdown from 'react-countdown-now';
+import Countdown from 'react-countdown';
 import ReactTooltip from 'react-tooltip'
 import ScoreDisplay from './ScoreDisplay';
 import TeamDisplay from './TeamDisplay';
@@ -12,7 +12,8 @@ export default class ForecastGame extends Component {
         this.state = {
             game: props.game,
             forecast: props.forecast,
-            edit: false
+            edit: false,
+            strings: props.strings
         };
 
         this.onForecastSubmit = this.onForecastSubmit.bind(this);
@@ -63,7 +64,7 @@ export default class ForecastGame extends Component {
                 });
             })
             .catch(function (error) {
-                toastr.error(error.response.data.message || error.response.data.error.message || 'Ups! ocurrió un error inesperado.');
+                toastr.error(error.response.data.message || error.response.data.error.message || this.state.strings.unexpectedError);
             });
     }
 
@@ -87,7 +88,7 @@ export default class ForecastGame extends Component {
                 });
             })
             .catch(function (error) {
-                toastr.error(error.response.data.message || error.response.data.error.message || 'Ups! ocurrió un error inesperado.');
+                toastr.error(error.response.data.message || error.response.data.error.message || this.state.strings.unexpectedError);
             });
     }
 
@@ -98,12 +99,12 @@ export default class ForecastGame extends Component {
                 <div className={'card text-center mb-2 ' + (this.state.game.computed ? 'bg-light' : '')}>
                     <div className={'row text-center'}>
                         <div className={'col-md-12'}>
-                            <div className={'row mt-2 ml-1 mr-1'}>
+                            <div className={'row mt-2'}>
                                 <div className={'col-2 text-left'}>
                                     {this.state.game.isAuditable &&
                                     <div className={'text-muted'}>
-                                        <a href={this.state.game.auditUrl} alt={'Auditar'}>
-                                            <i className={'fas fa-lock audit'}/>
+                                        <a href={this.state.game.forecastsUrl}>
+                                            <i className={'bi-magic audit'}/>
                                         </a>
                                     </div>
                                     }
@@ -114,7 +115,7 @@ export default class ForecastGame extends Component {
                                 <div className={'col-2 text-right'}>
                                     {this.state.game.infoUrl &&
                                     <div className={'text-muted'}>
-                                        <a href={this.state.game.infoUrl} alt={'Información'} target={'_blank'}>
+                                        <a href={this.state.game.infoUrl} alt={'Info'} target={'_blank'}>
                                             <i className={'fas fa-chart-line'}/>
                                         </a>
                                     </div>
@@ -123,11 +124,11 @@ export default class ForecastGame extends Component {
                             </div>
                             <div className={'row text-muted'}>
                                 <div className={'col-12'}>
-                                    {moment(this.state.game.dateAndHour).format('DD/MM HH:mm')} hs
+                                    {moment(this.state.game.dateAndHour).format(this.state.strings.format.datetime)} ({Intl.DateTimeFormat().resolvedOptions().timeZone})
                                 </div>
 
                             </div>
-                            {!this.state.game.computed && !this.state.game.hasResult &&
+                            {!this.state.game.computed &&
                             <div>
                                 <Countdown className={'mt-2'}
                                            date={this.state.game.dateAndHour}
@@ -135,10 +136,10 @@ export default class ForecastGame extends Component {
                                            onComplete={this.onCompleteCountdown}
                                            renderer={({ days, hours, minutes, seconds, completed }) => {
                                                 if (completed) {
-                                                    return <span>El partido ya comenzó!</span>;
+                                                    return <span className={'badge rounded-pill live-badge bg-danger mt-1 '}>{this.state.strings.live}</span>;
                                                 } else {
                                                     return <span className={'text-muted'}>
-                                                        faltan <strong>{days}d {hours}h {minutes}m {seconds}s</strong> para el partido
+                                                        {this.state.strings.countdown.before} <strong>{days}{this.state.strings.format.day} {hours}{this.state.strings.format.hour} {minutes}{this.state.strings.format.minute} {seconds}{this.state.strings.format.second}</strong> {this.state.strings.countdown.after}
                                                     </span>;
                                                 }
                                            }}/>
@@ -155,7 +156,7 @@ export default class ForecastGame extends Component {
                                 <div className={'col-4 font-weight-bold'}>
                                     {this.state.game.computed &&
                                     <span>
-                                        Puntos <h1>{this.state.forecast ? this.state.forecast.pointsEarned : 0}</h1>
+                                        {this.state.strings.points} <h1>{this.state.forecast ? this.state.forecast.pointsEarned : 0}</h1>
                                         {this.state.forecast && this.state.forecast.assertions.length > 0 &&
                                             <span>
                                                 <i className={'fas fa-question-circle text-muted'} data-tip data-for={'points-' + this.state.game.id} />
@@ -177,7 +178,7 @@ export default class ForecastGame extends Component {
                         <div className={'col-md-12'}>
                             {this.state.forecast && !this.state.edit &&
                             <div>
-                                <div className={'mt-4'}>Tu pronóstico</div>
+                                <div className={'mt-4'}>{this.state.strings.yourForecast}</div>
                                 <div className={'row'}>
                                     <div className={'col-6'}>
                                         <h2 className={'card-text'}>
@@ -192,40 +193,42 @@ export default class ForecastGame extends Component {
                                 </div>
                                 {this.state.game.canForecast &&
                                     <div className={'mt-2 text-center'}>
-                                        <button onClick={this.editForecast} className={'btn btn-light'}>Modificar</button>
+                                        <button onClick={this.editForecast} className={'btn btn-light'}>{this.state.strings.update}</button>
                                     </div>
                                 }
                             </div>
                             }
 
                             {!this.state.game.hasResult && !this.state.forecast && this.state.game.canForecast &&
-                                <ForecastForm tieBreakRequired={this.state.game.tieBreakRequired}
+                                <ForecastForm strings={this.state.strings}
+                                              tieBreakRequired={this.state.game.tieBreakRequired}
                                               onForecastSubmit={this.onForecastSubmit} />
                             }
 
                             {this.state.edit &&
                                 <div>
-                                    <ForecastForm tieBreakRequired={this.state.game.tieBreakRequired}
+                                    <ForecastForm strings={this.state.strings}
+                                                  tieBreakRequired={this.state.game.tieBreakRequired}
                                                   homeScore={this.state.forecast.homeScore}
                                                   awayScore={this.state.forecast.awayScore}
                                                   homeTieBreakScore={this.state.forecast.homeTieBreakScore}
                                                   awayTieBreakScore={this.state.forecast.awayTieBreakScore}
                                                   onForecastSubmit={this.onForecastUpdate} />
                                     <div className={'mt-2 text-center'}>
-                                        <button onClick={this.cancelEditForecast} className={'btn btn-light'}>Cancelar</button>
+                                        <button onClick={this.cancelEditForecast} className={'btn btn-light'}>{this.state.strings.cancel}</button>
                                     </div>
                                 </div>
                             }
 
-                            {!this.state.forecast && this.state.game.hasResult &&
-                            <div className={'font-italic text-muted mt-4'}>No pronosticaste este partido</div>
+                            {!this.state.forecast && (!this.state.game.canForecast || this.state.game.hasResult) &&
+                            <div className={'font-italic text-muted mt-4'}>{this.state.strings.noForecast}</div>
                             }
                         </div>
 
                         {this.state.game.hasResult &&
                         <div className={'col-md-12'}>
                             <hr/>
-                            <div>Resultado final</div>
+                            <div>{this.state.game.computed ? this.state.strings.finalResult : this.state.strings.partialResult}</div>
                             <div className={'row'}>
                                 <div className={'col-6'}>
                                     <h4 className={'card-text'}>

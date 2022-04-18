@@ -17,8 +17,6 @@
         </div>
     </div>
 
-    <div class="async-list" data-source-url="{{route('stats.mine')}}">
-    </div>
     <div class="row mb-3">
         <div class="col-md-12">
             <div class="loading text-center mt-1" style="display: none">
@@ -30,7 +28,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">Mis grupos</h4>
+                <h4 class="mb-4">{{__('party.mine')}}</h4>
                 <div class="async-list" data-source-url="{{route('party.list.mine')}}">
                 </div>
                 <div class="row">
@@ -44,7 +42,7 @@
         </div>
         <div class="col-md-6">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">Fechas</h4>
+                <h4 class="mb-4">{{__('set.title')}}</h4>
                 <div class="async-list" data-source-url="{{route('set.list')}}">
                 </div>
                 <div class="row">

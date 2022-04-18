@@ -2,17 +2,20 @@
 
 @section('content')
     <div class="mb-4">
-        <h2>{{$party->name}}</h2>
+        <div class="feature-icon bg-dark bg-gradient">
+            <i class="bi-people-fill"></i>
+        </div>
+        <span class="fs-2 fw-bold">{{$party->name}}</span>
     </div>
 
-    <a href="{{route('home')}}" class="btn btn-dark mb-3">Volver</a>
+    <a href="{{route('home')}}" class="btn btn-light mb-3">{{__('common.buttons.back')}}</a>
 
     <div class="row">
         <div class="col-md-6 order-2 order-md-1">
             <div class="row">
                 <div class="col-md-4">
                     <div class="card p-3 mb-3">
-                        <h4 class="mb-4">Promedio</h4>
+                        <h4 class="mb-4">{{__('party.average')}}</h4>
                         <h1>
                             <strong>
                                 {{number_format($party->users->sum('points') / $party->users->count(), 2)}}
@@ -22,7 +25,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card p-3 mb-3">
-                        <h4 class="mb-4">Puntos</h4>
+                        <h4 class="mb-4">{{__('party.points')}}</h4>
                         <h1>
                             <strong>
                                 {{$party->users->sum('points')}}
@@ -32,7 +35,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card p-3 mb-3">
-                        <h4 class="mb-4">Jugadores</h4>
+                        <h4 class="mb-4">{{__('party.players')}}</h4>
                         <h1>
                             <strong>
                                 {{$party->users->count()}}
@@ -46,7 +49,7 @@
                 <div id="editor" class="mb-2">
                     {!! $party->description !!}
                 </div>
-                <button id="btnSaveDescription" class="btn btn-primary">Guardar</button>
+                <button id="btnSaveDescription" class="btn btn-primary">{{__('common.buttons.save')}}</button>
             </div>
             @elseif ($party->description)
             <div class="card p-3 mb-3">
@@ -61,10 +64,10 @@
                 </div>
             @endif
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">Posiciones</h4>
+                <h4 class="mb-4">{{__('party.ranking')}}</h4>
 
                 <form class="mb-4">
-                    <select id='rankings-select' class="form-control">
+                    <select id='rankings-select' class="form-select">
                         @foreach($sets as $set)
                             <option value="{{$set->id}}">{{$set->name}}</option>
                         @endforeach
@@ -82,14 +85,14 @@
                 </div>
             </div>
             <div class="card p-3 mb-3">
-                <p class="text-muted">
-                    Invitá a tus amigos compartiendo el siguiente link.
-                    Una vez enviada su solicitud cualquier Admin del grupo podrá aceptarla.
-                </p>
-                <input id="link" value="{{route('party.details', ['id' => $party->id])}}" class="form-control mb-1">
-                <button class="share btn btn-light" data-clipboard-target="#link">
-                    Copiar
-                </button>
+                <p class="text-muted">{{__('party.share')}}</p>
+                <div class="d-flex">
+                    <input id="link" value="{{route('party.details', ['id' => $party->id])}}" class="form-control me-2" readonly="readonly">
+                    <button class="share btn btn-light" data-clipboard-target="#link">
+                        <i class="bi bi-files"></i>
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -102,7 +105,7 @@
 @endif
 @push('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
-    <script>
+    <script type="text/javascript">
         new ClipboardJS('.share');
         $(function () {
             $('#dates').on('change', function (e) {
@@ -113,11 +116,11 @@
     </script>
     @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
         <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-        <script>
+        <script type="text/javascript">
             $(function () {
                 var quill = new Quill('#editor', {
                     theme: 'snow',
-                    placeholder: 'Acá podés escribir lo que quieras: reglas internas, mensajes, etc.'
+                    placeholder: '{{__('party.description.placeholder')}}'
                 });
 
                 $('#btnSaveDescription').click(function () {
@@ -131,13 +134,13 @@
                         data: {description: $('.ql-editor').html()},
                         success: function (response) {
                             if (response.metadata.code === 200) {
-                                toastr.success("Descripción guardada.");
+                                toastr.success("{{__('party.description.saved')}}");
                             } else {
-                                toastr.error("Ocurrió un error al intentar guardar la descripción.");
+                                toastr.error("{{__('party.description.error')}}");
                             }
                         },
                         error: function () {
-                            toastr.error("Ocurrió un error al intentar guardar la descripción.");
+                            toastr.error("{{__('party.description.error')}}");
                         }
                     };
 
@@ -163,10 +166,10 @@
                     url: '{{route('party.ranking', ['id' => $party->id])}}' + '?setId=' + setId,
                     success: function (response) {
                         $('#rankings').append('<div class="tab-pane" id="ranking-' + setId + '">' + response + '</div>');
-                        $('#ranking-' + setId).show();
+                        $('#ranking-' + setId).fadeIn(1000);
                     },
                     error: function () {
-                        toastr.error("Ocurrió un error al intentar traer el ranking.");
+                        toastr.error('{{__('common.messages.errors.fetch_data')}}');
                     }
                 };
 
@@ -174,7 +177,7 @@
                 loading.show();
 
                 $.ajax(options).done(function () {
-                    loading.hide();
+                    loading.fadeOut(500);
                 });
             });
 

@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Party;
 use Illuminate\Console\Command;
-use Prode\Domain\Model\Party;
 
 class CreateParty extends Command
 {
@@ -12,7 +12,7 @@ class CreateParty extends Command
      *
      * @var string
      */
-    protected $signature = 'party:create 
+    protected $signature = 'party:create
                              {--name= : Name of the party}';
 
     /**

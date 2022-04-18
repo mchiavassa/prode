@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
-use Prode\Domain\Model\User;
-use Prode\Service\UserService;
 
 class UserController extends Controller
 {
-    private $user;
-    private $userService;
+    private User $user;
+    private UserService $userService;
 
     public function __construct(User $user, UserService $userService)
     {
@@ -19,6 +19,10 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
+    /**
+     * (App admin only)
+     * Displays the view with the list of users in the platform
+     */
     public function index()
     {
         $users = $this->user
@@ -29,18 +33,24 @@ class UserController extends Controller
         return view('user.index', ['users' => $users]);
     }
 
+    /**
+     * Displays the view to delete the account of the logged user
+     */
     public function showDelete()
     {
         return view('user.delete');
     }
 
+    /**
+     * POST operation that deletes the account of the logged user
+     */
     public function delete()
     {
         $this->userService->delete(Auth::user());
 
         Auth::logout();
 
-        return redirect()->route('login')->with(self::SUCCESS_MESSAGE, 'Tu cuenta ha sido eliminada.');;
+        return redirect()->route('login')->with(self::SUCCESS_MESSAGE, __('account.delete.succeed'));;
 
     }
 }

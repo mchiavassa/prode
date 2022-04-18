@@ -300,8 +300,8 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Hola!</p>
-                                        <p>Se habilitó la fecha <strong>{{$gameSet->name}}</strong> con <strong>{{$gameSet->games->count()}}</strong> nuevos partidos para pronosticar.</p>
+                                        <p>{{__('emails.common.hello')}}</p>
+                                        <p>{{__('emails.set.message1')}}<strong>{{$gameSet->name}}</strong>{{__('emails.set.message2')}}<strong>{{$gameSet->games->count()}}</strong>{{__('emails.set.message3')}}</p>
                                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                             <tbody>
                                             <tr>
@@ -309,7 +309,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td><a href="{{route('forecast.set', ['id' => $gameSet->id])}}" target="_blank">Ir a la fecha!</a></td>
+                                                            <td><a href="{{route('forecast.set', ['id' => $gameSet->id])}}" target="_blank">{{__('emails.common.go')}}</a></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -317,8 +317,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <p>Saludos!</p>
-                                        <p><strong>Prode Team</strong></p>
+                                        <p>{{__('emails.common.salute')}}</p>
                                     </td>
                                 </tr>
                             </table>
@@ -327,7 +326,7 @@
                     <tr>
                         <td>
                             <hr/>
-                            <p>Si no jugás más al prode, ingresá a la app y <a href="{{route('delete.show')}}">eliminá tu cuenta</a>.</p>
+                            <p>{{__('emails.common.delete1')}}<a href="{{route('delete.show')}}">{{__('emails.common.delete2')}}</a></p>
                         </td>
                     </tr>
                 </table>

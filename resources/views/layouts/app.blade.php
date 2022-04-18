@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Prode') }}</title>
 
     <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{asset('img/favicon/apple-touch-icon-57x57.png')}}" />
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{asset('img/favicon/apple-touch-icon-114x114.png')}}" />
@@ -31,13 +31,13 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md {{Request::get('admin-view') ? 'navbar-dark bg-dark' : 'navbar-light'}} navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{route('home')}}">
-                    <img src="{{asset('img/logo.png')}}" alt="Prode" class="rounded" height="30px">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand fw-bold" href="{{route('home')}}">
+                    <img src="{{asset('img/logo.png')}}" alt="Prode" class="rounded" height="40px">
+                    {{ config('app.name', 'Prode') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -45,8 +45,11 @@
                     @include('common.menu')
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ms-auto">
                         @include('common.login')
+                    </ul>
+                    <ul class="navbar-nav">
+                        @include('common.lang')
                     </ul>
                 </div>
             </div>
@@ -59,8 +62,9 @@
         </main>
         <footer class="bd-footer text-muted">
             <div class="container text-center mb-3">
-                <div>Hecho en <i class="fas fa-map-marker"></i> Córdoba, Argentina</div>
-                <div><a href="mailto:hi@argendev.com">hi@argendev.com</a></div>
+                <a href="https://github.com/mchiavassa/prode" class="repo-link" target="_blank">
+                    <i class="bi-github" style="font-size: 2rem;"></i>
+                </a>
             </div>
         </footer>
     </div>
@@ -83,8 +87,11 @@
             }
         }
     </script>
+    <script type="text/javascript">
+        const errorMessageFetchData = '{{__('common.messages.errors.fetch_data')}}';
+    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118928932-1"></script>
-    <script>
+    <script type="text/javascript">
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -93,7 +100,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.17/moment-timezone-with-data.min.js"></script>
-    <script>
+    <script type="text/javascript">
         const appTimeZone = '{{config('app.timezone')}}';
         function getTimezoneNow() {
             const nowInTimeZone = moment().tz(appTimeZone);
@@ -106,22 +113,4 @@
     @include('common.messages')
     @stack('script')
 </body>
-@auth
-    <!-- Start of Survicate (www.survicate.com) code -->
-    <script type="text/javascript">
-        (function (w) {
-            var s = document.createElement('script');
-            s.src = '//survey.survicate.com/workspaces/d592f450357baa2167bac4ca620bfa15/web_surveys.js';
-            s.async = true;
-            var e = document.getElementsByTagName('script')[0];
-            e.parentNode.insertBefore(s, e);
-        })(window);
-        (function(opts) {
-            opts.traits = {
-                'user_id': '#{{Auth::user()->id}} {{Auth::user()->name}}'
-            };
-        })(window._sva = window._sva || {});
-    </script>
-    <!-- End of Survicate code -->
-@endauth
 </html>

@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -14,13 +14,12 @@ let mix = require('laravel-mix');
 mix.js('resources/assets/js/app.js', 'public/js')
     .copyDirectory('resources/assets/img', 'public/img')
     .sass('resources/assets/sass/app.scss', 'public/css')
-    .react('resources/assets/js/components/ForecastGameSet.jsx', 'public/js/react-components')
-    .react('resources/assets/js/components/NextForecastGame.jsx', 'public/js/react-components')
-    .react('resources/assets/js/components/ForecastGame.jsx', 'public/js/react-components')
-    .react('resources/assets/js/components/ForecastForm.jsx', 'public/js/react-components')
-    .react('resources/assets/js/components/ScoreDisplay.jsx', 'public/js/react-components')
-    .react('resources/assets/js/components/TeamDisplay.jsx', 'public/js/react-components')
-    .react('resources/assets/js/components/GameForecastsValidator.jsx', 'public/js/react-components');
+    .js('resources/assets/js/components/ForecastGameSet.jsx', 'public/js/react-components').react()
+    .js('resources/assets/js/components/NextForecastGame.jsx', 'public/js/react-components').react()
+    .js('resources/assets/js/components/ForecastGame.jsx', 'public/js/react-components').react()
+    .js('resources/assets/js/components/ForecastForm.jsx', 'public/js/react-components').react()
+    .js('resources/assets/js/components/ScoreDisplay.jsx', 'public/js/react-components').react()
+    .js('resources/assets/js/components/TeamDisplay.jsx', 'public/js/react-components').react();
 
 
 if (mix.inProduction()) {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
+
 class HomeController extends Controller
 {
     public function __construct()
@@ -9,12 +11,12 @@ class HomeController extends Controller
         $this->middleware('auth')->except('rules');
     }
 
-    public function index()
+    public function index(): View
     {
         return view('home.index');
     }
 
-    public function rules()
+    public function rules(): View
     {
         return view('home.rules');
     }

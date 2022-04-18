@@ -5,12 +5,12 @@
 
     <div class="card col-md-6 offset-md-3">
         <div class="card-body">
-            <h4>Nuevo Partido</h4>
+            <h4>{{__('game.create.title')}}</h4>
             <form method="POST" action="{{ route('game.create', ['id' =>  $gameSet->id]) }}">
                 @csrf
                 @if ($errors->any())
                     <div class="alert alert-danger">
-                        Errores
+                        {{__('common.messages.errors.title')}}
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -20,32 +20,32 @@
                 @endif
 
                 <div class="form-group">
-                    <label for="home">Local</label>
-                    {{ Form::select('home', \Prode\Domain\Team::list(), old('home'), ['class' => 'form-control mb-2']) }}
+                    <label for="home">{{__('game.create.home')}}</label>
+                    {{ Form::select('home', \App\Services\TeamService::list(), old('home'), ['class' => 'form-select mb-2']) }}
                 </div>
                 <div class="form-group">
-                    <label for="away">Visitante</label>
-                    {{ Form::select('away', \Prode\Domain\Team::list(), old('away'), ['class' => 'form-control']) }}
+                    <label for="away">{{__('game.create.away')}}</label>
+                    {{ Form::select('away', \App\Services\TeamService::list(), old('away'), ['class' => 'form-select']) }}
                 </div>
                 <div class="form-group">
-                    <label for="away">Fecha y hora</label>
+                    <label for="away">{{__('game.create.datetime')}} ({{config('app.timezone')}})</label>
                     {{ Form::text('date_and_hour', '', ['class' => 'form-control']) }}
                     <small class="form-text text-muted">Formato: 2018-04-30 20:30:00</small>
                 </div>
                 <div class="form-group">
-                    <label for="away">Grupo</label>
+                    <label for="away">{{__('game.create.group')}}</label>
                     {{ Form::text('group', '', ['class' => 'form-control']) }}
                 </div>
                 <div class="form-group">
-                    <label for="infoUrl">Info URL</label>
+                    <label for="infoUrl">{{__('game.create.info_url')}}</label>
                     {{ Form::text('info_url', '', ['class' => 'form-control']) }}
                 </div>
                 <div class="form-group">
-                    <label for="away">Incluye penales</label>
-                    {{ Form::select('tie_break_required', [1 => 'Si', 0 => 'No'], old('tie_break_required'), ['class' => 'form-control mb-2']) }}
+                    <label for="away">{{__('game.create.tiebreak')}}</label>
+                    {{ Form::select('tie_break_required', [0 => __('game.create.tiebreak_no'), 1 => __('game.create.tiebreak_yes')], old('tie_break_required'), ['class' => 'form-select mb-2']) }}
                 </div>
-                <input type="submit" class="btn btn-primary" value="Crear">
-                <a href="{{ route('set.details', ['id' => $gameSet->id]) }}" class="btn">Volver</a>
+                <input type="submit" class="btn btn-primary" value="{{__('game.create.submit')}}">
+                <a href="{{ route('set.details', ['id' => $gameSet->id]) }}" class="btn">{{__('common.buttons.back')}}</a>
             </form>
         </div>
     </div>

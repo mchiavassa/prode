@@ -12,7 +12,7 @@
             let options = {
                 url: url,
                 success: function (response) {
-                    list.append(response);
+                    list.append(response).hide().fadeIn(500);
 
                     if (list.find('.item-list').length === loadedItems) {
                         if (loadMoreBtn) {
@@ -23,8 +23,8 @@
                     }
                 },
                 error: function () {
-                    toastr.error("Ocurrió un error al intentar traer algunos datos.");
-                    loading.hide();
+                    toastr.error(errorMessageFetchData);
+                    loading.fadeOut(500);
                 }
             };
 
@@ -36,7 +36,7 @@
 
             loading.show();
             $.ajax(options).done(function () {
-                loading.hide();
+                loading.fadeOut(500);
             });
         };
 

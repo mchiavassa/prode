@@ -2,16 +2,16 @@
 
 namespace App\Mail;
 
+use App\Models\GameSet;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Prode\Domain\Model\GameSet;
 
 class GameSetEnabledEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $gameSet;
+    private GameSet $gameSet;
 
     public function __construct(GameSet $gameSet)
     {
