@@ -2,11 +2,10 @@
 
 namespace App\Console\Commands;
 
-use function foo\func;
+use App\Models\Forecast;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Database\DatabaseManager;
-use Prode\Domain\Model\Forecast;
-use Prode\Domain\Model\User;
 
 class AdjustUserPoints extends Command
 {
@@ -24,9 +23,9 @@ class AdjustUserPoints extends Command
      */
     protected $description = 'Adjust user points by sum all forecasts.';
 
-    private $forecast;
-    private $user;
-    private $db;
+    private Forecast $forecast;
+    private User $user;
+    private DatabaseManager $db;
 
     public function __construct(Forecast $forecast, User $user, DatabaseManager $db)
     {

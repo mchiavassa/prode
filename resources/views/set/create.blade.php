@@ -1,16 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2 class="mb-4">Fechas</h2>
-
     <div class="card col-md-6 offset-md-3">
         <div class="card-body">
-            <h4>Nueva Fecha</h4>
+            <h4>{{__('set.create.title')}}</h4>
             <form method="POST" action="{{ route('set.create') }}">
                 @csrf
                 @if ($errors->any())
                     <div class="alert alert-danger">
-                        Errores
+                        {{__('common.messages.errors.title')}}
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -20,10 +18,10 @@
                 @endif
 
                 <div class="form-group">
-                    {{ Form::text('name', '', ['class' => 'form-control mb-2', 'placeholder'=> 'Nombre']) }}
+                    {{ Form::text('name', '', ['class' => 'form-control mb-2', 'placeholder'=> __('set.create.name')]) }}
                 </div>
-                <input type="submit" class="btn btn-primary" value="Crear">
-                <a href="{{route('set.admin')}}" class="btn btn-dark">Volver</a>
+                <input type="submit" class="btn btn-primary" value="{{__('set.create.submit')}}">
+                <a href="{{route('set.admin')}}" class="btn btn-light">{{__('common.buttons.back')}}</a>
             </form>
         </div>
     </div>

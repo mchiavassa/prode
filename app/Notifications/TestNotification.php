@@ -20,11 +20,15 @@ class TestNotification extends Notification implements ShouldQueue
         return ['mail'];
     }
 
+    public function viaQueues()
+    {
+        return ['mail' => 'emails',];
+    }
 
     public function toMail($notifiable)
     {
         return (new TestEmail())
-            ->subject('Esto es una prueba')
+            ->subject(__('emails.test.subject'))
             ->to($notifiable->email);
     }
 }

@@ -6,7 +6,7 @@
                 {{ $rankingUser->position }}
             </td>
             <td>
-                <img src="{{ $rankingUser->item->picture_url }}" class="rounded" height="30px" alt="{{ $rankingUser->item->name }}">
+                <img src="{{ $rankingUser->item->picture_url }}" class="rounded" height="30px">
                 {{ $rankingUser->item->name }}
             </td>
             <td>

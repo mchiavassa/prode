@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGameSet;
+use App\Models\GameSet;
+use App\Models\User;
 use App\Notifications\GameSetEnabled;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Notification;
-use Prode\Domain\Model\GameSet;
-use Prode\Domain\Model\User;
 
 class GameSetController extends Controller
 {
-    private $gameSet;
-    private $user;
+    private GameSet $gameSet;
+    private User $user;
 
     public function __construct(GameSet $gameSet, User $user)
     {
@@ -49,7 +50,7 @@ class GameSetController extends Controller
         $validated = $request->validated();
 
         $gameSet = new GameSet();
-        $gameSet->name = array_get($validated, 'name');
+        $gameSet->name = Arr::get($validated, 'name');
         $gameSet->status = GameSet::STATUS_DRAFT;
         $gameSet->save();
 
@@ -66,7 +67,7 @@ class GameSetController extends Controller
 
             Notification::send($this->user->get(), new GameSetEnabled($gameSet));
         }
-        return redirect()->route('set.details', ['id' => $id])->with(self::SUCCESS_MESSAGE, 'Fecha habilitada!');
+        return redirect()->route('set.details', ['id' => $id])->with(self::SUCCESS_MESSAGE, __('set.enabled'));
     }
 
     public function finish($id)
@@ -80,7 +81,7 @@ class GameSetController extends Controller
         $gameSet->status = GameSet::STATUS_FINISHED;
         $gameSet->save();
 
-        return redirect()->route('set.details', ['id' => $id])->with(self::SUCCESS_MESSAGE, 'Fecha finalizada!');
+        return redirect()->route('set.details', ['id' => $id])->with(self::SUCCESS_MESSAGE, __('set.finished'));
     }
 
     public function listAdmin()

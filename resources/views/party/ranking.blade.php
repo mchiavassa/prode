@@ -6,10 +6,10 @@
                 {{ $rankingUser->position }}
             </td>
             <td>
-                <img src="{{ $rankingUser->item->picture_url }}" class="rounded" height="30px" alt="{{ $rankingUser->item->name }}">
+                <img src="{{ $rankingUser->item->picture_url }}" class="rounded" height="30px">
                 {{ $rankingUser->item->name }}
                 @if($rankingUser->item->pivot->is_admin)
-                    <span class="badge badge-pill badge-success">Admin</span>
+                    <span class="badge rounded-pill bg-success">Admin</span>
                 @elseif($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
                     <form action="{{route('party.user.makeAdmin', ['partyId' => $rankingUser->item->pivot->party_id, 'userId' => $rankingUser->item->id])}}" method="POST" class="d-inline">
                         @csrf

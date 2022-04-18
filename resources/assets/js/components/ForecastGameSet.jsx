@@ -7,7 +7,8 @@ class ForecastGameSet extends Component {
         super(props);
         this.state = {
             games: props.games,
-            forecasts: props.forecasts
+            forecasts: props.forecasts,
+            strings: props.strings
         };
     }
 
@@ -16,6 +17,7 @@ class ForecastGameSet extends Component {
             <div className={'row justify-content-center'}>
                 {this.state.games.map(game => (
                     <ForecastGame
+                        strings={this.state.strings}
                         key={game.id}
                         game={game}
                         forecast={forecasts[game.id]}
@@ -28,6 +30,6 @@ class ForecastGameSet extends Component {
 }
 
 ReactDOM.render(
-    <ForecastGameSet games={games} forecasts={forecasts} />,
+    <ForecastGameSet games={games} forecasts={forecasts} strings={strings} />,
     document.getElementById('game-set-forecast')
 );

@@ -1,7 +1,7 @@
 @extends('layouts.error')
 
 @section('content')
-    <h4>Nada por aca...</h4>
-    <p>La página que buscás no existe.</p>
-    <a href="{{route('home')}}" class="btn btn-primary">Volver al home</a>
+    <h4>{{__('common.messages.errors.404.title')}}</h4>
+    <p>{{__('common.messages.errors.404.message')}}</p>
+    <a href="{{route('home')}}" class="btn btn-primary">{{__('common.buttons.back')}}</a>
 @endsection

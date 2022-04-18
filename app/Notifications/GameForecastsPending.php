@@ -12,7 +12,7 @@ class GameForecastsPending extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private $games;
+    private Collection $games;
 
     public function __construct(Collection $games)
     {
@@ -24,11 +24,15 @@ class GameForecastsPending extends Notification implements ShouldQueue
         return ['mail'];
     }
 
+    public function viaQueues()
+    {
+        return ['mail' => 'emails',];
+    }
 
     public function toMail($notifiable)
     {
         return (new GameForecastsPendingEmail($this->games))
-            ->subject('No te olvides de tus pronósticos!')
+            ->subject(__('emails.forecasts.subject'))
             ->to($notifiable->email);
     }
 }

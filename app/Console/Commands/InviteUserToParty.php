@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Party;
+use App\Models\User;
 use App\Notifications\PartyJoinRequestAccepted;
 use Illuminate\Console\Command;
 use InvalidArgumentException;
-use Prode\Domain\Model\Party;
-use Prode\Domain\Model\User;
 
 class InviteUserToParty extends Command
 {
@@ -15,7 +15,7 @@ class InviteUserToParty extends Command
      *
      * @var string
      */
-    protected $signature = 'party:invite 
+    protected $signature = 'party:invite
                              {--email= : Email of the User}
                              {--party_id= : Id of the Party}';
 
@@ -26,8 +26,8 @@ class InviteUserToParty extends Command
      */
     protected $description = 'Invites a user to a Party.';
 
-    private $party;
-    private $user;
+    private Party $party;
+    private User $user;
 
     public function __construct(Party $party, User $user)
     {

@@ -3,24 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGroup;
+use App\Models\Forecast;
+use App\Models\GameSet;
+use App\Models\Party;
+use App\Models\PartyJoinRequest;
+use App\Models\Ranking;
 use App\Notifications\PartyJoinRequestAccepted;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Prode\Domain\Model\Forecast;
-use Prode\Domain\Model\GameSet;
-use Prode\Domain\Model\Party;
-use Prode\Domain\Model\PartyJoinRequest;
-use Prode\Domain\Ranking;
 
 class PartyController extends Controller
 {
-    private $party;
-    private $partyJoinRequest;
-    private $forecast;
-    private $gameSet;
-    private $db;
+    private Party $party;
+    private PartyJoinRequest $partyJoinRequest;
+    private Forecast $forecast;
+    private GameSet $gameSet;
+    private DatabaseManager $db;
 
     public function __construct(
         Party $party,
@@ -39,22 +40,62 @@ class PartyController extends Controller
         $this->db = $db;
     }
 
+    /**
+     * Displays the main view for Parties
+     */
     public function index()
     {
         return view('party.index');
     }
 
+    /**
+     * Retrieves a partial view with the entire list visible parties in the app
+     */
+    public function listOthers()
+    {
+        $parties = $this->party
+            ->whereDoesntHave('users', function($query) {
+                $query->where('user_id', Auth::user()->id);
+            })
+            ->where('hidden', false)
+            ->get()
+            ->sortBy('name');
+
+        return view('party.list', ['parties' => $parties]);
+    }
+
+    /**
+     * Retrieves a partial view with the list of parties from the logged user
+     */
+    public function listMine()
+    {
+        $parties = $this->party
+            ->whereHas('users', function($query) {
+                $query->where('user_id', Auth::user()->id);
+            })
+            ->get()
+            ->sortBy('name');
+
+        return view('party.list', ['parties' => $parties]);
+    }
+
+    /**
+     * Displays the view to create a new Party
+     */
     public function showCreate()
     {
         return view('party.create');
     }
 
+    /**
+     * POST operation that creates a new Party
+     */
     public function create(StoreGroup $request)
     {
         $validated = $request->validated();
 
         $party = new Party();
-        $party->name = array_get($validated, 'name');
+        $party->name = Arr::get($validated, 'name');
         $party->save();
 
         $party->users()->attach(Auth::user()->id, ['is_admin' => true]);
@@ -63,7 +104,10 @@ class PartyController extends Controller
         return redirect()->route('party.details', ['id' => $party->id]);
     }
 
-    public function updateDescription(Request $request, $id)
+    /**
+     * PATCH operation that updates the description of an existing Party
+     */
+    public function updateDescription(Request $request, int $id)
     {
         /** @var Party $party */
         $party = $this->party
@@ -72,14 +116,19 @@ class PartyController extends Controller
 
         $this->assertLoggedUserIsPartyAdmin($party);
 
-        $party->description = array_get($request->all(), 'description');
+        $party->description = Arr::get($request->all(), 'description');
         $party->save();
 
         return $this->jsonSuccess();
     }
 
-    public function details($id)
+    /**
+     * If the logged user belong to the party, retrieves the view of the details of a Party,
+     * otherwise returns the view to send a request to join.
+     */
+    public function details(int $id)
     {
+        /** @var Party $party */
         $party = $this->party
             ->with('users')
             ->findOrFail($id);
@@ -110,7 +159,10 @@ class PartyController extends Controller
         return view('party.details', ['party' => $party, 'sets' => $sets]);
     }
 
-    public function partyRanking(Request $request, $id)
+    /**
+     * Retrieves the partial view of the users ranking of a Party
+     */
+    public function partyRanking(Request $request, int $id)
     {
         /** @var Party $party */
         $party = $this->party->with('users')->findOrFail($id);
@@ -139,7 +191,7 @@ class PartyController extends Controller
         $setForecasts = $setForecasts->groupBy('user.id');
 
         $users = $partyUsers->map(function($user) use ($setForecasts) {
-            $forecasts = array_get($setForecasts, $user->id);
+            $forecasts = Arr::get($setForecasts, $user->id);
             $newUser = clone $user;
             $newUser->points = $forecasts ? $forecasts->sum('points_earned') : 0;
 
@@ -149,8 +201,12 @@ class PartyController extends Controller
         return view('party.ranking', ['ranking' => new Ranking($users), 'party' => $party]);
     }
 
-    public function requestJoin($id)
+    /**
+     * POST operation from the logged user to request to join a particular Party
+     */
+    public function requestJoin(int $id)
     {
+        /** @var Party $party */
         $party = $this->party
             ->with('users')
             ->findOrFail($id);
@@ -158,7 +214,7 @@ class PartyController extends Controller
         if ($this->loggedUserBelongsToParty($party)) {
             return redirect()->route('party.details', ['id' => $id])->with(
                 self::ERROR_MESSAGE,
-                'Ya pertenecés a este equipo.'
+                __('party.apply.belong_already')
             );
         }
 
@@ -167,7 +223,7 @@ class PartyController extends Controller
         if ($joinRequest) {
             return redirect()->route('party.details', ['id' => $id])->with(
                 self::ERROR_MESSAGE,
-                'Tu solicitud para entrar al grupo ya fue enviada.'
+                __('party.apply.sent_already')
             );
         }
 
@@ -179,7 +235,11 @@ class PartyController extends Controller
         return redirect()->route('party.details', ['id' => $id]);
     }
 
-    public function replyJoinRequest(Request $request, $partyId, $joinRequestId)
+    /**
+     * POST operation from a logged party admin to reply to a join request to their party.
+     * If the user is accepted, a notification is being sent.
+     */
+    public function replyJoinRequest(Request $request, int $partyId, int $joinRequestId)
     {
         /** @var Party $party */
         $party = $this->party
@@ -206,7 +266,10 @@ class PartyController extends Controller
         return redirect()->route('party.details', ['id' => $partyId]);
     }
 
-    public function makeAdmin($partyId, $userId)
+    /**
+     * POST operation from a logged party admin to make another user admin of a Party as well
+     */
+    public function makeAdmin(int $partyId, int $userId)
     {
         /** @var Party $party */
         $party = $this->party
@@ -220,7 +283,10 @@ class PartyController extends Controller
         return redirect()->route('party.details', ['id' => $partyId]);
     }
 
-    public function joinRequestList($id)
+    /**
+     * Retrieves a partial view with the list of join requests to a particular Party
+     */
+    public function joinRequestList(int $id)
     {
         /** @var Party $party */
         $party = $this->party
@@ -238,30 +304,10 @@ class PartyController extends Controller
         return view('party.joinRequests', ['joinRequests' => $joinRequests]);
     }
 
-    public function list()
-    {
-        $parties = $this->party
-            ->with('users')
-            ->where('hidden', false)
-            ->get()
-            ->sortBy('name');
-
-        return view('party.list', ['parties' => $parties]);
-    }
-
-    public function listMine()
-    {
-        $parties = $this->party
-            ->whereHas('users', function($query) {
-                $query->where('user_id', Auth::user()->id);
-            })
-            ->get()
-            ->sortBy('name');
-
-        return view('party.list', ['parties' => $parties]);
-    }
-
-    public function gameForecastsOfPartyUsers($partyId, $gameId)
+    /**
+     * Retrieves a partial view with all the party forecasts of a particular game
+     */
+    public function gameForecastsOfPartyUsers(int $partyId, int $gameId)
     {
         /** @var Party $party */
         $party = $this->party
@@ -280,18 +326,37 @@ class PartyController extends Controller
         $forecasts = $partyUsersGameForecasts->map(function (Forecast $forecast) use ($party) {
             $user = $party->users->where('id', $forecast->user_id)->first();
 
-            $homeScore = $forecast->home_score.($forecast->home_tie_break_score ? '('.$forecast->home_tie_break_score.')' : '');
-            $awayScore = $forecast->away_score.($forecast->away_tie_break_score ? '('.$forecast->away_tie_break_score.')' : '');
-            $score = sprintf('%s-%s', $homeScore, $awayScore);
-
-            return sprintf('#%s %s %s', $user->id, $user->name, $score);
+            return [
+                'user' => [
+                    'name' => $user->name,
+                    'picture_url' => $user->picture_url,
+                ],
+                'home_score' => $forecast->home_score.($forecast->home_tie_break_score ? '('.$forecast->home_tie_break_score.')' : ''),
+                'away_score' => $forecast->away_score.($forecast->away_tie_break_score ? '('.$forecast->away_tie_break_score.')' : ''),
+            ];
         });
 
-        $formatted = implode("\n", $forecasts->all());
+        $formatted = implode(
+            "\n",
+            $partyUsersGameForecasts->map(function (Forecast $forecast) use ($party) {
+                $user = $party->users->where('id', $forecast->user_id)->first();
 
-        return $this->jsonSuccess([
-            'forecasts' => $formatted,
-        ]);
+                $homeScore = $forecast->home_score.($forecast->home_tie_break_score ? '('.$forecast->home_tie_break_score.')' : '');
+                $awayScore = $forecast->away_score.($forecast->away_tie_break_score ? '('.$forecast->away_tie_break_score.')' : '');
+                $score = sprintf('%s-%s', $homeScore, $awayScore);
+
+                return sprintf('#%s %s %s', $user->id, $user->name, $score);
+            })->all()
+        );
+
+        return view(
+            'party.game-forecasts-list',
+            [
+                'forecasts' => $forecasts,
+                'forecasts_text' => $formatted,
+                'party_name' => $party->name
+            ]
+        );
     }
 
 
@@ -304,11 +369,7 @@ class PartyController extends Controller
         }
     }
 
-    /**
-     * @param Party $party
-     * @return boolean
-     */
-    private function loggedUserBelongsToParty(Party $party)
+    private function loggedUserBelongsToParty(Party $party): bool
     {
         return $party->users->where('id', Auth::user()->id)->isNotEmpty();
     }

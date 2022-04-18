@@ -1,6 +1,20 @@
 <?php
 
 return [
+    'tournament' => [
+      'schedule' => [
+          'timezone' => 'Asia/Qatar',
+          'from' => '12:00',
+          'to' => '22:00',
+      ]
+    ],
+    'reminders' => [
+        'forecasts' => [
+            'cron' => '*/30 * * * *', // every 30 minutes
+            'window_minutes' => 30, // search in a window of 30 minutes
+            'offset_minutes' => 10, // in 10 minutes from now
+        ]
+    ],
     'points' => [
         'result' => 10,
         'score' => 10,
@@ -9,51 +23,51 @@ return [
     ],
     'teams' => [
           // Group A
-          'RUS' => 'Rusia',
-          'KSA' => 'Arabia Saudí',
-          'EGY' => 'Egipto',
-          'URU' => 'Uruguay',
+          'QAT',
+          'ECU',
+          'SEN',
+          'NED',
 
           // Group B
-          'POR' => 'Portugal',
-          'ESP' => 'España',
-          'MAR' => 'Marruecos',
-          'IRN' => 'RI de Irán',
+          'ENG',
+          'IRN',
+          'USA',
+          'pending1',
 
           // Group C
-          'FRA' => 'Francia',
-          'AUS' => 'Australia',
-          'PER' => 'Perú',
-          'DEN' => 'Dinamarca',
+          'ARG',
+          'KSA',
+          'MEX',
+          'POL',
 
           // Group D
-          'ARG' => 'Argentina',
-          'ISL' => 'Islandia',
-          'CRO' => 'Croacia',
-          'NGA' => 'Nigeria',
+          'FRA',
+          'pending2',
+          'DEN',
+          'TUN',
 
           // Group E
-          'BRA' => 'Brasil',
-          'SUI' => 'Suiza',
-          'CRC' => 'Costa Rica',
-          'SRB' => 'Serbia',
+          'ESP',
+          'pending3',
+          'GER',
+          'JPN',
 
           // Group F
-          'GER' => 'Alemania',
-          'MEX' => 'México',
-          'SWE' => 'Suecia',
-          'KOR' => 'República de Corea',
+          'BEL',
+          'CAN',
+          'MAR',
+          'CRO',
 
           // Group G
-          'BEL' => 'Bélgica',
-          'PAN' => 'Panamá',
-          'TUN' => 'Túnez',
-          'ENG' => 'Inglaterra',
+          'BRA',
+          'SRB',
+          'SUI',
+          'CMR',
 
           // Group H
-          'POL' => 'Polonia',
-          'SEN' => 'Senegal',
-          'COL' => 'Colombia',
-          'JPN' => 'Japón',
+          'POR',
+          'GHA',
+          'URU',
+          'KOR',
     ],
 ];

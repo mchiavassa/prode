@@ -1,7 +1,7 @@
 @auth
     <li class="nav-item dropdown">
-        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="{{ Auth::user()->picture_url }}" class="rounded" height="30px" alt="{{ Auth::user()->name }}">
+        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="{{ Auth::user()->picture_url }}" class="rounded" height="30px">
             {{ Auth::user()->name }} <span class="caret"></span>
         </a>
 
@@ -14,11 +14,11 @@
             <span class="dropdown-item-text text-muted">{{ Auth::user()->email }}</span>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ route('delete.show') }}">
-                Eliminar cuenta
+                {{__('account.menu.delete')}}
             </a>
             <a class="dropdown-item" href="{{ route('logout') }}"
                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                Salir
+                {{__('account.menu.logout')}}
             </a>
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -1,11 +1,16 @@
 {
-    "/js/react-components/NextForecastGame.js": "/js/react-components/NextForecastGame.js",
-    "/js/react-components/ForecastGameSet.js": "/js/react-components/ForecastGameSet.js",
-    "/js/react-components/ForecastGame.js": "/js/react-components/ForecastGame.js",
-    "/js/react-components/GameForecastsValidator.js": "/js/react-components/GameForecastsValidator.js",
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/react-components/TeamDisplay.js": "/js/react-components/TeamDisplay.js",
+    "/js/react-components/ForecastGameSet.js": "/js/react-components/ForecastGameSet.js",
+    "/js/react-components/NextForecastGame.js": "/js/react-components/NextForecastGame.js",
+    "/js/react-components/ForecastGame.js": "/js/react-components/ForecastGame.js",
+    "/js/react-components/ForecastForm.js": "/js/react-components/ForecastForm.js",
     "/js/react-components/ScoreDisplay.js": "/js/react-components/ScoreDisplay.js",
-    "/js/react-components/ForecastForm.js": "/js/react-components/ForecastForm.js"
+    "/js/react-components/TeamDisplay.js": "/js/react-components/TeamDisplay.js",
+    "/css/app.css": "/css/app.css",
+    "/img/competition-bg.png": "/img/competition-bg.png",
+    "/img/competition-logo.png": "/img/competition-logo.png",
+    "/img/en.svg": "/img/en.svg",
+    "/img/es.svg": "/img/es.svg",
+    "/img/loading.svg": "/img/loading.svg",
+    "/img/logo.png": "/img/logo.png"
 }

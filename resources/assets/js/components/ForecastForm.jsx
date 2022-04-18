@@ -7,7 +7,8 @@ export default class ForecastForm extends Component {
             homeScore: isNaN(props.homeScore) ?  '' : props.homeScore,
             awayScore: isNaN(props.awayScore) ? '' : props.awayScore,
             homeTieBreakScore: isNaN(props.homeTieBreakScore) ? '' : props.homeTieBreakScore,
-            awayTieBreakScore: isNaN(props.awayTieBreakScore) ? '' : props.awayTieBreakScore
+            awayTieBreakScore: isNaN(props.awayTieBreakScore) ? '' : props.awayTieBreakScore,
+            strings: props.strings
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -43,7 +44,7 @@ export default class ForecastForm extends Component {
                     <div className={'col-6 border-right'}>
                         <div className={'row'}>
                             <div className={!this.props.tieBreakRequired ? 'col-6 offset-6' : 'col-6'}>
-                                <label>Goles</label>
+                                <label>{this.state.strings.goals}</label>
                                 <input type="number"
                                        name="homeScore"
                                        className={'form-control mb-2'}
@@ -54,7 +55,7 @@ export default class ForecastForm extends Component {
                             </div>
                             {this.props.tieBreakRequired === true &&
                                 <div className={'col-6'}>
-                                    <label>Penales</label>
+                                    <label>{this.state.strings.penalties}</label>
                                     <input type="number"
                                            name="homeTieBreakScore"
                                            value={this.state.homeTieBreakScore}
@@ -69,7 +70,7 @@ export default class ForecastForm extends Component {
                     <div className={'col-6'}>
                         <div className={'row'}>
                             <div className={'col-6'}>
-                                <label>Goles</label>
+                                <label>{this.state.strings.goals}</label>
                                 <input type="number"
                                        name="awayScore"
                                        value={this.state.awayScore}
@@ -80,7 +81,7 @@ export default class ForecastForm extends Component {
                             </div>
                             {this.props.tieBreakRequired === true &&
                                 <div className={'col-6'}>
-                                    <label>Penales</label>
+                                    <label>{this.state.strings.penalties}</label>
                                     <input type="number"
                                            name="awayTieBreakScore"
                                            value={this.state.awayTieBreakScore}
@@ -94,7 +95,7 @@ export default class ForecastForm extends Component {
                     </div>
                 </div>
                 <div className={'mt-2 text-center'}>
-                    <button onClick={this.validateForecast} className={'btn btn-primary'}>Pronosticar</button>
+                    <button onClick={this.validateForecast} className={'btn btn-primary'}>{this.state.strings.submit}</button>
                 </div>
             </div>
         );

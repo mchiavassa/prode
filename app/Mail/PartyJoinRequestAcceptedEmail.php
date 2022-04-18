@@ -2,16 +2,16 @@
 
 namespace App\Mail;
 
+use App\Models\Party;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Prode\Domain\Model\Party;
 
 class PartyJoinRequestAcceptedEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $party;
+    private Party $party;
 
     public function __construct(Party $party)
     {

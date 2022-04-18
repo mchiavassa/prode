@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\RedirectsUsers;
+use App\Exceptions\Handler;
+use App\Services\Auth\AuthService;
+use App\Services\Auth\ExternalUser;
+use App\Services\Auth\SocialNetworkProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
 use Laravel\Socialite\Facades\Socialite;
-use Prode\Domain\SocialNetworkProvider;
-use Prode\Infrastructure\Auth\ExternalUserFactory;
-use Prode\Service\AuthService;
 
 class LoginController extends Controller
 {
-    use RedirectsUsers;
-
     /**
      * Where to redirect users after login.
      *
@@ -57,7 +57,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Redirect the user to the GitHub authentication page.
+     * Redirect the user to the authentication page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -80,28 +80,34 @@ class LoginController extends Controller
         if ($request->has('error')) {
             return redirect()->route('login')->with(
                 self::ERROR_MESSAGE,
-                sprintf('Se produjo un error al intentar ingresar con %s.', ucfirst($provider))
+                sprintf(__('account.error'), ucfirst($provider))
             );
         }
 
         $provider = new SocialNetworkProvider($provider);
 
         try {
-            $externalUser = ExternalUserFactory::createExternalUser(
+            $userData = (array) Socialite::driver((string) $provider)->user();
+            $externalUser = new ExternalUser(
                 $provider,
-                (array) Socialite::driver((string) $provider)->user()
+                Arr::get($userData, 'id'),
+                Arr::get($userData, 'email'),
+                Arr::get($userData, 'name'),
+                Arr::get($userData, 'avatar')
             );
         } catch (InvalidArgumentException $e) {
+            Handler::captureException($e);
             return redirect()->route('login')->with(
                 self::ERROR_MESSAGE,
-                sprintf('Se produjo un error al intentar ingresar con %s.', ucfirst($provider))
+                sprintf(__('account.error'), ucfirst($provider))
             );
         }
 
         $authUser = $this->authService->findOrCreateUser($externalUser, $provider);
 
         Auth::login($authUser, true);
+        session()->put('locale', $authUser->locale ?: App::getLocale());
 
-        return redirect()->intended($this->redirectPath());
+        return redirect()->intended();
     }
 }

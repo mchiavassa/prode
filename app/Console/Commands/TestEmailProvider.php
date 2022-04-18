@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use App\Notifications\TestNotification;
 use Illuminate\Console\Command;
 use Mockery\Exception;
-use Prode\Domain\Model\User;
 
 class TestEmailProvider extends Command
 {
@@ -23,7 +23,7 @@ class TestEmailProvider extends Command
      */
     protected $description = 'Test the email provider.';
 
-    private $user;
+    private User $user;
 
     public function __construct(User $user)
     {
