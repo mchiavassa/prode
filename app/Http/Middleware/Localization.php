@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\App;
  * - Takes the one from the browser
  * - Uses the default one from the app config
  */
-class SessionLocale extends Middleware
+class Localization extends Middleware
 {
     public function handle($request, Closure $next, ...$guards)
     {

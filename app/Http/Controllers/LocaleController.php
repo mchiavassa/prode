@@ -8,6 +8,10 @@ class LocaleController extends Controller
 {
     public function switchLocale(string $locale)
     {
+        if (!in_array($locale, config('app.supported_locales'))) {
+            $locale = config('app.fallback_locale');
+        }
+        
         session()->put('locale', $locale);
 
         if (Auth::user()) {
