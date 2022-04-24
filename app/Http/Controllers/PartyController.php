@@ -123,7 +123,7 @@ class PartyController extends Controller
     }
 
     /**
-     * If the logged user belong to the party, retrieves the view of the details of a Party,
+     * If the logged user belong to the party (or is Prode admin), retrieves the view of the details of a Party,
      * otherwise returns the view to send a request to join.
      */
     public function details(int $id)
@@ -133,28 +133,27 @@ class PartyController extends Controller
             ->with('users')
             ->findOrFail($id);
 
+        if (Auth::user()->isAdmin()) {
+            $joinRequest = $this->partyJoinRequest->where('user_id', Auth::user()->id)->first();
+            $sets = $this->getActiveSets();
+
+            return view(
+                'party.details',
+                [
+                    'party' => $party,
+                    'joinRequest' => $joinRequest,
+                    'sets' => $sets
+                ]
+            );
+        }
+
         if (!$this->loggedUserBelongsToParty($party)) {
             $joinRequest = $this->partyJoinRequest->where('user_id', Auth::user()->id)->first();
 
             return view('party.apply', ['party' => $party, 'joinRequest' => $joinRequest]);
         }
 
-        $sets = collect();
-        $sets->push((object)['id' => '', 'name' => 'General']);
-
-        /** @var Collection $activeSets */
-        $activeSets = $this->gameSet
-            ->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED])
-            ->get()
-            ->sortByDesc('created_at')
-            ->map(function ($set) {
-                return (object)[
-                    'id' => $set->id,
-                    'name' => $set->name
-                ];
-            });
-
-        $sets = $sets->merge($activeSets);
+        $sets = $this->getActiveSets();
 
         return view('party.details', ['party' => $party, 'sets' => $sets]);
     }
@@ -167,7 +166,7 @@ class PartyController extends Controller
         /** @var Party $party */
         $party = $this->party->with('users')->findOrFail($id);
 
-        if (!$this->loggedUserBelongsToParty($party)) {
+        if (!Auth::user()->isAdmin() && !$this->loggedUserBelongsToParty($party)) {
             abort(404);
         }
 
@@ -372,5 +371,28 @@ class PartyController extends Controller
     private function loggedUserBelongsToParty(Party $party): bool
     {
         return $party->users->where('id', Auth::user()->id)->isNotEmpty();
+    }
+
+    /**
+     * @return Collection
+     */
+    private function getActiveSets(): Collection
+    {
+        $sets = collect();
+        $sets->push((object)['id' => '', 'name' => 'General']);
+
+        /** @var Collection $activeSets */
+        $activeSets = $this->gameSet
+            ->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED])
+            ->get()
+            ->sortByDesc('created_at')
+            ->map(function ($set) {
+                return (object)[
+                    'id' => $set->id,
+                    'name' => $set->name
+                ];
+            });
+
+        return $sets->merge($activeSets);
     }
 }

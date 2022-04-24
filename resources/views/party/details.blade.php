@@ -18,7 +18,7 @@
                         <h4 class="mb-4">{{__('party.average')}}</h4>
                         <h1>
                             <strong>
-                                {{number_format($party->users->sum('points') / $party->users->count(), 2)}}
+                                {{$party->users->count() == 0 ? 0 : number_format($party->users->sum('points') / $party->users->count(), 2)}}
                             </strong>
                         </h1>
                     </div>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
+            @if($party->users->contains('id', Auth::user()->id) && $party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
             <div class="card p-3 mb-3">
                 <div id="editor" class="mb-2">
                     {!! $party->description !!}
@@ -59,7 +59,7 @@
 
         </div>
         <div class="col-md-6 order-1 order-md-2">
-            @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
+            @if($party->users->contains('id', Auth::user()->id) && $party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
                 <div class="async-list" data-source-url="{{route('party.joinRequest.list', ['id' => $party->id])}}">
                 </div>
             @endif
@@ -96,9 +96,12 @@
             </div>
         </div>
     </div>
+    @if(Auth::user()->isAdmin() && !$party->users->contains('id', Auth::user()->id))
+        @include('party.apply-button', ['party' => $party, 'joinRequest' => $joinRequest])
+    @endif
 @endsection
 
-@if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
+@if($party->users->contains('id', Auth::user()->id) && $party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
     @push('css')
         <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     @endpush
@@ -114,7 +117,7 @@
             });
         });
     </script>
-    @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
+    @if($party->users->contains('id', Auth::user()->id) && $party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
         <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
         <script type="text/javascript">
             $(function () {
