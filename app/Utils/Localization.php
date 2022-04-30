@@ -29,7 +29,8 @@ class Localization
             'finalResult' => __('game.result.final'),
             'partialResult' => __('game.result.partial'),
             'points' => __('game.forecasts.points'),
-            'live' => __('domain.game.status.live')
+            'live' => __('domain.game.status.live'),
+            'finished' => __('domain.game.status.finished'),
         ];
     }
 }

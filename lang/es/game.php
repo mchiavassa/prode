@@ -40,7 +40,7 @@ return [
     'result' => [
         'score' => 'Goles',
         'tiebreak' => 'Penales',
-        'final' => 'Resultado final',
+        'final' => 'Resultado',
         'partial' => 'Resultado parcial',
         'invalid' => 'El resultado es inválido',
     ],

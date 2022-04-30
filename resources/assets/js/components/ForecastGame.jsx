@@ -128,6 +128,9 @@ export default class ForecastGame extends Component {
                                 </div>
 
                             </div>
+                            {this.state.game.computed &&
+                                <span className={'badge rounded-pill bg-dark'}>{this.state.strings.finished}</span>
+                            }
                             {!this.state.game.computed &&
                             <div>
                                 <Countdown className={'mt-2'}
