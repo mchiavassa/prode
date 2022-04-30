@@ -293,16 +293,24 @@ class PartyController extends Controller
             ->with('users')
             ->findOrFail($partyId);
 
-        $this->assertLoggedUserIsPartyAdmin($party);
+        $selfRemoval = Auth::user()->id === $userId;
+
+        if (!$selfRemoval) {
+            $this->assertLoggedUserIsPartyAdmin($party);
+        }
 
         $user = $party->users->where('id', $userId)->first();
 
         $party->users()->detach($userId, ['is_admin' => false]);
         $party->save();
 
-        $user->notify(new UserRemovedFromParty($party));
+        if (!$selfRemoval) {
+            $user->notify(new UserRemovedFromParty($party));
+        }
 
-        return redirect()->route('party.details', ['id' => $partyId]);
+        return $selfRemoval
+            ? redirect()->route('home')
+            : redirect()->route('party.details', ['id' => $partyId]);
     }
 
     /**

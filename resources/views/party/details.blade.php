@@ -92,7 +92,16 @@
                         <i class="bi bi-files"></i>
                     </button>
                 </div>
-
+            </div>
+            <div class="card p-3 mb-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form onsubmit="return confirm('{{__('party.quit.user-confirmation')}}');" action="{{route('party.user.remove', ['partyId' => $party->id, 'userId' => Auth::user()->id])}}" method="POST">
+                            @csrf
+                            <input type="submit" class="btn btn-danger" style="width: 100%" value="{{__('party.quit.button')}}" />
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -8,7 +8,11 @@ return [
     'join' => 'Unite a uno existente',
     'make-admin' => 'Hacer admin',
     'remove-user' => 'Quitar',
-    'remove-user-confirmation' => '¿Estás seguro que deseas eliminar al usuario del group?',
+    'remove-user-confirmation' => '¿Estás seguro que deseas eliminar al usuario del groupo?',
+    'quit' => [
+        'user-confirmation' => '¿Estás seguro que deseas salir del groupo?',
+        'button' => 'Salir del grupo',
+    ],
     'apply' => [
         'sent' => 'Tu solicitud para ingresar al grupo fue enviada.',
         'join' => '¿Querés formar parte de ',

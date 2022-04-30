@@ -9,6 +9,10 @@ return [
     'make-admin' => 'Make admin',
     'remove-user' => 'Remove',
     'remove-user-confirmation' => 'Are you sure you want to remove the user from the party?',
+    'quit' => [
+        'user-confirmation' => 'Are you sure you want to quit the party?',
+        'button' => 'Quit party',
+    ],
     'apply' => [
         'sent' => 'Your application to join the party has been submitted.',
         'join' => 'Would you like to join ',
