@@ -1,11 +1,11 @@
 <table class="table">
     <tbody>
     @foreach($ranking as $rankingUser)
-        <tr class="{{$rankingUser->item->email == Auth::user()->email ? 'font-weight-bold' : ''}}">
+        <tr class="{{$rankingUser->item->email == Auth::user()->email ? 'fw-bold' : ''}}">
             <td>
                 {{ $rankingUser->position }}
             </td>
-            <td>
+            <td class="forms-show-hover">
                 <img src="{{ $rankingUser->item->picture_url }}" class="rounded" height="30px">
                 {{ $rankingUser->item->name }}
                 @if($rankingUser->item->pivot->is_admin)
@@ -13,7 +13,13 @@
                 @elseif($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
                     <form action="{{route('party.user.makeAdmin', ['partyId' => $rankingUser->item->pivot->party_id, 'userId' => $rankingUser->item->id])}}" method="POST" class="d-inline">
                         @csrf
-                        <input type="submit" class="btn" style="font-size: 0.7em" value="Hacer Admin" />
+                        <input type="submit" class="btn btn-sm btn-light" style="font-size: 0.7em; padding: 0.1rem 0.5rem" value="{{__('party.make-admin')}}" />
+                    </form>
+                @endif
+                @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin && $rankingUser->item->email !== Auth::user()->email)
+                    <form onsubmit="return confirm('{{__('party.remove-user-confirmation')}}');" action="{{route('party.user.remove', ['partyId' => $rankingUser->item->pivot->party_id, 'userId' => $rankingUser->item->id])}}" method="POST" class="d-inline">
+                        @csrf
+                        <input type="submit" class="btn btn-sm btn-danger" style="font-size: 0.7em; padding: 0.1rem 0.5rem" value="{{__('party.remove-user')}}" />
                     </form>
                 @endif
             </td>

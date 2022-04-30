@@ -9,6 +9,7 @@ use App\Models\Party;
 use App\Models\PartyJoinRequest;
 use App\Models\Ranking;
 use App\Notifications\PartyJoinRequestAccepted;
+use App\Notifications\UserRemovedFromParty;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -278,6 +279,28 @@ class PartyController extends Controller
         $this->assertLoggedUserIsPartyAdmin($party);
 
         $party->users()->updateExistingPivot($userId, ['is_admin' => true]);
+
+        return redirect()->route('party.details', ['id' => $partyId]);
+    }
+
+    /**
+     * POST operation that removes a particular user from the party
+     */
+    public function removeUser(int $partyId, int $userId)
+    {
+        /** @var Party $party */
+        $party = $this->party
+            ->with('users')
+            ->findOrFail($partyId);
+
+        $this->assertLoggedUserIsPartyAdmin($party);
+
+        $user = $party->users->where('id', $userId)->first();
+
+        $party->users()->detach($userId, ['is_admin' => false]);
+        $party->save();
+
+        $user->notify(new UserRemovedFromParty($party));
 
         return redirect()->route('party.details', ['id' => $partyId]);
     }

@@ -23,6 +23,10 @@ return [
         'message' => 'You are now part of the party ',
         'reminder' => 'Don\'t forget to submit your forecasts for the next matches.'
     ],
+    'party-user-removed' => [
+        'subject' => 'You\'ve been removed from %s',
+        'message' => 'You are no longer part of the party ',
+    ],
     'test' => [
         'subject' => 'Test',
         'message' => 'This is a test email.'

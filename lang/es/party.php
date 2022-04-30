@@ -6,6 +6,9 @@ return [
     'points' => 'Puntos totales',
     'ranking' => 'Posiciones',
     'join' => 'Unite a uno existente',
+    'make-admin' => 'Hacer admin',
+    'remove-user' => 'Quitar',
+    'remove-user-confirmation' => '¿Estás seguro que deseas eliminar al usuario del group?',
     'apply' => [
         'sent' => 'Tu solicitud para ingresar al grupo fue enviada.',
         'join' => '¿Querés formar parte de ',

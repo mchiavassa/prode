@@ -162,3 +162,15 @@ img.flag {
 .lang-dropdown {
     min-width: 0em;
 }
+
+.forms-show-hover{
+    form {
+        display: none !important;
+
+    }
+    &:hover {
+        form {
+            display: inline !important;
+        }
+    }
+}

@@ -23,6 +23,10 @@ return [
         'message' => 'Ya eres parte del grupo ',
         'reminder' => 'No olvides enviar tus pronósticos para los próximos partidos.'
     ],
+    'party-user-removed' => [
+        'subject' => 'Has sido eliminado de %s',
+        'message' => 'Ya no formas parte del grupo  ',
+    ],
     'test' => [
         'subject' => 'Prueba',
         'message' => 'Este es un email de prueba.'

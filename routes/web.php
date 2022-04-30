@@ -52,6 +52,7 @@ Route::get('/parties/{partyId}/games/{gameId}/forecasts', [PartyController::clas
 Route::post('/parties/{id}/joinRequests', [PartyController::class, 'requestJoin'])->where('id', '[0-9]+')->name('party.requestJoin');
 Route::post('/parties/{partyId}/joinRequests/{joinRequestId}', [PartyController::class, 'replyJoinRequest'])->where('partyId', '[0-9]+')->where('joinRequestId', '[0-9]+')->name('party.joinRequest.reply');
 Route::post('/parties/{partyId}/users/{userId}', [PartyController::class, 'makeAdmin'])->where('partyId', '[0-9]+')->where('userId', '[0-9]+')->name('party.user.makeAdmin');
+Route::post('/parties/{partyId}/users/{userId}/remove', [PartyController::class, 'removeUser'])->where('partyId', '[0-9]+')->where('id', '[0-9]+')->name('party.user.remove');
 
 Route::get('/sets', [GameSetController::class, 'index'])->name('set');
 Route::get('/sets/list', [GameSetController::class, 'list'])->name('set.list');

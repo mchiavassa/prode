@@ -67,14 +67,17 @@ Run the DB migrations (located at `database/migrations/`)
 
 All email notifications are queued in `redis`, this can be configured differently in the `config/queue.php` file.
 
-In order to process messages form the queue, run this command 
-```bash
-./vendor/bin/sail artisan queue:work
-```
-
 There are two custom queues configured:
 - `emails`: for email notifications
-- `scheduled`: to execute jobs from the scheduler 
+- `scheduled`: to execute jobs from the scheduler
+
+### Running and monitoring queues
+
+Run [Laravel Horizon](https://laravel.com/docs/9.x/horizon#introduction) to run and monitor queues
+```bash
+./vendor/bin/sail artisan horizon
+```
+Access the dashboard: http://localhost/horizon
 
 ### Email notifications
 
@@ -93,14 +96,6 @@ In order to run the scheduler execute the following command
 ```bash
 ./vendor/bin/sail artisan schedule:work
 ```
-
-### Monitoring queues
-
-Run [Laravel Horizon](https://laravel.com/docs/9.x/horizon#introduction) to monitor queues
-```bash
-./vendor/bin/sail artisan horizon
-```
-Access the dashboard: http://localhost/horizon
 
 ## Testing
 
