@@ -299,13 +299,29 @@ class PartyController extends Controller
             $this->assertLoggedUserIsPartyAdmin($party);
         }
 
-        $user = $party->users->where('id', $userId)->first();
+        $userToRemove = $party->users->where('id', $userId)->first();
+        if ($userToRemove == null) {
+            abort(404);
+        }
 
-        $party->users()->detach($userId, ['is_admin' => false]);
+        $party->users()->detach($userId);
+
+        // if no more admins in the party, then assign any other
+        if ($party->users
+                ->where('pivot.is_admin', true)
+                ->where('id', '<>', $userToRemove->id)
+                ->count() == 0) {
+            $otherUser = $party->users->where('id', '<>',$userId)->first();
+            if ($otherUser != null) {
+                $party->users()->updateExistingPivot($otherUser->id, [
+                    'is_admin' => true,
+                ]);
+            }
+        }
         $party->save();
 
         if (!$selfRemoval) {
-            $user->notify(new UserRemovedFromParty($party));
+            $userToRemove->notify(new UserRemovedFromParty($party));
         }
 
         return $selfRemoval

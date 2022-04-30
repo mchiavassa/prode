@@ -16,7 +16,7 @@
                         <input type="submit" class="btn btn-sm btn-light" style="font-size: 0.7em; padding: 0.1rem 0.5rem" value="{{__('party.make-admin')}}" />
                     </form>
                 @endif
-                @if($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin && $rankingUser->item->email !== Auth::user()->email)
+                @if($party->users->contains('id', Auth::user()->id) && $party->users->where('id', Auth::user()->id)->first()->pivot->is_admin && $rankingUser->item->email !== Auth::user()->email)
                     <form onsubmit="return confirm('{{__('party.remove-user-confirmation')}}');" action="{{route('party.user.remove', ['partyId' => $rankingUser->item->pivot->party_id, 'userId' => $rankingUser->item->id])}}" method="POST" class="d-inline">
                         @csrf
                         <input type="submit" class="btn btn-sm btn-danger" style="font-size: 0.7em; padding: 0.1rem 0.5rem" value="{{__('party.remove-user')}}" />
