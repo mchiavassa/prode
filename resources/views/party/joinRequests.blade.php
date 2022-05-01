@@ -7,7 +7,7 @@
                     <tr>
                         <td>
                             <img src="{{ $joinRequest->user->picture_url }}" class="rounded" height="30px">
-                            {{ $joinRequest->user->name }}
+                            {{ $joinRequest->user->name }} ({{$joinRequest->user->points}} pts)
                         </td>
                         <td class="">
                             <form class="float-end" action="{{route('party.joinRequest.reply', ['partyId' => $joinRequest->party->id, 'joinRequestId' =>  $joinRequest->id,'accept' => false])}}" method="POST">
