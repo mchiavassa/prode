@@ -15,6 +15,11 @@ class TestNotification extends Notification implements ShouldQueue
     {
     }
 
+    public function tags()
+    {
+        return ['emails', 'testing'];
+    }
+
     public function via($notifiable)
     {
         return ['mail'];

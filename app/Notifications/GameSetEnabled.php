@@ -24,6 +24,11 @@ class GameSetEnabled extends Notification implements ShouldQueue
         return ['mail'];
     }
 
+    public function tags()
+    {
+        return ['emails'];
+    }
+
     public function viaQueues()
     {
         return ['mail' => 'emails',];

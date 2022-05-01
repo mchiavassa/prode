@@ -27,6 +27,11 @@ class NotifyGamesWithMissingForecast implements ShouldQueue, ShouldBeUniqueUntil
         $this->onQueue('scheduled');
     }
 
+    public function tags()
+    {
+        return ['scheduled'];
+    }
+
     /**
      * Look for games starting in an interval of 'window_minutes' minutes, in 'offset_minutes' minutes from now.
      *

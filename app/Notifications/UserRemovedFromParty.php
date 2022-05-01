@@ -30,6 +30,11 @@ class UserRemovedFromParty extends Notification implements ShouldQueue
         return ['mail' => 'emails',];
     }
 
+    public function tags()
+    {
+        return ['emails'];
+    }
+
     public function toMail($notifiable)
     {
         return (new UserRemovedFromPartyEmail($this->party))

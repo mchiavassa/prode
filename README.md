@@ -13,11 +13,11 @@ Web application to play [PRODE](https://bit.ly/2HDeWPa) with friends.
 
 ### Environment variables
 
-Copy the `.env.example` file, rename it to `.env`. Some env vars are already filled to run with the local docker container provided.
+Copy the `.env.example` file, rename it to `.env`. Some variables are already filled to work with the local docker containers provided.
 
-### Docker container
+### Docker containers
 
-Start app the container using [Laravel Sail](https://laravel.com/docs/9.x/sail#introduction)
+Start the containers using [Laravel Sail](https://laravel.com/docs/9.x/sail#introduction)
 ```bash
 ./vendor/bin/sail up
 ```
@@ -63,6 +63,11 @@ Run the DB migrations (located at `database/migrations/`)
 - `failed_jobs`: Laravel table to store async jobs that failed with all details.
 - `migrations`: Laravel table to keep track of DB migrations.
 
+### Admin users
+
+Some functionalities are only authorized to a set of admin users for the entire Prode app, like loading match results, computing forecasts and seeing general stats. 
+These users can be listed in the `config/auth.php` file under the `admins` key.  
+
 ## Queues and async jobs
 
 All email notifications are queued in `redis`, this can be configured differently in the `config/queue.php` file.
@@ -73,11 +78,16 @@ There are two custom queues configured:
 
 ### Running and monitoring queues
 
-Run [Laravel Horizon](https://laravel.com/docs/9.x/horizon#introduction) to run and monitor queues
+In order to process messages from the queues, keep running the following command
+```bash
+./vendor/bin/sail artisan queue:work --queue=emails,scheduled
+```
+
+A better alternative is to run [Laravel Horizon](https://laravel.com/docs/9.x/horizon#introduction) that not only will keep the command running to process queue messages, but also will allow you to monitor the jobs processed and failed.
 ```bash
 ./vendor/bin/sail artisan horizon
 ```
-Access the dashboard: http://localhost/horizon
+Access the dashboard: http://localhost/horizon (only granted to logged admin users, `auth.admins` config)
 
 ### Email notifications
 
@@ -131,13 +141,14 @@ Localization files can be found under `lang/<language>/`
 Default and supported locales are located on `config/app.php` (`locale`, `supported_locales`)
 
 
-## Deployment
+## Running in production
 
-TODO
+- Keeping queues running and monitored through a [supervisor](https://laravel.com/docs/9.x/queues#supervisor-configuration)
+- [Deploying Horizon](https://laravel.com/docs/9.x/horizon#deploying-horizon)
+- [DigitalOcean](https://digitalocean.com/): cloud computing
+- [Forge](https://forge.laravel.com/): Useful server provisioner by Laravel
+- [Sentry](https://sentry.io/): error monitoring 
 
-## Useful Links
-- DigitalOcean: cloud computing (https://digitalocean.com/)
-- Forge: Useful server provisioner by Laravel (https://forge.laravel.com/)
-- Sendinblue: email provider (https://sendinblue.com/)
-- Sentry: error monitoring (https://sentry.io/)
+## Other Useful Links
+- [Sendinblue](https://sendinblue.com/): email provider
 - Flags from all countries in SVG (https://github.com/lipis/flag-icons)
