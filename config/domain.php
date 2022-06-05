@@ -32,7 +32,7 @@ return [
           'ENG',
           'IRN',
           'USA',
-          'pending1',
+          'WAL',
 
           // Group C
           'ARG',

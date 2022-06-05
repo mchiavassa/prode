@@ -33,7 +33,7 @@ return [
         'ENG' => 'England',
         'IRN' => 'Iran',
         'USA' => 'United States',
-        'pending1' => 'pending1',
+        'WAL' => 'Wales',
 
         // Group C
         'ARG' => 'Argentina',
