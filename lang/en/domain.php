@@ -43,13 +43,13 @@ return [
 
         // Group D
         'FRA' => 'France',
-        'pending2' => 'pending2',
+        'AUS' => 'Australia',
         'DEN' => 'Denmark',
         'TUN' => 'Tunisia',
 
         // Group E
         'ESP' => 'Spain',
-        'pending3' => 'pending3',
+        'CRC' => 'Costa Rica',
         'GER' => 'Germany',
         'JPN' => 'Japan',
 

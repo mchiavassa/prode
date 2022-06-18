@@ -42,13 +42,13 @@ return [
 
           // Group D
           'FRA',
-          'pending2',
+          'AUS',
           'DEN',
           'TUN',
 
           // Group E
           'ESP',
-          'pending3',
+          'CRC',
           'GER',
           'JPN',
 
