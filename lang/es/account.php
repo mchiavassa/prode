@@ -2,9 +2,9 @@
 
 return [
     'login' => [
-        'facebook' => 'Continua con Facebook',
-        'google' => 'Continua con Google',
-        'github' => 'Continua con GitHub'
+        'facebook' => 'Continúa con Facebook',
+        'google' => 'Continúa con Google',
+        'github' => 'Continúa con GitHub'
     ],
     'error' => 'Ha ocurrido un error intentando acceder con %s.',
     'menu' => [
