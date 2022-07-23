@@ -6,7 +6,7 @@
             <div class="card text-center">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-8 offset-2">
+                        <div class="col-md-8 offset-md-2">
                             <img src="{{asset('img/logo.png')}}" alt="Prode" class="img-fluid rounded mb-4">
                         </div>
                     </div>
@@ -28,3 +28,4 @@
         </div>
     </div>
 @endsection
+

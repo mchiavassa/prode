@@ -26,7 +26,7 @@ Route::get('locale/{locale}', [LocaleController::class, 'switchLocale'])->name('
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');;
-Route::get('login/{provider}', [LoginController::class, 'redirectToProvider'])->name('login.external');
+Route::any('login/{provider}', [LoginController::class, 'redirectToProvider'])->name('login.external');
 Route::get('login/{provider}/callback', [LoginController::class, 'handleProviderCallback']);
 
 Route::get('/delete', [UserController::class, 'showDelete'])->name('delete.show');

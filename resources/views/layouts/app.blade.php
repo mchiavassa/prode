@@ -69,6 +69,8 @@
         </footer>
     </div>
 
+    @include('auth.google-one-tap')
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script type="text/javascript">
         // Fixes Fb redirect url chars issue
         if (window.location.hash && window.location.hash == '#_=_') {
