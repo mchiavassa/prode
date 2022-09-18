@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\Handler;
+use App\Http\Requests\CreateAccount;
+use App\Http\Requests\Login;
+use App\Models\User;
 use App\Services\Auth\AuthService;
 use App\Services\Auth\ExternalUser;
 use App\Services\Auth\SocialNetworkProvider;
@@ -27,8 +30,6 @@ class LoginController extends Controller
     public function __construct(AuthService $authService)
     {
         $this->authService = $authService;
-
-        $this->middleware('guest')->except('logout');
     }
 
     /**
@@ -39,6 +40,59 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('auth.login');
+    }
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showCreateForm()
+    {
+        return view('auth.create');
+    }
+
+    /**
+     * Log in the user using email and password
+     *
+     * @param  Login  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function loginWithPassword(Login $request) {
+
+        $validated = $request->validated();
+
+        $user = $this->authService->authenticateUser(
+            Arr::get($validated, 'email'),
+            Arr::get($validated, 'password')
+        );
+        if ($user) {
+            return $this->authorizeUser($user);
+        }
+        return redirect()->route('login')->with(self::ERROR_MESSAGE, __('account.login.failed'));
+    }
+
+    /**
+     * Creates a new user account
+     *
+     * @param  CreateAccount  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function create(CreateAccount $request) {
+
+        $validated = $request->validated();
+
+        $user = $this->authService->createAccount(
+            Arr::get($validated, 'name'),
+            Arr::get($validated, 'email'),
+            Arr::get($validated, 'password')
+        );
+
+        if (!empty($user)) {
+            return $this->authorizeUser($user);
+        }
+
+        return redirect()->route('login')->with(self::ERROR_MESSAGE, __('account.create.failed'));
     }
 
     /**
@@ -105,9 +159,18 @@ class LoginController extends Controller
 
         $authUser = $this->authService->findOrCreateUser($externalUser, $provider);
 
-        Auth::login($authUser, true);
-        session()->put('locale', $authUser->locale ?: App::getLocale());
+        return $this->authorizeUser($authUser);
+    }
 
-        return redirect()->intended();
+    /**
+     * @param User $user
+     * @return \Illuminate\Http\Response
+     */
+    private function authorizeUser(User $user)
+    {
+        Auth::login($user, true);
+        session()->put('locale', $user->locale ?: App::getLocale());
+
+        return redirect()->route('home');
     }
 }

@@ -27,6 +27,11 @@ return [
         'subject' => 'You\'ve been removed from %s',
         'message' => 'You are no longer part of the party ',
     ],
+    'verification' => [
+        'subject' => 'Verify your email',
+        'message' => 'Verify your email so we can send you useful notifications about upcoming and new games to forecast.',
+        'verify' => 'Verify',
+    ],
     'test' => [
         'subject' => 'Test',
         'message' => 'This is a test email.'

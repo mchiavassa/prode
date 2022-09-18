@@ -39,5 +39,8 @@ return [
     ],
     'forecasts' => [
         'empty' => 'Nobody from the party has submitted a forecast for this match.',
+    ],
+    'list' => [
+        'empty' => 'There are no dates available',
     ]
 ];

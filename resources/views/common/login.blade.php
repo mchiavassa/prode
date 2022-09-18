@@ -5,14 +5,10 @@
             {{ Auth::user()->name }} <span class="caret"></span>
         </a>
 
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <span class="dropdown-item-text text-muted text-center">
-                @foreach(Auth::user()->logins as $login)
-                    <i class="fab fa-{{$login->provider}}"></i>
-                @endforeach
-            </span>
-            <span class="dropdown-item-text text-muted">{{ Auth::user()->email }}</span>
-            <div class="dropdown-divider"></div>
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ route('profile.show') }}">
+                {{__('account.menu.profile')}}
+            </a>
             <a class="dropdown-item" href="{{ route('delete.show') }}">
                 {{__('account.menu.delete')}}
             </a>

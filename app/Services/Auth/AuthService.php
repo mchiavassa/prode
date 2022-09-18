@@ -4,16 +4,51 @@ namespace App\Services\Auth;
 
 use App\Models\User;
 use App\Models\UserLogin;
+use App\Services\UserService;
+use App\Utils\DateTimes;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Hash;
 
 
 class AuthService
 {
     private User $user;
+    private UserService $userService;
 
-    public function __construct(User $user)
+    public function __construct(User $user, UserService $userService)
     {
         $this->user = $user;
+        $this->userService = $userService;
+    }
+
+    public function authenticateUser(string $email, string $password): ?User
+    {
+        $user = $this->user->where('email', $email)->first();
+        if (!empty($user) && $this->passwordIsValid($user, $password)) {
+            return $user;
+        }
+        return null;
+    }
+
+    public function createAccount(string $name, string $email, string $password): ?User
+    {
+        $user = $this->getUserByEmail($email);
+
+        // We don't allow creating another account with the same email.
+        if (!empty($user)) {
+            return null;
+        }
+
+        $user = new User();
+        $user->name = $name;
+        $user->email = $email;
+        $user->password = Hash::make($password);
+        $user->locale = App::getLocale();
+        $user->save();
+
+        $this->userService->sendEmailVerification($user);
+
+        return $user;
     }
 
     public function findOrCreateUser(ExternalUser $externalUser, SocialNetworkProvider $provider): User
@@ -78,6 +113,7 @@ class AuthService
         $user = new User();
         $user->name = $externalUser->getName();
         $user->email = $externalUser->getEmail();
+        $user->email_verified_at = DateTimes::now();
         $user->picture_url = $externalUser->getPictureUrl();
         $user->locale = App::getLocale();
         $user->save();
@@ -95,4 +131,10 @@ class AuthService
 
         $user->logins()->save($userLogin);
     }
+
+    private function passwordIsValid(User $user, string $password): bool
+    {
+        return !empty($user->password) && Hash::check($password, $user->password);
+    }
+
 }
