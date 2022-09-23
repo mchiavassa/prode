@@ -34,8 +34,8 @@ return [
     ],
     'password_recovery' => [
         'subject' => 'Recover your password',
-        'message' => 'Follow the link to recover your password.',
-        'recover' => 'Recover',
+        'message' => 'Follow the button link to recover your password.',
+        'recover' => 'Recover my password',
     ],
     'test' => [
         'subject' => 'Test',

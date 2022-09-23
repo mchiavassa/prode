@@ -15,8 +15,8 @@ return [
         'name' => 'Name',
         'email' => 'Email',
         'password' => 'Password',
-        'submit' => 'Register',
-        'failed' => 'Unable to register user with this email.',
+        'submit' => 'Create',
+        'failed' => 'Unable to create a user with this email.',
     ],
     'forgot_password' => [
         'email' => 'Enter your email',

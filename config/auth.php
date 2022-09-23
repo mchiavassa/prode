@@ -23,7 +23,7 @@ return [
     |
     */
     'tokens' => [
-        'minutes' => 5, // how many minutes a token lasts since generated
+        'minutes' => 10, // how many minutes a token lasts since generated
     ],
 
     /*

@@ -27,7 +27,7 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/';
 
-    private $authService;
+    private AuthService $authService;
 
     public function __construct(AuthService $authService)
     {
@@ -59,9 +59,7 @@ class LoginController extends Controller
     {
         $validated = $request->validated();
 
-        $this->authService->recoverPassword(
-            Arr::get($validated, 'email')
-        );
+        $this->authService->recoverPassword(Arr::get($validated, 'email'));
 
         return redirect()->route('login')->with(self::SUCCESS_MESSAGE, __('account.forgot_password.submitted'));
     }
@@ -72,7 +70,7 @@ class LoginController extends Controller
             return view('auth.restore_password', ['token' => $token]);
         }
 
-        return  redirect()->route('login');
+        return redirect()->route('login');
     }
 
     public function restorePassword(RestorePassword $request)
@@ -214,6 +212,6 @@ class LoginController extends Controller
         Auth::login($user, true);
         session()->put('locale', $user->locale ?: App::getLocale());
 
-        return redirect()->route('home');
+        return redirect()->intended();
     }
 }

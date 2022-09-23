@@ -5,10 +5,12 @@ namespace App\Services\Auth;
 use App\Models\User;
 use App\Models\UserLogin;
 use App\Models\UserTempToken;
+use App\Notifications\PasswordRecovery;
 use App\Services\UserService;
 use App\Utils\DateTimes;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
+use Ramsey\Uuid\Uuid;
 
 
 class AuthService
@@ -54,17 +56,6 @@ class AuthService
         return $user;
     }
 
-    public function recoverPassword(string $email)
-    {
-        $user = $this->getUserByEmail($email);
-
-        if (empty($user)) {
-            return;
-        }
-
-        $this->userService->sendPasswordRecoveryToken($user);
-    }
-
     public function isValidPasswordRecoveryToken(string $token) : bool
     {
         /** @var UserTempToken $userToken */
@@ -76,7 +67,40 @@ class AuthService
         return !empty($userToken) && !$userToken->isExpired();
     }
 
-    public function restorePassword(string $token, string $password)
+    public function recoverPassword(string $email): void
+    {
+        $user = $this->user->where('email', $email)->first();
+
+        if (empty($user)) {
+            return;
+        }
+
+        if (!$user->emailIsVerified()) {
+            return;
+        }
+
+        /** @var UserTempToken $userToken */
+        $userToken = $this->userTempToken
+            ->where('user_id', $user->id)
+            ->where('token_type', UserTempToken::TYPE_PASSWORD_RECOVERY)
+            ->first();
+
+        if (empty($userToken)) {
+            $userToken = new UserTempToken();
+        } else if (!$userToken->isExpired()) {
+            return; // if the current token is not expired, we don't send another one
+        }
+
+        $userToken->created_at = DateTimes::now();
+        $userToken->token_type = UserTempToken::TYPE_PASSWORD_RECOVERY;
+        $token = Uuid::uuid4();
+        $userToken->token = $token;
+        $user->tokens()->save($userToken);
+
+        $user->notify(new PasswordRecovery($token));
+    }
+
+    public function restorePassword(string $token, string $password): bool
     {
         /** @var UserTempToken $userToken */
         $userToken = $this->userTempToken
@@ -124,15 +148,6 @@ class AuthService
         return $user;
     }
 
-    private function getUserByEmail(string $email): ?User
-    {
-        return $this->user
-            ->withTrashed()
-            ->with('logins')
-            ->where('email', $email)
-            ->first();
-    }
-
     private function getUserWithLogin(SocialNetworkProvider $provider, string $providerKey): ?User
     {
         return $this->user
@@ -164,7 +179,7 @@ class AuthService
         return $user;
     }
 
-    private function addProviderLogin(User $user, ExternalUser $externalUser)
+    private function addProviderLogin(User $user, ExternalUser $externalUser): void
     {
         $userLogin = new UserLogin();
         $userLogin->provider = $externalUser->getProvider();
@@ -176,5 +191,14 @@ class AuthService
     private function passwordIsValid(User $user, string $password): bool
     {
         return !empty($user->password) && Hash::check($password, $user->password);
+    }
+
+    private function getUserByEmail(string $email): ?User
+    {
+        return $this->user
+            ->withTrashed()
+            ->with('logins')
+            ->where('email', $email)
+            ->first();
     }
 }

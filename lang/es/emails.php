@@ -27,6 +27,16 @@ return [
         'subject' => 'Has sido eliminado de %s',
         'message' => 'Ya no formas parte del grupo  ',
     ],
+    'verification' => [
+        'subject' => 'Verifica tu email',
+        'message' => 'Al verificar tu email, podrás recuperar tu contraseña y recibir notificaciones de partidos a pronosticar.',
+        'verify' => 'Verificar',
+    ],
+    'password_recovery' => [
+        'subject' => 'Recupera tu contraseña',
+        'message' => 'Haz click en el botón para recuperar tu password.',
+        'recover' => 'Recuperar mi contraseña',
+    ],
     'test' => [
         'subject' => 'Prueba',
         'message' => 'Este es un email de prueba.'

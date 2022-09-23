@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Models\UserLogin;
 use App\Models\UserTempToken;
 use App\Notifications\EmailVerification;
-use App\Notifications\PasswordRecovery;
 use App\Utils\DateTimes;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\Hash;
@@ -44,7 +43,7 @@ class UserService
     /**
      * Deletes a user with all their associated entities from the app
      */
-    public function delete(User $user)
+    public function delete(User $user): void
     {
         $this->db->connection()->transaction(function () use ($user) {
             $userParties = $this->party
@@ -91,7 +90,7 @@ class UserService
         });
     }
 
-    public function sendEmailVerification(User $user)
+    public function sendEmailVerification(User $user): void
     {
         if ($user->emailIsVerified()) {
             return;
@@ -118,33 +117,6 @@ class UserService
         $user->notify(new EmailVerification($token));
     }
 
-    public function sendPasswordRecoveryToken(User $user)
-    {
-        if (!$user->emailIsVerified()) {
-            return;
-        }
-
-        /** @var UserTempToken $userToken */
-        $userToken = $this->userTempToken
-            ->where('user_id', $user->id)
-            ->where('token_type', UserTempToken::TYPE_PASSWORD_RECOVERY)
-            ->first();
-
-        if (empty($userToken)) {
-            $userToken = new UserTempToken();
-        } else if (!$userToken->isExpired()) {
-            return; // if the current token is not expired, we don't send another one
-        }
-
-        $userToken->created_at = DateTimes::now();
-        $userToken->token_type = UserTempToken::TYPE_PASSWORD_RECOVERY;
-        $token = Uuid::uuid4();
-        $userToken->token = $token;
-        $user->tokens()->save($userToken);
-
-        $user->notify(new PasswordRecovery($token));
-    }
-
     public function verifyEmail($userId, string $token) : bool
     {
         $userToken = $this->userTempToken
@@ -164,7 +136,7 @@ class UserService
         return $validToken;
     }
 
-    public function updateProfile($user, $name, $password)
+    public function updateProfile(User $user, string $name, $password): void
     {
         $user->name = $name;
 
