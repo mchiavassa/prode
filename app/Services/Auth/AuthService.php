@@ -112,6 +112,9 @@ class AuthService
         if (!empty($userToken) && !$userToken->isExpired()) {
             $userToken->user->password = Hash::make($password);
             $userToken->user->save();
+
+            $userToken->delete();
+
             return true;
         }
         return false;
