@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use App\Mail\VerificationEmail;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -33,6 +32,11 @@ class EmailVerification extends Notification implements ShouldQueue
     public function viaQueues()
     {
         return ['mail' => 'emails',];
+    }
+
+    public function shouldSend($notifiable, $channel)
+    {
+        return !$notifiable->emailIsVerified();
     }
 
     public function toMail($notifiable)

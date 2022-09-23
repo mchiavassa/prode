@@ -8,7 +8,7 @@ return [
     'points' => 'Puntos',
     'average' => 'Promedio',
     'users' => 'Usuarios hoy',
-    'parties' => 'Grupos today',
+    'parties' => 'Grupos hoy',
     'forecasts' => 'Pronósticos enviados hoy',
     'top_matches' => 'Top 5 partidos',
     'top_sets' => 'Top Fechas',

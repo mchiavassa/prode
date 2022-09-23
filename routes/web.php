@@ -31,6 +31,10 @@ Route::post('create', [LoginController::class, 'create'])->middleware('guest')->
 Route::post('logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');;
 Route::any('login/{provider}', [LoginController::class, 'redirectToProvider'])->middleware('guest')->name('login.external');
 Route::get('login/{provider}/callback', [LoginController::class, 'handleProviderCallback'])->middleware('guest');
+Route::get('forgot_password', [LoginController::class, 'showRecoverPassword'])->middleware('guest')->name('login.recover_password.show');
+Route::post('forgot_password', [LoginController::class, 'recoverPassword'])->middleware('guest')->name('login.recover_password');
+Route::get('restore_password/{token}', [LoginController::class, 'showRestorePassword'])->whereUuid('token')->middleware('guest')->name('login.restore_password.show');
+Route::post('restore_password', [LoginController::class, 'restorePassword'])->middleware('guest')->name('login.restore_password');
 
 Route::get('/verify_email/{token}', [UserController::class, 'verifyEmail'])->whereUuid('token')->name('email.verify');
 Route::post('/verify_email', [UserController::class, 'sendEmailVerification'])->name('email.verification.send');

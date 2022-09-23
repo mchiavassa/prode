@@ -29,8 +29,13 @@ return [
     ],
     'verification' => [
         'subject' => 'Verify your email',
-        'message' => 'Verify your email so we can send you useful notifications about upcoming and new games to forecast.',
+        'message' => 'By verifying your email, you would be able to recover your password and receive reminders to forecast upcoming games!',
         'verify' => 'Verify',
+    ],
+    'password_recovery' => [
+        'subject' => 'Recover your password',
+        'message' => 'Follow the link to recover your password.',
+        'recover' => 'Recover',
     ],
     'test' => [
         'subject' => 'Test',

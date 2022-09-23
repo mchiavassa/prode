@@ -37,6 +37,11 @@ class User extends Authenticatable implements HasLocalePreference
         return in_array($this->email, config('auth.admins'));
     }
 
+    public function getPictureUrlAttribute($value)
+    {
+        return empty($value) ? asset('img/user-avatar.png') : $value;
+    }
+
     /**
      * Get the user's preferred locale.
      * To notifications (emails) in the user language.

@@ -4,6 +4,7 @@ namespace App\Services\Auth;
 
 use App\Models\User;
 use App\Models\UserLogin;
+use App\Models\UserTempToken;
 use App\Services\UserService;
 use App\Utils\DateTimes;
 use Illuminate\Support\Facades\App;
@@ -13,11 +14,13 @@ use Illuminate\Support\Facades\Hash;
 class AuthService
 {
     private User $user;
+    private UserTempToken $userTempToken;
     private UserService $userService;
 
-    public function __construct(User $user, UserService $userService)
+    public function __construct(User $user, UserTempToken $userTempToken, UserService $userService)
     {
         $this->user = $user;
+        $this->userTempToken = $userTempToken;
         $this->userService = $userService;
     }
 
@@ -51,6 +54,45 @@ class AuthService
         return $user;
     }
 
+    public function recoverPassword(string $email)
+    {
+        $user = $this->getUserByEmail($email);
+
+        if (empty($user)) {
+            return;
+        }
+
+        $this->userService->sendPasswordRecoveryToken($user);
+    }
+
+    public function isValidPasswordRecoveryToken(string $token) : bool
+    {
+        /** @var UserTempToken $userToken */
+        $userToken = $this->userTempToken
+            ->where('token', $token)
+            ->where('token_type', UserTempToken::TYPE_PASSWORD_RECOVERY)
+            ->first();
+
+        return !empty($userToken) && !$userToken->isExpired();
+    }
+
+    public function restorePassword(string $token, string $password)
+    {
+        /** @var UserTempToken $userToken */
+        $userToken = $this->userTempToken
+            ->with('user')
+            ->where('token', $token)
+            ->where('token_type', UserTempToken::TYPE_PASSWORD_RECOVERY)
+            ->first();
+
+        if (!empty($userToken) && !$userToken->isExpired()) {
+            $userToken->user->password = Hash::make($password);
+            $userToken->user->save();
+            return true;
+        }
+        return false;
+    }
+
     public function findOrCreateUser(ExternalUser $externalUser, SocialNetworkProvider $provider): User
     {
         $user = $this->getUserWithLogin($provider, $externalUser->getId());
@@ -75,7 +117,6 @@ class AuthService
         if (empty($providerLogin)) {
             $this->addProviderLogin($user, $externalUser);
         } else {
-            $user->name = $externalUser->getName();
             $user->picture_url = $externalUser->getPictureUrl();
             $user->save();
         }
@@ -136,5 +177,4 @@ class AuthService
     {
         return !empty($user->password) && Hash::check($password, $user->password);
     }
-
 }

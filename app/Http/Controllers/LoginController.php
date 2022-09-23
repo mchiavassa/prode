@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Exceptions\Handler;
 use App\Http\Requests\CreateAccount;
 use App\Http\Requests\Login;
+use App\Http\Requests\RecoverPassword;
+use App\Http\Requests\RestorePassword;
 use App\Models\User;
 use App\Services\Auth\AuthService;
 use App\Services\Auth\ExternalUser;
@@ -42,14 +44,55 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    /**
-     * Show the application's login form.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function showCreateForm()
     {
         return view('auth.create');
+    }
+
+    public function showRecoverPassword()
+    {
+        return view('auth.recover_password');
+    }
+
+    public function recoverPassword(RecoverPassword $request)
+    {
+        $validated = $request->validated();
+
+        $this->authService->recoverPassword(
+            Arr::get($validated, 'email')
+        );
+
+        return redirect()->route('login')->with(self::SUCCESS_MESSAGE, __('account.forgot_password.submitted'));
+    }
+
+    public function showRestorePassword(Request $request, $token)
+    {
+        if ($this->authService->isValidPasswordRecoveryToken($token)) {
+            return view('auth.restore_password', ['token' => $token]);
+        }
+
+        return  redirect()->route('login');
+    }
+
+    public function restorePassword(RestorePassword $request)
+    {
+        $validated = $request->validated();
+
+        $restored = $this->authService->restorePassword(
+            Arr::get($validated, 'token'),
+            Arr::get($validated, 'password')
+        );
+
+        if ($restored) {
+            return redirect()
+                ->route('login')
+                ->with(self::SUCCESS_MESSAGE, __('account.forgot_password.restored'));
+        }
+        return redirect()
+            ->route('login')
+            ->with(self::ERROR_MESSAGE, __('account.forgot_password.error'));
+
     }
 
     /**

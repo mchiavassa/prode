@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserTempToken extends Model
 {
     const TYPE_EMAIL_CONFIRMATION = 'email_confirmation';
-    const TYPE_FORGOT_PASSWORD = 'forgot_password';
+    const TYPE_PASSWORD_RECOVERY = 'password_recovery';
 
     public $timestamps = false;
 
