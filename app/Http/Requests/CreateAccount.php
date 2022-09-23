@@ -29,4 +29,11 @@ class CreateAccount extends FormRequest
             'password' => 'required|string|min:4|max:20',
         ];
     }
+
+    public function messages() : array
+    {
+        return [
+            'password.min' => __('validation.password.min')
+        ];
+    }
 }

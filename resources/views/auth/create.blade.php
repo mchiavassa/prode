@@ -15,12 +15,9 @@
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger">
-                                {{__('common.messages.errors.title')}}
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                            @foreach ($errors->all() as $error)
+                                {{ $error }} <br>
+                            @endforeach
                             </div>
                         @endif
 
@@ -28,7 +25,7 @@
                             {{ Form::text('name', '', ['class' => 'form-control', 'placeholder' => __('account.create.name'), 'required']) }}
                         </div>
                         <div class="form-group mb-2">
-                            {{ Form::text('email', '', ['class' => 'form-control', 'placeholder' => __('account.create.email'), 'required']) }}
+                            {{ Form::email('email', '', ['class' => 'form-control', 'placeholder' => __('account.create.email'), 'required']) }}
                         </div>
                         <div class="form-group mb-2">
                             {{ Form::password('password', ['class' => 'form-control', 'placeholder' => __('account.create.password'), 'required']) }}

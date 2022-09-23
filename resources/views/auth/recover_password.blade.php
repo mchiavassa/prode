@@ -15,17 +15,14 @@
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger">
-                                {{__('common.messages.errors.title')}}
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }} <br>
+                                @endforeach
                             </div>
                         @endif
 
                         <div class="form-group mb-2">
-                            {{ Form::text('email', '', ['class' => 'form-control', 'placeholder' => __('account.forgot_password.email'), 'required']) }}
+                            {{ Form::email('email', '', ['class' => 'form-control', 'placeholder' => __('account.forgot_password.email'), 'required']) }}
                         </div>
                         <input type="submit" class="w-100 mb-2 btn btn-primary" value="{{__('account.forgot_password.submit')}}">
                         <a href="{{route('login')}}" class="w-100 btn btn-light">{{__('account.login.login')}}</a>

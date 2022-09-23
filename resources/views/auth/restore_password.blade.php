@@ -15,12 +15,9 @@
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger">
-                                {{__('common.messages.errors.title')}}
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }} <br>
+                                @endforeach
                             </div>
                         @endif
                         {{ Form::hidden('token', $token, ['required']) }}

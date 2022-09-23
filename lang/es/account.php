@@ -2,7 +2,7 @@
 
 return [
     'login' => [
-        'login' => 'Login',
+        'login' => 'Iniciar sesión',
         'facebook' => 'Continúa con Facebook',
         'google' => 'Continúa con Google',
         'github' => 'Continúa con GitHub',
@@ -31,7 +31,7 @@ return [
     'menu' => [
         'profile' => 'Perfil',
         'delete' => 'Eliminar cuenta',
-        'logout' => 'Logout'
+        'logout' => 'Salir'
     ],
     'delete' => [
         'title' => 'Eliminar cuenta',
