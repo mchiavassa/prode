@@ -105,9 +105,11 @@
     <script type="text/javascript">
         const appTimeZone = '{{config('app.timezone')}}';
         function getTimezoneNow() {
-            const nowInTimeZone = moment().tz(appTimeZone);
-
             return new Date(Date.parse(moment().tz(appTimeZone).toString()));
+        }
+        function getLocalTimezone() {
+            let localTimeZone = moment.tz(moment.tz.guess()).zoneAbbr();
+            return (/\d/g).test(localTimeZone) ? 'UTC' + localTimeZone : localTimeZone;
         }
     </script>
     <script src="{{ mix('js/app.js') }}"></script>

@@ -78,8 +78,7 @@
     <script type="text/javascript">
         let dateTime = $('.game-datetime');
         let timestamp = parseInt(dateTime.attr('data-timestamp'));
-        let localTimeZone = moment.tz(moment.tz.guess()).zoneAbbr();
-        let localDateTime = moment(timestamp).format('{{__('common.formats.datetime.forecast_box')}}') + ' (' + ((/\d/g).test(localTimeZone) ? 'UTC' + localTimeZone : localTimeZone) + ')';
+        let localDateTime = moment(timestamp).format('{{__('common.formats.datetime.forecast_box')}}') + ' (' + (getLocalTimezone()) + ')';
         dateTime.append(localDateTime);
     </script>
     <script type="text/javascript">
