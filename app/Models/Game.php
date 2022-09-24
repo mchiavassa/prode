@@ -56,4 +56,9 @@ class Game extends Model
     {
         return $this->hasResult() && $this->home_tie_break_score !== null;
     }
+
+    public function getGroupAttribute($value)
+    {
+        return __($value);
+    }
 }

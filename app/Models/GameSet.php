@@ -29,4 +29,9 @@ class GameSet extends Model
     {
         return $this->status === self::STATUS_DRAFT;
     }
+
+    public function getNameAttribute($value)
+    {
+        return __($value);
+    }
 }

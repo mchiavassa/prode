@@ -124,7 +124,7 @@ export default class ForecastGame extends Component {
                             </div>
                             <div className={'row text-muted'}>
                                 <div className={'col-12'}>
-                                    {moment(this.state.game.dateAndHour).format(this.state.strings.format.datetime)} ({moment.tz(moment.tz.guess()).zoneAbbr()})
+                                    {moment(this.state.game.dateAndHour).format(this.state.strings.format.datetime)} ({ ((/\d/g).test(moment.tz(moment.tz.guess()).zoneAbbr()) ? 'UTC' + moment.tz(moment.tz.guess()).zoneAbbr() : moment.tz(moment.tz.guess()).zoneAbbr())})
                                 </div>
 
                             </div>
