@@ -27,6 +27,16 @@ return [
         'subject' => 'You\'ve been removed from %s',
         'message' => 'You are no longer part of the party ',
     ],
+    'verification' => [
+        'subject' => 'Verify your email',
+        'message' => 'By verifying your email, you would be able to recover your password and receive reminders to forecast upcoming games!',
+        'verify' => 'Verify',
+    ],
+    'password_recovery' => [
+        'subject' => 'Recover your password',
+        'message' => 'Follow the button link to recover your password.',
+        'recover' => 'Recover my password',
+    ],
     'test' => [
         'subject' => 'Test',
         'message' => 'This is a test email.'

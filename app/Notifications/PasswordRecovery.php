@@ -2,21 +2,22 @@
 
 namespace App\Notifications;
 
-use App\Mail\GameForecastsPendingEmail;
+use App\Mail\PasswordRecoveryEmail;
+use App\Mail\VerificationEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Collection;
 
-class GameForecastsPending extends Notification implements ShouldQueue
+
+class PasswordRecovery extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private Collection $games;
+    private string $token;
 
-    public function __construct(Collection $games)
+    public function __construct(string $token)
     {
-        $this->games = $games;
+        $this->token = $token;
     }
 
     public function via($notifiable)
@@ -34,7 +35,6 @@ class GameForecastsPending extends Notification implements ShouldQueue
         return ['mail' => 'emails',];
     }
 
-
     public function shouldSend($notifiable, $channel)
     {
         return $notifiable->emailIsVerified();
@@ -42,8 +42,8 @@ class GameForecastsPending extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-        return (new GameForecastsPendingEmail($this->games))
-            ->subject(__('emails.forecasts.subject'))
+        return (new PasswordRecoveryEmail(route('login.restore_password.show', ['token' => $this->token])))
+            ->subject(__('emails.password_recovery.subject'))
             ->to($notifiable->email);
     }
 }

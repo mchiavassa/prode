@@ -18,7 +18,7 @@
                 <div class="form-group">
                     {{ Form::text('name', '', ['class' => 'form-control mb-2', 'placeholder'=> __('party.create.name')]) }}
                 </div>
-                <input type="submit" class="btn btn-primary" value="__('party.create.create')">
+                <input type="submit" class="btn btn-primary" value="{{__('party.create.create')}}">
                 <a href="{{route('home')}}" class="btn btn-default">{{__('common.buttons.back')}}</a>
             </form>
         </div>

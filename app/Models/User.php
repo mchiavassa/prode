@@ -12,7 +12,7 @@ class User extends Authenticatable implements HasLocalePreference
     use SoftDeletes;
     use Notifiable;
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'email_verified_at'];
 
     public function logins()
     {
@@ -24,12 +24,22 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->belongsToMany(Party::class)->withPivot('is_admin');
     }
 
+    public function tokens()
+    {
+        return $this->hasMany(UserTempToken::class);
+    }
+
     /**
      * @return bool
      */
     public function isAdmin()
     {
         return in_array($this->email, config('auth.admins'));
+    }
+
+    public function getPictureUrlAttribute($value)
+    {
+        return empty($value) ? asset('img/user-avatar.png') : $value;
     }
 
     /**
@@ -41,5 +51,9 @@ class User extends Authenticatable implements HasLocalePreference
     public function preferredLocale()
     {
         return $this->locale;
+    }
+
+    public function emailIsVerified() {
+        return !empty($this->email_verified_at);
     }
 }

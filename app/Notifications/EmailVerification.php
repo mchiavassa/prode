@@ -2,21 +2,21 @@
 
 namespace App\Notifications;
 
-use App\Mail\GameForecastsPendingEmail;
+use App\Mail\VerificationEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Collection;
 
-class GameForecastsPending extends Notification implements ShouldQueue
+
+class EmailVerification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private Collection $games;
+    private string $token;
 
-    public function __construct(Collection $games)
+    public function __construct(string $token)
     {
-        $this->games = $games;
+        $this->token = $token;
     }
 
     public function via($notifiable)
@@ -34,16 +34,15 @@ class GameForecastsPending extends Notification implements ShouldQueue
         return ['mail' => 'emails',];
     }
 
-
     public function shouldSend($notifiable, $channel)
     {
-        return $notifiable->emailIsVerified();
+        return !$notifiable->emailIsVerified();
     }
 
     public function toMail($notifiable)
     {
-        return (new GameForecastsPendingEmail($this->games))
-            ->subject(__('emails.forecasts.subject'))
+        return (new VerificationEmail(route('email.verify', ['token' => $this->token])))
+            ->subject(__('emails.verification.subject'))
             ->to($notifiable->email);
     }
 }

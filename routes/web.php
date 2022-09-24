@@ -24,11 +24,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('locale/{locale}', [LocaleController::class, 'switchLocale'])->name('locale.switch');
 
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');;
-Route::any('login/{provider}', [LoginController::class, 'redirectToProvider'])->name('login.external');
-Route::get('login/{provider}/callback', [LoginController::class, 'handleProviderCallback']);
+Route::get('login', [LoginController::class, 'showLoginForm'])->middleware('guest')->name('login');
+Route::post('login', [LoginController::class, 'loginWithPassword'])->middleware('guest')->name('login.password');
+Route::get('create', [LoginController::class, 'showCreateForm'])->middleware('guest')->name('account.create.show');
+Route::post('create', [LoginController::class, 'create'])->middleware('guest')->name('account.create');
+Route::post('logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');;
+Route::any('login/{provider}', [LoginController::class, 'redirectToProvider'])->middleware('guest')->name('login.external');
+Route::get('login/{provider}/callback', [LoginController::class, 'handleProviderCallback'])->middleware('guest');
+Route::get('forgot_password', [LoginController::class, 'showRecoverPassword'])->middleware('guest')->name('login.recover_password.show');
+Route::post('forgot_password', [LoginController::class, 'recoverPassword'])->middleware('guest')->name('login.recover_password');
+Route::get('restore_password/{token}', [LoginController::class, 'showRestorePassword'])->whereUuid('token')->middleware('guest')->name('login.restore_password.show');
+Route::post('restore_password', [LoginController::class, 'restorePassword'])->middleware('guest')->name('login.restore_password');
 
+Route::get('/verify_email/{token}', [UserController::class, 'verifyEmail'])->whereUuid('token')->name('email.verify');
+Route::post('/verify_email', [UserController::class, 'sendEmailVerification'])->name('email.verification.send');
+Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.show');
+Route::post('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
 Route::get('/delete', [UserController::class, 'showDelete'])->name('delete.show');
 Route::post('/delete', [UserController::class, 'delete'])->name('delete');
 

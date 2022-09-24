@@ -34,6 +34,11 @@ class GameSetEnabled extends Notification implements ShouldQueue
         return ['mail' => 'emails',];
     }
 
+    public function shouldSend($notifiable, $channel)
+    {
+        return $notifiable->emailIsVerified();
+    }
+
     public function toMail($notifiable)
     {
         return (new GameSetEnabledEmail($this->gameSet))

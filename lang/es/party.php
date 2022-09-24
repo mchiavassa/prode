@@ -39,5 +39,8 @@ return [
     ],
     'forecasts' => [
         'empty' => 'Nadie ha pronosticado este juego.',
+    ],
+    'list' => [
+        'empty' => 'No hay fechas disponibles',
     ]
 ];

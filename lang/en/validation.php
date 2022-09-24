@@ -2,6 +2,8 @@
 
 return [
 
+    'password.min' => 'The password must be at least :min characters.',
+
     /*
     |--------------------------------------------------------------------------
     | Validation Language Lines
