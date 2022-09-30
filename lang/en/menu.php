@@ -7,5 +7,6 @@ return [
     'stats' => 'Statistics',
     'users' => 'Users',
     'admin' => 'Admin',
+    'translations' => 'Translations',
     'points' => 'points',
 ];

@@ -8,6 +8,7 @@ use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -100,4 +101,7 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::post('/admin/games/{id}/revert', [GameController::class, 'revertComputed'])->where('id', '[0-9]+')->name('game.revert');
     Route::get('/admin/games/{id}', [GameController::class, 'showResultSet'])->where('id', '[0-9]+')->name('game.result.show');
     Route::post('/admin/games/{id}', [GameController::class, 'setResult'])->where('id', '[0-9]+')->name('game.result');
+
+    Route::get('/admin/translations', [TranslationController::class, 'index'])->name('translations');
+    Route::post('/admin/translations', [TranslationController::class, 'updateLocaleJson'])->name('translations.save');
 });

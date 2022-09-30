@@ -17,10 +17,12 @@ return [
         'save' => 'Guardar'
     ],
     'messages' => [
+        'success' => 'Exito!',
         'errors' => [
             'title' => 'Errores',
             'fetch_data' => 'Ocurrió un error al intentar traer unos datos.',
             'unexpected' => 'Ocurrió un error inesperado al intentar realizar esta acción.',
+            'not_found' => 'No se encontró la entidad',
             '404' => [
                 'title' => '¡Fuera de juego!',
                 'message' => 'La página que buscas no existe.'

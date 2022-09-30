@@ -19,6 +19,9 @@
             <li class="nav-item">
                 <a class="nav-link {{Route::currentRouteName() === 'stats.admin' ? 'active' : ''}}" href="{{route('stats.admin')}}">{{__('menu.admin')}}</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{Route::currentRouteName() === 'translations' ? 'active' : ''}}" href="{{route('translations')}}">{{__('menu.translations')}}</a>
+            </li>
         @endif
         <li class="nav-item dropdown">
             <a id="statsDropdown" class="btn btn-dark" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
