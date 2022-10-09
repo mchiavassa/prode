@@ -3,8 +3,11 @@
 return [
     'players' => 'Jugadores',
     'average' => 'Promedio',
+    'average_details' => 'Puntos totales dividido la cantidad de jugadores.',
     'points' => 'Puntos totales',
-    'ranking' => 'Posiciones',
+    'ranking-points' => 'Puntos',
+    'ranking-average' => 'Promedios',
+    'ranking-average-details' => 'Puntos de cada juagador dividido la cantidad de partidos que pronosticó.',
     'join' => 'Unite a uno existente',
     'make-admin' => 'Hacer admin',
     'remove-user' => 'Quitar',
@@ -35,7 +38,8 @@ return [
     'applications' => [
         'title' => 'Solicitudes',
         'accept' => 'Aceptar',
-        'reject' => 'Rechazar'
+        'reject' => 'Rechazar',
+        'empty' => 'No hay solicitudes para unirse a este grupo.'
     ],
     'forecasts' => [
         'empty' => 'Nadie ha pronosticado este juego.',

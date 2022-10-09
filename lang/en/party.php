@@ -3,8 +3,11 @@
 return [
     'players' => 'Players',
     'average' => 'Avg Points',
+    'average_details' => 'Total group points divided by the amount of players.',
     'points' => 'Total Points',
-    'ranking' => 'Ranking',
+    'ranking-points' => 'Points',
+    'ranking-average' => 'Averages',
+    'ranking-average-details' => 'Player\'s points divided by the amount of matches forecasted by each of them.',
     'join' => 'Join an existing one',
     'make-admin' => 'Make admin',
     'remove-user' => 'Remove',
@@ -35,7 +38,8 @@ return [
     'applications' => [
         'title' => 'Applications',
         'accept' => 'Accept',
-        'reject' => 'Reject'
+        'reject' => 'Reject',
+        'empty' => 'No applications to join this party.'
     ],
     'forecasts' => [
         'empty' => 'Nobody from the party has submitted a forecast for this match.',

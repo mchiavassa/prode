@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Support\Collection;
 
 /**
- * Represents a ranking of entities that contain the 'points' attribute.
+ * Represents a ranking of entities that contain the 'name' and 'points' attribute.
  */
 class Ranking extends Collection
 {
-    public function __construct(Collection $item, int $limit = null, $positions = null)
+    public function __construct(Collection $items, int $limit = null, $positions = null)
     {
-        $sortedItems = $item->sort(function ($a, $b) {
+        $sortedItems = $items->sort(function ($a, $b) {
             if($a->points === $b->points) {
                 if(strtolower($a->name) === strtolower($b->name)) {
                     return 0;

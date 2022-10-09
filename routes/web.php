@@ -60,6 +60,7 @@ Route::post('/parties/create', [PartyController::class, 'create'])->name('party.
 
 Route::get('/parties/{id}/joinRequests', [PartyController::class, 'joinRequestList'])->where('id', '[0-9]+')->name('party.joinRequest.list');
 Route::get('/parties/{id}/ranking', [PartyController::class, 'partyRanking'])->where('id', '[0-9]+')->name('party.ranking');
+Route::get('/parties/{id}/ranking-averages', [PartyController::class, 'partyAveragesRanking'])->where('id', '[0-9]+')->name('party.ranking-averages');
 Route::get('/parties/{partyId}/games/{gameId}/forecasts', [PartyController::class, 'gameForecastsOfPartyUsers'])->where('partyId', '[0-9]+')->where('gameId', '[0-9]+')->name('party.game.forecasts');
 Route::post('/parties/{id}/joinRequests', [PartyController::class, 'requestJoin'])->where('id', '[0-9]+')->name('party.requestJoin');
 Route::post('/parties/{partyId}/joinRequests/{joinRequestId}', [PartyController::class, 'replyJoinRequest'])->where('partyId', '[0-9]+')->where('joinRequestId', '[0-9]+')->name('party.joinRequest.reply');

@@ -15,6 +15,7 @@ return [
 
     'mine' => [
         'title' => 'Tus estadísticas',
+        'forecasts_count'=> 'Partidos pronosticados',
         'result' => 'Partidos donde acertaste el resultado',
         'score' => 'Partidos donde acertaste el marcador',
         'tie_break_existence' => 'Partidos donde acertaste la existencia de penales',

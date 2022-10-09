@@ -34,4 +34,9 @@ class Forecast extends Model
     {
         return $this->home_tie_break_score !== null;
     }
+
+    public function computed(): bool
+    {
+        return $this->points_earned != null;
+    }
 }

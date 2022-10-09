@@ -15,11 +15,12 @@ return [
 
     'mine' => [
         'title' => 'Your statistics',
-        'result' => 'Matches where you guessed the result', // Partidos donde acertaste el resultado.
-        'score' => 'Matches where you guessed the score.', // Partidos donde acertaste el marcador.
-        'tie_break_existence' => 'Matches where you guessed the existence of tie break', // Partidos donde acertaste la existencia de penales.
-        'tie_break_score' => 'Matches where you guessed the exact amount of penalties', // Partidos donde acertaste la cantidad exacta de penales.
-        'nothing' => 'No assertions' // Sin aciertos
+        'forecasts_count'=> 'Matches forecasted',
+        'result' => 'Matches where you guessed the result',
+        'score' => 'Matches where you guessed the score.',
+        'tie_break_existence' => 'Matches where you guessed the existence of tie break',
+        'tie_break_score' => 'Matches where you guessed the exact amount of penalties',
+        'nothing' => 'No assertions'
     ]
 
 ];

@@ -2,10 +2,10 @@
     <tbody>
     @foreach($ranking as $rankingUser)
         <tr class="{{$rankingUser->item->email == Auth::user()->email ? 'fw-bold' : ''}}">
-            <td>
+            <td style="width: 5%">
                 {{ $rankingUser->position }}
             </td>
-            <td class="forms-show-hover">
+            <td class="forms-show-hover" style="width: 80%">
                 <img src="{{ $rankingUser->item->picture_url }}" class="rounded" height="30px">
                 {{ $rankingUser->item->name }}
                 @if($rankingUser->item->pivot->is_admin)

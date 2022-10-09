@@ -98,7 +98,7 @@ class StatsController extends Controller
 
     public function mine()
     {
-        $userForecastsComputed = $this->forecast->where('user_id', Auth::user()->id)->where('assertions', '<>', null)->get();
+        $userForecastsComputed = $this->forecast->where('user_id', Auth::user()->id)->get()->filter(function($forecast) {return $forecast->computed();});
         $userForecastsComputedCount = $userForecastsComputed->count();
         $matchResultForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::RESULT, $forecast->assertions);})->count();
         $matchScoreForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::SCORE, $forecast->assertions);})->count();
@@ -109,6 +109,7 @@ class StatsController extends Controller
 
         return view('stats.mine', [
             'points' => Auth::user()->points,
+            'userForecastsComputedCount' => $userForecastsComputedCount,
 
             'matchResultForecastsCount' => $matchResultForecastsCount,
             'matchResultForecastsPercentage' => $userForecastsComputedCount == 0

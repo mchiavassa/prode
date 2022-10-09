@@ -8,6 +8,7 @@ use App\Models\GameSet;
 use App\Models\Party;
 use App\Models\PartyJoinRequest;
 use App\Models\Ranking;
+use App\Models\User;
 use App\Notifications\PartyJoinRequestAccepted;
 use App\Notifications\UserRemovedFromParty;
 use Illuminate\Database\DatabaseManager;
@@ -160,7 +161,7 @@ class PartyController extends Controller
     }
 
     /**
-     * Retrieves the partial view of the users ranking of a Party
+     * Retrieves the partial view of the user's ranking of a Party
      */
     public function partyRanking(Request $request, int $id)
     {
@@ -199,6 +200,37 @@ class PartyController extends Controller
         });
 
         return view('party.ranking', ['ranking' => new Ranking($users), 'party' => $party]);
+    }
+
+    /**
+     * Retrieves the partial view of the user's average ranking of a Party
+     */
+    public function partyAveragesRanking(Request $request, int $id)
+    {
+        /** @var Party $party */
+        $party = $this->party->with('users', 'users.forecasts')->findOrFail($id);
+
+        if (!Auth::user()->isAdmin() && !$this->loggedUserBelongsToParty($party)) {
+            abort(404);
+        }
+
+        $partyUsers = $party->users->map(function(User $user) {
+            $computedForecastsCount = $user->forecasts
+                ->filter(function(Forecast $forecast) {
+                    return $forecast->computed();
+                })
+                ->count();
+
+            $average = $computedForecastsCount == 0 ? 0 : $user->points / $computedForecastsCount;
+
+            // we make use of the User object here to reuse all the ranking view logic
+            $partyUser = clone $user;
+            $partyUser->points = $average;
+
+            return $partyUser;
+        });
+
+        return view('party.ranking', ['ranking' => new Ranking($partyUsers), 'party' => $party]);
     }
 
     /**

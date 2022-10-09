@@ -24,6 +24,11 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->belongsToMany(Party::class)->withPivot('is_admin');
     }
 
+    public function forecasts()
+    {
+        return $this->hasMany(Forecast::class);
+    }
+
     public function tokens()
     {
         return $this->hasMany(UserTempToken::class);
