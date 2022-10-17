@@ -17,14 +17,6 @@
         </div>
     </div>
 
-    <div class="row mb-3">
-        <div class="col-md-12">
-            <div class="loading text-center mt-1" style="display: none">
-                <img class="small" src="{{asset('img/loading.svg')}}" />
-            </div>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-md-6">
             <div class="card p-3 mb-3">

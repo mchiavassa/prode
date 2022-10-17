@@ -9,8 +9,18 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.bg-logo {
-    background: url(/../img/competition-bg.png) repeat-y 0 0;
+.bg-main {
+  background-color: rgba(255,255,255, .7);
+
+  box-shadow: 0px 0px 152px -100px rgba(0,0,0,0.9);
+  -webkit-box-shadow: 0px 0px 152px -100px rgba(0,0,0,0.9);
+  -moz-box-shadow: 0px 0px 152px -100px rgba(0,0,0,0.9);
+
+  border-radius: 0.5rem;
+}
+
+body {
+  background: url(/../img/competition-bg.png) repeat 0 0;
 }
 
 .card {
