@@ -18,8 +18,9 @@ return [
         'assertion' => [
             \App\Models\ForecastAssertion::RESULT => 'Resultado',
             \App\Models\ForecastAssertion::SCORE => 'Marcador',
-            \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE => 'Existencia de penales',
+            \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE => 'Hay penales',
             \App\Models\ForecastAssertion::TIEBREAK_SCORE => 'Marcador de penales',
+            'nothing' => 'Sin aciertos',
         ],
     ],
     'teams' => [

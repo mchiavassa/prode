@@ -31,7 +31,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md {{Request::get('admin-view') ? 'navbar-dark bg-dark' : 'navbar-light'}} navbar-laravel">
+        <nav class="navbar navbar-expand-md {{Request::get('admin-view') ? 'navbar-dark bg-dark' : 'navbar-light'}} navbar-laravel sticky-top">
             <div class="container">
                 <a class="navbar-brand fw-bold" href="{{route('home')}}">
                     <img src="{{asset('img/logo.png')}}" alt="Prode" class="rounded" height="40px">
@@ -56,7 +56,7 @@
         </nav>
 
         <main class="container">
-            <div class="my-4 p-4 bg-main">
+            <div class="my-3 p-4 bg-main">
                 @yield('content')
             </div>
         </main>

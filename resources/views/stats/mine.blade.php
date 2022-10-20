@@ -1,49 +1,31 @@
-<li class="card dropdown-item bg-light border-dark mb-2">
-    {{__('stats.mine.forecasts_count')}}
-    <h4>
-        <strong>{{$userForecastsComputedCount}}</strong>
-    </h4>
-</li>
-<li class="card dropdown-item bg-light border-success mb-2">
-    {{__('domain.forecast.assertion.'.\App\Models\ForecastAssertion::RESULT)}}
-    <i class="fas fa-question-circle text-muted" data-toggle="tooltip" data-placement="top" title="{{__('stats.mine.result')}}"></i>
-    <h4>
-        <strong>{{$matchResultForecastsCount}}</strong>
-        <small class="text-muted">({{number_format($matchResultForecastsPercentage, 0)}}%)</small>
-    </h4>
-</li>
-<li class="card dropdown-item bg-light border-success mb-2">
-    {{__('domain.forecast.assertion.'.\App\Models\ForecastAssertion::SCORE)}}
-    <i class="fas fa-question-circle text-muted" data-toggle="tooltip" data-placement="top" title="{{__('stats.mine.score')}}"></i>
-    <h4>
-        <strong>{{$matchScoreForecastsCount}}</strong>
-        <small class="text-muted">({{number_format($matchScoreForecastsPercentage, 0)}}%)</small>
-    </h4>
-</li>
-<li class="card dropdown-item bg-light border-success mb-2">
-    {{__('domain.forecast.assertion.'.\App\Models\ForecastAssertion::TIEBREAK_EXISTENCE)}}
-    <i class="fas fa-question-circle text-muted" data-toggle="tooltip" data-placement="top" title="{{__('stats.mine.tie_break_existence')}}"></i>
-    <h4>
-        <strong>{{$matchTieBreakExistenceForecastsCount}}</strong>
-        <small class="text-muted">({{number_format($matchTieBreakExistenceForecastsPercentage, 0)}}%)</small>
-    </h4>
-</li>
-<li class="card dropdown-item bg-light border-success mb-2">
-    {{__('domain.forecast.assertion.'.\App\Models\ForecastAssertion::TIEBREAK_SCORE)}}
-    <i class="fas fa-question-circle text-muted" data-toggle="tooltip" data-placement="top" title="{{__('stats.mine.tie_break_score')}}"></i>
-    <h4>
-        <strong>{{$matchTieBreakScoreForecastsCount}}</strong>
-        <small class="text-muted">({{number_format($matchTieBreakScoreForecastsPercentage, 0)}}%)</small>
-    </h4>
-</li>
-<li class="card dropdown-item bg-light border-danger mb-2">
-    Sin aciertos
-    <h4>
-        <strong>{{$noMatchForecastsCount}}</strong>
-        <small class="text-muted">({{number_format($noMatchForecastsPercentage, 0)}}%)</small>
-    </h4>
-</li>
-<li class="dropdown-item disabled text-center">{{__('stats.mine.title')}}</li>
+<div class="container">
+    <div class="row mb-1">
+        <div class="col-md-12">
+            <h4 class="h3 d-inline-block">{{__('stats.mine.title')}}</h4>
+            <span class="badge rounded-pill bg-success align-text-bottom">
+                <strong>{{$userForecastsComputedCount}}</strong>
+                {{__('stats.mine.'.($userForecastsComputedCount == 1 ? 'forecast_count' : 'forecasts_count'))}}
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::RESULT, 'percentage' => $matchResultForecastsPercentage, 'forecastsCount' => $matchResultForecastsCount, 'color' => 'success'])
+        </div>
+        <div class="col-md-3">
+            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::SCORE, 'percentage' => $matchScoreForecastsPercentage, 'forecastsCount' => $matchScoreForecastsCount, 'color' => 'success'])
+        </div>
+        <div class="col-md-2">
+            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE, 'percentage' => $matchTieBreakExistenceForecastsPercentage, 'forecastsCount' => $matchTieBreakExistenceForecastsCount, 'color' => 'success'])
+        </div>
+        <div class="col-md-2">
+            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::TIEBREAK_SCORE, 'percentage' => $matchTieBreakScoreForecastsPercentage, 'forecastsCount' => $matchTieBreakScoreForecastsCount, 'color' => 'success'])
+        </div>
+        <div class="col-md-2">
+            @include('stats.card', ['stat' => 'nothing', 'percentage' => $noMatchForecastsPercentage, 'forecastsCount' => $noMatchForecastsCount, 'color' => 'danger'])
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     $(function () {

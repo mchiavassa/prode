@@ -20,6 +20,7 @@ return [
             \App\Models\ForecastAssertion::SCORE => 'Score',
             \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE => 'Tie break existence',
             \App\Models\ForecastAssertion::TIEBREAK_SCORE => 'Tie break score',
+            'nothing' => 'No assertions',
         ],
     ],
     'teams' => [

@@ -51,7 +51,16 @@
         </div>
     </div>
 @endsection
-
+@push('css')
+    <style type="text/css">
+        .bg-main {
+            background-color: rgba(255,255,255, .0) !important;
+            box-shadow: 0 0 0 0 rgba(255,255,255, 0) !important;
+            -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0) !important;
+            -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0) !important;
+        }
+    </style>
+@endpush
 @push('script')
     <script type="text/javascript">
         // Example starter JavaScript for disabling form submissions if there are invalid fields

@@ -23,19 +23,18 @@
                 <a class="nav-link {{Route::currentRouteName() === 'translations' ? 'active' : ''}}" href="{{route('translations')}}">{{__('menu.translations')}}</a>
             </li>
         @endif
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown full-width">
             <a id="statsDropdown" class="btn btn-dark" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <strong>{{Auth::user()->points}}</strong> {{__('menu.points')}}
             </a>
-            <ul id="statsList" class="dropdown-menu p-4 statsList" aria-labelledby="statsDropdown" data-source-url="{{route('stats.mine')}}">
-            </ul>
+            <div id="statsList" class="dropdown-menu p-4 statsList" aria-labelledby="statsDropdown" data-source-url="{{route('stats.mine')}}">
+            </div>
         </li>
         <li class="nav-item loading" style="display: none; margin-left: 0.5em">
             <img class="small" src="{{asset('img/loading.svg')}}" />
         </li>
     @endauth
 </ul>
-
 @push('script')
     <script type="text/javascript">
         $(function () {
@@ -44,7 +43,7 @@
             const loading = $('li.loading');
 
             $('#statsDropdown').click(function() {
-               if ($('#statsList li').length === 0) {
+               if ($('#statsList div').length === 0) {
                    loadStats();
                }
             });

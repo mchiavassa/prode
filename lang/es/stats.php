@@ -15,12 +15,15 @@ return [
 
     'mine' => [
         'title' => 'Tus estadísticas',
-        'forecasts_count'=> 'Partidos pronosticados',
+        'forecasts' => 'partidos',
+        'forecast' => 'partido',
+        'forecasts_count'=> 'partidos pronosticados',
+        'forecast_count'=> 'partido pronosticado',
         'result' => 'Partidos donde acertaste el resultado',
         'score' => 'Partidos donde acertaste el marcador',
-        'tie_break_existence' => 'Partidos donde acertaste la existencia de penales',
-        'tie_break_score' => 'Partidos donde acertaste la cantidad exacta de penales',
-        'nothing' => 'Sin aciertos',
+        'tiebreak_existence' => 'Partidos donde acertaste la existencia de penales',
+        'tiebreak_score' => 'Partidos donde acertaste la cantidad exacta de penales',
+        'nothing' => 'Partidos donde no has acertado nada',
     ]
 
 ];

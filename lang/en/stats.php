@@ -15,12 +15,15 @@ return [
 
     'mine' => [
         'title' => 'Your statistics',
-        'forecasts_count'=> 'Matches forecasted',
+        'forecasts_count'=> 'matches forecasted',
+        'forecast_count'=> 'match forecasted',
+        'forecasts' => 'matches',
+        'forecast' => 'match',
         'result' => 'Matches where you guessed the result',
         'score' => 'Matches where you guessed the score.',
-        'tie_break_existence' => 'Matches where you guessed the existence of tie break',
-        'tie_break_score' => 'Matches where you guessed the exact amount of penalties',
-        'nothing' => 'No assertions'
+        'tiebreak_existence' => 'Matches where you guessed the existence of tie break',
+        'tiebreak_score' => 'Matches where you guessed the exact amount of penalties',
+        'nothing' => 'Matches where you haven\'t guessed anything',
     ]
 
 ];

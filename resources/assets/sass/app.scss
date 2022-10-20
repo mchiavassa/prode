@@ -158,7 +158,18 @@ img.flag {
 }
 
 .statsList {
-    opacity: 0.95;
+    margin-top: 0 !important;
+    border: 0;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 4%);
+}
+
+.full-width.dropdown {
+    position: static;
+}
+.full-width.dropdown > .dropdown-menu {
+    left: 0;
+    right: 0;
+    position: absolute;
 }
 
 .live-badge {
