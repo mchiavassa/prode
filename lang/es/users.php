@@ -2,7 +2,7 @@
 
 return [
     'title' => 'Usuarios',
-    'name' => 'Nomber',
+    'name' => 'Nombre',
     'logins' => 'Logins',
     'email' => 'Email',
     'parties' => 'Grupos'

@@ -5,7 +5,7 @@
                 @foreach ($joinRequests as $joinRequest)
                     <tr>
                         <td>
-                            <img src="{{ $joinRequest->user->picture_url }}" class="rounded" height="30px">
+                            <img src="{{ $joinRequest->user->picture_url }}" class="rounded" height="30px" onerror="this.onerror=null; this.src='{{asset('img/user-avatar.png')}}'">
                             <strong>{{ $joinRequest->user->name }}</strong> ({{$joinRequest->user->points}} pts)
                         </td>
                         <td class="">

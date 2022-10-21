@@ -16,7 +16,7 @@
             @foreach ($users as $user)
                 <tr>
                     <td>
-                        <img src="{{ $user->picture_url }}" class="rounded" height="30px">
+                        <img src="{{ $user->picture_url }}" class="rounded" height="30px" onerror="this.onerror=null; this.src='{{asset('img/user-avatar.png')}}'">
                         {{ $user->name }} <span class="caret"></span>
                     </td>
                     <td>
@@ -26,6 +26,9 @@
                     </td>
                     <td>
                         {{$user->email}}
+                        @if($user->emailIsVerified())
+                            <i class="bi-check-circle-fill text-success"></i>
+                        @endif
                     </td>
                     <td>
                         @foreach($user->parties->pluck('name') as $group)

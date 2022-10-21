@@ -18,7 +18,7 @@
         @foreach($forecasts as $forecast)
             <tr>
                 <td>
-                    <img src="{{Arr::get($forecast, 'user.picture_url')}}" class="rounded" height="30px">
+                    <img src="{{Arr::get($forecast, 'user.picture_url')}}" class="rounded" height="30px" onerror="this.onerror=null; this.src='{{asset('img/user-avatar.png')}}'">
                     {{Arr::get($forecast, 'user.name')}}
                 </td>
                 <td>

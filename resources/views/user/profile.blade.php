@@ -7,7 +7,7 @@
         <div class="card-body">
                 <div style="text-align: right">
                     <h5 class="mb-4">
-                        <img src="{{ Auth::user()->picture_url }}" class="rounded" height="30px">
+                        <img src="{{ Auth::user()->picture_url }}" class="rounded" height="30px" onerror="this.onerror=null; this.src='{{asset('img/user-avatar.png')}}'">
                         {{ Auth::user()->email }}
                         @if(Auth::user()->emailIsVerified())
                             <i class="bi-check-circle-fill text-success"></i>

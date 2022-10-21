@@ -6,7 +6,7 @@
                 {{ $rankingUser->position }}
             </td>
             <td class="forms-show-hover" style="width: 80%">
-                <img src="{{ $rankingUser->item->picture_url }}" class="rounded" height="30px">
+                <img src="{{ $rankingUser->item->picture_url }}" class="rounded" height="30px" onerror="this.onerror=null; this.src='{{asset('img/user-avatar.png')}}'">
                 {{ $rankingUser->item->name }}
                 @if($rankingUser->item->pivot->is_admin)
                     <span class="badge rounded-pill bg-success">Admin</span>
