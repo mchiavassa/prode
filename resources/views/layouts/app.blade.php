@@ -31,7 +31,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md {{Request::get('admin-view') ? 'navbar-dark bg-dark' : 'navbar-light'}} navbar-laravel sticky-top">
+        <nav class="navbar navbar-expand-md {{Request::get('admin-view') ? 'navbar-dark bg-dark' : 'navbar-light'}} navbar-laravel">
             <div class="container">
                 <a class="navbar-brand fw-bold" href="{{route('home')}}">
                     <img src="{{asset('img/logo.png')}}" alt="Prode" class="rounded" height="40px">

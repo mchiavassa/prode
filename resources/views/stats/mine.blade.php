@@ -9,19 +9,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md">
             @include('stats.card', ['stat' => \App\Models\ForecastAssertion::RESULT, 'percentage' => $matchResultForecastsPercentage, 'forecastsCount' => $matchResultForecastsCount, 'color' => 'success'])
         </div>
-        <div class="col-md-3">
+        <div class="col-md">
             @include('stats.card', ['stat' => \App\Models\ForecastAssertion::SCORE, 'percentage' => $matchScoreForecastsPercentage, 'forecastsCount' => $matchScoreForecastsCount, 'color' => 'success'])
         </div>
-        <div class="col-md-2">
+        <div class="col-md">
             @include('stats.card', ['stat' => \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE, 'percentage' => $matchTieBreakExistenceForecastsPercentage, 'forecastsCount' => $matchTieBreakExistenceForecastsCount, 'color' => 'success'])
         </div>
-        <div class="col-md-2">
+        <div class="col-md">
             @include('stats.card', ['stat' => \App\Models\ForecastAssertion::TIEBREAK_SCORE, 'percentage' => $matchTieBreakScoreForecastsPercentage, 'forecastsCount' => $matchTieBreakScoreForecastsCount, 'color' => 'success'])
         </div>
-        <div class="col-md-2">
+        <div class="col-md">
             @include('stats.card', ['stat' => 'nothing', 'percentage' => $noMatchForecastsPercentage, 'forecastsCount' => $noMatchForecastsCount, 'color' => 'danger'])
         </div>
     </div>
