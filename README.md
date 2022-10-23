@@ -54,6 +54,7 @@ Run the DB migrations (located at `database/migrations/`)
 #### Schema
 - `users`: Contains the basic information about users (like name, email, locale, etc.) and points earned from the forecasts submitted. 
 - `user_logins`: Contains all the third-party login accesses associated to each user (google, facebook, github, etc)
+- `user_temp_tokens`: Contains user tokens serving different purposes, like password recovery and email validation. 
 - `game_sets`: Represents an entity that group games, commonly known as "Matchday" or "Fecha" in spanish.
 - `games`: Represents a game that belongs to a set. The `computed` field states that points have been given to all forecasts associated to it.
 - `forecasts`: Represents a forecast of a specific game that belongs to a user. After computed the `assertions` field will be the source of truth of points earned based on the game result.
