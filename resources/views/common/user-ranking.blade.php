@@ -1,7 +1,7 @@
 <table class="table">
     <tbody>
     @foreach($ranking as $rankingUser)
-        <tr class="{{$rankingUser->item->email == Auth::user()->email ? 'font-weight-bold' : ''}}">
+        <tr class="{{$rankingUser->item->email == Auth::user()->email ? 'fw-bold' : ''}}">
             <td>
                 {{ $rankingUser->position }}
             </td>

@@ -177,7 +177,7 @@ class PartyController extends Controller
         $setId = $request->query('setId');
 
         if (empty($setId)) {
-            return view('party.ranking', ['ranking' => new Ranking($partyUsers), 'party' => $party]);
+            return view('party.ranking', ['ranking' => Ranking::ofItems($partyUsers), 'party' => $party]);
         }
 
         $set = $this->gameSet->findOrFail($setId);
@@ -199,7 +199,7 @@ class PartyController extends Controller
             return $newUser;
         });
 
-        return view('party.ranking', ['ranking' => new Ranking($users), 'party' => $party]);
+        return view('party.ranking', ['ranking' => Ranking::ofItems($users), 'party' => $party]);
     }
 
     /**
@@ -230,7 +230,7 @@ class PartyController extends Controller
             return $partyUser;
         });
 
-        return view('party.ranking', ['ranking' => new Ranking($partyUsers), 'party' => $party]);
+        return view('party.ranking', ['ranking' => Ranking::ofItems($partyUsers), 'party' => $party]);
     }
 
     /**

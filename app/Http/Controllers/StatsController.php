@@ -32,20 +32,35 @@ class StatsController extends Controller
         $this->party = $party;
     }
 
-    public function index()
+    public function rankings()
     {
         $allUsers = $this->user->get();
 
-        $allParties = $this->party->with('users')->has('users', '>=', 2)->get()->map(function($party) {
-            return (object) [
-                'name' => $party->name,
-                'points' => number_format($party->users->sum('points') / $party->users->count(), 2)
-            ];
-        });
+        $allParties = $this->party
+            ->with('users')
+            ->has('users', '>=', 2)
+            ->get()
+            ->map(function($party) {
+                return (object) [
+                    'name' => $party->name,
+                    'points' => number_format($party->users->sum('points') / $party->users->count(), 2)
+                ];
+            });
 
-        return view('stats.index', [
-            'usersRanking' => new Ranking($allUsers, null, 3),
-            'partiesRanking' => new Ranking($allParties, null, 5),
+        $topUsersCount = 5;
+        $topPartiesCount = 5;
+
+        return view('stats.rankings', [
+            'usersRanking' => Ranking::ofItemsWithPositionsAndIncludeItem(
+                $allUsers,
+                $topUsersCount,
+                Auth::user(),
+                function($user, $user2) {
+                    return $user->email === $user2->email;
+                }),
+            'topUsersCount' => $topUsersCount,
+            'partiesRanking' => Ranking::ofItemsWithPositions($allParties, $topPartiesCount),
+            'topPartiesCount' => $topPartiesCount,
         ]);
     }
 

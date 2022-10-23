@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
  */
 class Ranking extends Collection
 {
-    public function __construct(Collection $items, int $limit = null, $positions = null)
+    private function __construct(Collection $items, $positions = null, $includeItem = null, $compareFunc = null)
     {
         $sortedItems = $items->sort(function ($a, $b) {
             if($a->points === $b->points) {
@@ -21,26 +21,64 @@ class Ranking extends Collection
             return $a->points > $b->points ? -1 : 1;
         });
 
-        if ($limit) {
-            $sortedItems = $sortedItems->take($limit);
-        }
-
         $ranking = [];
 
         $position = 1;
         $currentPoints = $sortedItems->isNotEmpty() ? $sortedItems->first()->points : 0;
+
+        $includeItemFound = $includeItem == null; // if there's no item to find, then true
+        $topRankingCompleted = false;
 
         foreach ($sortedItems as $item) {
             if ($item->points < $currentPoints) {
                 $currentPoints = $item->points;
                 $position++;
 
-                if ($positions && $position > $positions) break;
+                // If we reached to the expected positions
+                if ($positions && $position > $positions) {
+                    $topRankingCompleted = true;
+                    if ($includeItemFound) break;
+                }
             }
 
-            $ranking[] = (object) ['position' => $position, 'item' => $item];
+            // if we haven't found the item we compare it with the current one
+            if (!$includeItemFound) {
+                $includeItemFound = $compareFunc != null
+                    ? $compareFunc($includeItem, $item)
+                    : $includeItem == $item;
+
+                // if we found the item, we add it to the ranking!
+                if ($includeItemFound) {
+                    $ranking[] = (object) ['position' => $position, 'item' => $item];
+                    continue;
+                }
+            }
+
+            // keep adding items as the ranking is not completed
+            if (!$topRankingCompleted) {
+                $ranking[] = (object) ['position' => $position, 'item' => $item];
+            }
         }
 
         parent::__construct($ranking);
+    }
+
+    public static function ofItems(Collection $items): Ranking
+    {
+        return new self($items, null);
+    }
+
+    public static function ofItemsWithPositions(Collection $items, int $positions): Ranking
+    {
+        return new self($items, $positions);
+    }
+
+    public static function ofItemsWithPositionsAndIncludeItem(
+        Collection $items,
+        int        $positions,
+                   $includeItem,
+                   $compareFunc): Ranking
+    {
+        return new self($items, $positions, $includeItem, $compareFunc);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'title' => 'Estadísticas',
-    'top_users' => 'Top 3 jugadores',
-    'top_parties' => 'Top 5 grupos',
+    'rankings_title' => 'Rankings',
+    'top_users' => 'Top :number jugadores',
+    'top_parties' => 'Top :number grupos',
     'top_parties_detail' => 'con 2 o más jugadores',
     'points' => 'Puntos',
     'average' => 'Promedio',

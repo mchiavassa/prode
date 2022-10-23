@@ -10,7 +10,7 @@
             <a class="nav-link {{Route::currentRouteName() === 'set' ? 'active' : ''}}" href="{{Auth::user()->isAdmin() ? route('set.admin') : route('set')}}">{{__('menu.sets')}}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{Route::currentRouteName() === 'stats' ? 'active' : ''}}" href="{{route('stats')}}">{{__('menu.stats')}}</a>
+            <a class="nav-link {{Route::currentRouteName() === 'rankings' ? 'active' : ''}}" href="{{route('rankings')}}">{{__('menu.rankings')}}</a>
         </li>
         @if(Auth::user()->isAdmin())
             <li class="nav-item">

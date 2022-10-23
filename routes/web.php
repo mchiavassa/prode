@@ -47,7 +47,7 @@ Route::post('/delete', [UserController::class, 'delete'])->name('delete');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/rules', [HomeController::class, 'rules'])->name('rules');
 
-Route::get('/stats', [StatsController::class, 'index'])->name('stats');
+Route::get('/rankings', [StatsController::class, 'rankings'])->name('rankings');
 Route::get('/me/stats', [StatsController::class, 'mine'])->name('stats.mine');
 
 Route::get('/parties', [PartyController::class, 'index'])->name('party');
