@@ -2,7 +2,7 @@
     <li class="nav-item dropdown">
         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img src="{{ Auth::user()->picture_url }}"
-                 class="rounded" height="30px"
+                 class="rounded" height="32.4px"
                  onerror="this.onerror=null; this.src='{{asset('img/user-avatar.png')}}'">
 
             {{ Auth::user()->name }} <span class="caret"></span>
@@ -26,3 +26,4 @@
         </div>
     </li>
 @endauth
+

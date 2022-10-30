@@ -46,6 +46,7 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        @include('common.stats')
                         @include('common.login')
                     </ul>
                     <ul class="navbar-nav">
