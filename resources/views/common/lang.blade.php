@@ -1,5 +1,5 @@
 <li class="nav-item dropdown">
-    <a id="langDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a id="langDropdown" class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <img src="{{asset('img/'.App::getLocale().'.svg')}}" height="13">
         {{Str::upper(App::getLocale())}}
     </a>
