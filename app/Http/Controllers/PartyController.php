@@ -221,7 +221,7 @@ class PartyController extends Controller
                 })
                 ->count();
 
-            $average = $computedForecastsCount == 0 ? 0 : $user->points / $computedForecastsCount;
+            $average = $computedForecastsCount == 0 ? 0 : number_format($user->points / $computedForecastsCount, 2);
 
             // we make use of the User object here to reuse all the ranking view logic
             $partyUser = clone $user;
