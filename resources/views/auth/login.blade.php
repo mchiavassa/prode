@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4 offset-md-4">
+                        <div class="col-4 offset-4">
                             <img src="{{asset('img/logo.png')}}" alt="Prode" class="img-fluid rounded mb-2">
                         </div>
                     </div>
