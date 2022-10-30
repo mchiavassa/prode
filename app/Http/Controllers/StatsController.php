@@ -120,7 +120,7 @@ class StatsController extends Controller
         $matchTieBreakExistenceForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::TIEBREAK_EXISTENCE, $forecast->assertions);})->count();
         $matchTieBreakScoreForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::TIEBREAK_SCORE, $forecast->assertions);})->count();
         $noMatchForecastsCount = $userForecastsComputed
-            ->where('assertions', [])->count();
+            ->where('points_earned', 0)->count();
 
         return view('stats.mine', [
             'points' => Auth::user()->points,

@@ -37,6 +37,6 @@ class Forecast extends Model
 
     public function computed(): bool
     {
-        return $this->points_earned != null;
+        return $this->points_earned !== null;
     }
 }
