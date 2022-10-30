@@ -101,7 +101,7 @@ You can test your email provider using the command `app/Console/Commands/TestEma
 ### Scheduler
 
 Currently, there's one scheduled job to notify users about missing forecasts for upcoming games.
-It can be configured at `config/domain/php` on `reminders.forecasts`.
+It can be configured at `config/domain.php` on `reminders.forecasts`.
 
 In order to run the scheduler execute the following command
 ```bash
