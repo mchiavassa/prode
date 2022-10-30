@@ -35,6 +35,7 @@ return [
         'saved' => 'Descripción actualizada'
     ],
     'share' => 'Invita a tus amigos compartiendo el siguiente link. Una vez enviada la solicitud, cualquier Admin del grupo podrá aceptarla.',
+    'stats' => 'Estadísticas',
     'applications' => [
         'title' => 'Solicitudes',
         'accept' => 'Aceptar',

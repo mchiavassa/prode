@@ -16,7 +16,7 @@ $isAdmin = $party->users->contains('id', Auth::user()->id) && $party->users->whe
             <ul class="nav nav-pills justify-content-end mb-3" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-stats-tab" data-bs-toggle="pill" data-bs-target="#pills-stats" type="button" role="tab" aria-controls="pills-stats" aria-selected="true">
-                        {{__('menu.stats')}}
+                        {{__('party.stats')}}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">

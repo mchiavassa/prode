@@ -35,6 +35,7 @@ return [
         'saved' => 'Description updated!'
     ],
     'share' => 'Share this link to invite your friends to the party. Admins will have to accept the join request.',
+    'stats' => 'Statistics',
     'applications' => [
         'title' => 'Applications',
         'accept' => 'Accept',
