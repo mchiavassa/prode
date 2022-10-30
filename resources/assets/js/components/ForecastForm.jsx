@@ -79,6 +79,7 @@ export default class ForecastForm extends Component {
                                        autoComplete={'off'}
                                        className={'form-control mb-2'}
                                        onChange={this.handleInputChange}
+                                       inputMode="numeric"
                                 />
                             </div>
                             {this.props.tieBreakRequired === true &&
@@ -90,6 +91,7 @@ export default class ForecastForm extends Component {
                                            autoComplete={'off'}
                                            className={'form-control mb-2'}
                                            onChange={this.handleInputChange}
+                                           inputMode="numeric"
                                     />
                                 </div>
                             }
