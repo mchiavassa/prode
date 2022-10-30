@@ -42,8 +42,8 @@ class NotifyGamesWithMissingForecast implements ShouldQueue, ShouldBeUniqueUntil
      */
     public function handle(Game $game, User $user)
     {
-        $start = config('domain.reminders.forecasts.window_minutes');
-        $end = $start + config('domain.reminders.forecasts.offset_minutes');
+        $start = config('domain.reminders.forecasts.offset_minutes');
+        $end = $start + config('domain.reminders.forecasts.window_minutes');
 
         $gamesAboutToStart = $game
             ->with('forecasts')
