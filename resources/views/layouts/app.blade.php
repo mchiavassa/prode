@@ -92,13 +92,14 @@
     <script type="text/javascript">
         const errorMessageFetchData = '{{__('common.messages.errors.fetch_data')}}';
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118928932-1"></script>
-    <script type="text/javascript">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-808GGEBCME"></script>
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'UA-118928932-1');
+        gtag('config', 'G-808GGEBCME');
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.17/moment-timezone-with-data.min.js"></script>
