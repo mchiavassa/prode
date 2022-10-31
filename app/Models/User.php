@@ -58,7 +58,23 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->locale;
     }
 
-    public function emailIsVerified() {
+    public function emailIsVerified()
+    {
         return !empty($this->email_verified_at);
+    }
+
+    /**
+     * Get the user's average points based on the computed forecasts
+     *
+     * @return string
+     */
+    public function average()
+    {
+        $computedForecastsCount = $this->forecasts
+            ->filter(function(Forecast $forecast) {
+                return $forecast->computed();
+            })->count();
+
+        return $computedForecastsCount == 0 ? 0 : number_format($this->points / $computedForecastsCount);
     }
 }

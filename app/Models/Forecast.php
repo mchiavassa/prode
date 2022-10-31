@@ -39,4 +39,9 @@ class Forecast extends Model
     {
         return $this->points_earned !== null;
     }
+
+    public function withAssertion(string $assertion): bool
+    {
+        return $this->assertions !== null && in_array($assertion, $this->assertions);
+    }
 }

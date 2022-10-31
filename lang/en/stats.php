@@ -2,8 +2,10 @@
 
 return [
     'rankings_title' => 'Rankings',
-    'top_users' => 'Top :number players',
-    'top_parties' => 'Top :number parties',
+    'top_users' => 'Top players',
+    'total_users' => ':total players total',
+    'best_assertions' => 'Top assertions',
+    'top_parties' => 'Top parties',
     'top_parties_detail' => 'with 2 players or more',
     'points' => 'Points',
     'average' => 'Avg Points',

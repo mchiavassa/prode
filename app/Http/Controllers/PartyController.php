@@ -215,17 +215,9 @@ class PartyController extends Controller
         }
 
         $partyUsers = $party->users->map(function(User $user) {
-            $computedForecastsCount = $user->forecasts
-                ->filter(function(Forecast $forecast) {
-                    return $forecast->computed();
-                })
-                ->count();
-
-            $average = $computedForecastsCount == 0 ? 0 : number_format($user->points / $computedForecastsCount, 2);
-
             // we make use of the User object here to reuse all the ranking view logic
             $partyUser = clone $user;
-            $partyUser->points = $average;
+            $partyUser->points = $user->average();
 
             return $partyUser;
         });
