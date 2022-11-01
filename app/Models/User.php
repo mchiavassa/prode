@@ -66,7 +66,7 @@ class User extends Authenticatable implements HasLocalePreference
     /**
      * Get the user's average points based on the computed forecasts
      *
-     * @return string
+     * @return float|int
      */
     public function average()
     {
@@ -75,6 +75,6 @@ class User extends Authenticatable implements HasLocalePreference
                 return $forecast->computed();
             })->count();
 
-        return $computedForecastsCount == 0 ? 0 : number_format($this->points / $computedForecastsCount);
+        return $computedForecastsCount == 0 ? 0 : $this->points / $computedForecastsCount;
     }
 }

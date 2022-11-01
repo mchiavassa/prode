@@ -23,7 +23,7 @@
                         <h4 class="mb-4">{{__('stats.average')}}</h4>
                         <h1>
                             <strong>
-                                {{$totalAverage}}
+                                {{\App\Utils\Numbers::format($totalAverage)}}
                             </strong>
                         </h1>
                     </div>

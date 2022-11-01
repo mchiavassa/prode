@@ -24,7 +24,7 @@
                 @endif
             </td>
             <td>
-                {{ $rankingUser->item->points }}
+                {{ \App\Utils\Numbers::format($rankingUser->item->points) }}
             </td>
         </tr>
     @endforeach

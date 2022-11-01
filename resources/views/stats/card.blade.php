@@ -8,13 +8,13 @@ $points = config('domain.points.'.$stat) * $forecastsCount
         <i class="fas fa-question-circle text-muted" data-toggle="tooltip" data-placement="top" title="{{__('stats.mine.'.$stat)}}"></i>
     </span>
     <div style="font-size: 1.5em; font-weight:bold">
-        {{number_format($percentage, 0)}}%
+        {{\App\Utils\Numbers::format($percentage)}}%
     </div>
     <div class="progress" style="height: 0.5em">
         <div class="progress-bar bg-{{$color}}"
              role="progressbar"
-             style="width: {{number_format($percentage, 0)}}%"
-             aria-valuenow="{{number_format($percentage, 0)}}"
+             style="width: {{\App\Utils\Numbers::format($percentage)}}%"
+             aria-valuenow="{{\App\Utils\Numbers::format($percentage)}}"
              aria-valuemin="0"
              aria-valuemax="100"></div>
     </div>

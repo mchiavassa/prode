@@ -9,7 +9,7 @@
                 {{ $rankingItem->item->name }}
             </td>
             <td>
-                {{ $rankingItem->item->points }}
+                {{ \App\Utils\Numbers::format($rankingItem->item->points) }}
             </td>
         </tr>
     @endforeach

@@ -23,7 +23,7 @@
                 <h4>{{__('party.average')}}</h4>
                 <h3>
                     <strong>
-                        {{$party->users->isNotEmpty() ? number_format($party->users->sum('points') / $party->users->count(), 2) : 0}}
+                        {{$party->users->isNotEmpty() ? \App\Utils\Numbers::format($party->users->sum('points') / $party->users->count()) : 0}}
                     </strong>
                 </h3>
             </div>

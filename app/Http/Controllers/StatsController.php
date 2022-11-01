@@ -44,7 +44,7 @@ class StatsController extends Controller
             ->map(function($party) {
                 return (object) [
                     'name' => $party->name,
-                    'points' => number_format($party->users->sum('points') / $party->users->count(), 2)
+                    'points' => $party->users->sum('points') / $party->users->count()
                 ];
             });
 
@@ -130,7 +130,7 @@ class StatsController extends Controller
 
             $gameSets->push((object)[
                 'name' => $gameSet->name,
-                'points' => $points ? number_format($points / $gameSet->games->count(), 2) : 0
+                'points' => $points ? $points / $gameSet->games->count() : 0
             ]);
         }
 
@@ -152,7 +152,7 @@ class StatsController extends Controller
             'todayUsers' => $todayUsers,
             'todayParties' => $todayParties,
             'totalPoints' => $totalPoints,
-            'totalAverage' => number_format($totalPoints / $allUsers->count(), 2),
+            'totalAverage' => $totalPoints / $allUsers->count(),
             'usersWithPoints' => $usersWithPoints,
             'gameSets' => $gameSets->where('points', '>', 0),
             'games' => $games->where('points', '>', 0),

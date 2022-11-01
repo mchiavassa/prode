@@ -10,7 +10,7 @@
                 {{ $rankingUser->item->name }}
             </td>
             <td>
-                {{ $rankingUser->item->points }}
+                {{ \App\Utils\Numbers::format($rankingUser->item->points) }}
                 @isset($unit)
                     {{$unit}}
                 @endisset

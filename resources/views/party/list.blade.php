@@ -23,7 +23,7 @@
                                 </li>
                                 <li class="d-flex align-items-center">
                                     <div class="text-muted m-1">{{__('party.average')}}</div>
-                                    <h3 class="m-0">{{$party->users->isNotEmpty() ? number_format($party->users->sum('points') / $party->users->count(), 2) : '0.00'}}</h3>
+                                    <h3 class="m-0">{{$party->users->isNotEmpty() ? \App\Utils\Numbers::format($party->users->sum('points') / $party->users->count()) : '0.00'}}</h3>
                                 </li>
                             </ul>
                         </div>

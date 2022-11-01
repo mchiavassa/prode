@@ -69,7 +69,7 @@ $isAdmin = $party->users->contains('id', Auth::user()->id) && $party->users->whe
 
                                         <h2>
                                             <strong>
-                                                {{$party->users->count() == 0 ? 0 : number_format($party->users->sum('points') / $party->users->count(), 2)}}
+                                                {{$party->users->count() == 0 ? 0 : \App\Utils\Numbers::format($party->users->sum('points') / $party->users->count())}}
                                             </strong>
                                         </h2>
                                     </div>
