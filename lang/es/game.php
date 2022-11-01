@@ -20,7 +20,7 @@ return [
         'submit' => 'Pronosticar',
         'countdown' => [
             'before' => 'faltan',
-            'after' => 'para que comience el partido',
+            'after' => 'para que comience',
         ],
         'your' => 'Tu pronóstico',
         'update' => 'Modificar',
