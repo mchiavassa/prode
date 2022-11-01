@@ -147,6 +147,8 @@ $isAdmin = $party->users->contains('id', Auth::user()->id) && $party->users->whe
                                 <div class="card p-3 mb-3">
                                     {!! $party->description !!}
                                 </div>
+                            @else
+                                <div class="text-center m-2 text-muted">{{__('party.empty-rules')}}</div>
                             @endif
                         </div>
                     </div>

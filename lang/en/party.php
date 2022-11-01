@@ -47,5 +47,6 @@ return [
     ],
     'list' => [
         'empty' => 'There are no dates available',
-    ]
+    ],
+    'empty-rules' => 'There are no specific rules set for this party. Only admins can add and edit rules.',
 ];

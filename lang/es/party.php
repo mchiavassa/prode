@@ -47,5 +47,6 @@ return [
     ],
     'list' => [
         'empty' => 'No hay fechas disponibles',
-    ]
+    ],
+    'empty-rules' => 'No hay reglas específicas para este grupo. Sólo los admins pueden agregar y editar reglas.',
 ];
