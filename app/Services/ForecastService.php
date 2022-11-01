@@ -6,6 +6,7 @@ use App\Models\Forecast;
 use App\Models\Game;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class ForecastService
 {
@@ -55,6 +56,9 @@ class ForecastService
             $game->computed = true;
             $game->save();
         });
+
+        // Clear rankings cache, so they can be queried again from the DB
+        Cache::forget('rankings');
     }
 
     /**

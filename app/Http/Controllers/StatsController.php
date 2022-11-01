@@ -10,12 +10,14 @@ use App\Models\Party;
 use App\Models\Ranking;
 use App\Models\User;
 use App\Utils\DateTimes;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class StatsController extends Controller
 {
+    private const RANKING_CACHE = 3600; // 1 hour
+
     private Forecast $forecast;
     private User $user;
     private GameSet $gameSet;
@@ -35,59 +37,61 @@ class StatsController extends Controller
 
     public function rankings()
     {
-        $allUsers = $this->user->with('forecasts')->get();
+        $data = Cache::remember('rankings', self::RANKING_CACHE, function () {
+            $allUsers = $this->user->with('forecasts')->get();
 
-        $allParties = $this->party
-            ->with('users')
-            ->has('users', '>=', 2)
-            ->get()
-            ->map(function($party) {
-                return (object) [
-                    'name' => $party->name,
-                    'points' => $party->users->sum('points') / $party->users->count()
-                ];
+            $allParties = $this->party
+                ->with('users')
+                ->has('users', '>=', 2)
+                ->get()
+                ->map(function($party) {
+                    return (object) [
+                        'name' => $party->name,
+                        'points' => $party->users->sum('points') / $party->users->count()
+                    ];
+                });
+
+            $allUsersWithAverages = $allUsers->map(function(User $user) {
+                // we make use of the User object here to reuse all the ranking view logic
+                $avgUser = clone $user;
+                $avgUser->points = $user->average();
+
+                return $avgUser;
             });
 
-        $allUsersWithAverages = $allUsers->map(function(User $user) {
-            // we make use of the User object here to reuse all the ranking view logic
-            $avgUser = clone $user;
-            $avgUser->points = $user->average();
+            $topUsersByResult = $this->sortUsersByAssertion($allUsers, ForecastAssertion::RESULT);
+            $topUsersByScore = $this->sortUsersByAssertion($allUsers, ForecastAssertion::SCORE);
+            $topUsersByTieBreak = $this->sortUsersByAssertion($allUsers, ForecastAssertion::TIEBREAK_EXISTENCE);
+            $topUsersByTieBreakScore = $this->sortUsersByAssertion($allUsers, ForecastAssertion::TIEBREAK_SCORE);
 
-            return $avgUser;
+            $topUsersCount = 5;
+            $topPartiesCount = 5;
+
+            return [
+                'usersRanking' => Ranking::ofItemsWithPositionsAndIncludeItem(
+                    $allUsers,
+                    $topUsersCount,
+                    Auth::user(),
+                    function($user, $user2) {
+                        return $user->email === $user2->email;
+                    }),
+                'usersAverageRanking' => Ranking::ofItemsWithPositionsAndIncludeItem(
+                    $allUsersWithAverages,
+                    $topUsersCount,
+                    Auth::user(),
+                    function($user, $user2) {
+                        return $user->email === $user2->email;
+                    }),
+                'usersResultRanking' => Ranking::ofItemsWithPositions($topUsersByResult, $topUsersCount),
+                'usersScoreRanking' => Ranking::ofItemsWithPositions($topUsersByScore, $topUsersCount),
+                'usersTieBreakRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreak, $topUsersCount),
+                'usersTieBreakScoreRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreakScore, $topUsersCount),
+                'totalUsersCount' => $allUsers->count(),
+                'topUsersCount' => $topUsersCount,
+                'partiesRanking' => Ranking::ofItemsWithPositions($allParties, $topPartiesCount),
+                'topPartiesCount' => $topPartiesCount,
+            ];
         });
-
-        $topUsersByResult = $this->sortUsersByAssertion($allUsers, ForecastAssertion::RESULT);
-        $topUsersByScore = $this->sortUsersByAssertion($allUsers, ForecastAssertion::SCORE);
-        $topUsersByTieBreak = $this->sortUsersByAssertion($allUsers, ForecastAssertion::TIEBREAK_EXISTENCE);
-        $topUsersByTieBreakScore = $this->sortUsersByAssertion($allUsers, ForecastAssertion::TIEBREAK_SCORE);
-
-        $topUsersCount = 5;
-        $topPartiesCount = 5;
-
-        $data = [
-            'usersRanking' => Ranking::ofItemsWithPositionsAndIncludeItem(
-                $allUsers,
-                $topUsersCount,
-                Auth::user(),
-                function($user, $user2) {
-                    return $user->email === $user2->email;
-                }),
-            'usersAverageRanking' => Ranking::ofItemsWithPositionsAndIncludeItem(
-                $allUsersWithAverages,
-                $topUsersCount,
-                Auth::user(),
-                function($user, $user2) {
-                    return $user->email === $user2->email;
-                }),
-            'usersResultRanking' => Ranking::ofItemsWithPositions($topUsersByResult, $topUsersCount),
-            'usersScoreRanking' => Ranking::ofItemsWithPositions($topUsersByScore, $topUsersCount),
-            'usersTieBreakRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreak, $topUsersCount),
-            'usersTieBreakScoreRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreakScore, $topUsersCount),
-            'totalUsersCount' => $allUsers->count(),
-            'topUsersCount' => $topUsersCount,
-            'partiesRanking' => Ranking::ofItemsWithPositions($allParties, $topPartiesCount),
-            'topPartiesCount' => $topPartiesCount,
-        ];
 
         return view('stats.rankings', $data);
     }
