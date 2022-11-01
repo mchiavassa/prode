@@ -132,7 +132,7 @@ export default class ForecastGame extends Component {
                                 <span className={'badge rounded-pill bg-dark'}>{this.state.strings.finished}</span>
                             }
                             {!this.state.game.computed &&
-                            <div>
+                            <div className={'p-2'}>
                                 <Countdown className={'mt-2'}
                                            date={this.state.game.dateAndHour}
                                            now={getTimezoneNow}
