@@ -69,7 +69,7 @@ class ForecastController extends Controller
      */
     public function nextGamesForecast()
     {
-        $nextGames = $this->gameService->getUpcomingGamesToForecast();
+        $nextGames = $this->gameService->getUpcomingGamesToForecast2();
 
         if (!$nextGames) {
             return null;
@@ -200,6 +200,7 @@ class ForecastController extends Controller
             'home' => $game->home,
             'away' => $game->away,
             'infoUrl' => $game->info_url,
+            'setUrl' => route('forecast.set', ['id' => $game->set_id]),
             'homeFullName' => __('domain.teams.'.$game->home),
             'awayFullName' => __('domain.teams.'.$game->away),
             'homeShield' => asset('img/flags/'.$game->home.'.svg'),

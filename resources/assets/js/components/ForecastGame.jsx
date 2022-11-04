@@ -113,13 +113,11 @@ export default class ForecastGame extends Component {
                                     <div className={'text-muted'}>{this.state.game.group}</div>
                                 </div>
                                 <div className={'col-2 text-right'}>
-                                    {this.state.game.infoUrl &&
                                     <div className={'text-muted'}>
-                                        <a href={this.state.game.infoUrl} alt={'Info'} target={'_blank'}>
-                                            <i className={'fas fa-chart-line'}/>
+                                        <a href={this.state.game.setUrl} alt={'Set'}>
+                                            <i className={'bi-card-checklist text-dark'}/>
                                         </a>
                                     </div>
-                                    }
                                 </div>
                             </div>
                             <div className={'row text-muted'}>
@@ -170,8 +168,14 @@ export default class ForecastGame extends Component {
                                         }
                                     </span>
                                     }
+                                    {this.state.game.infoUrl &&
+                                        <div>
+                                            <a href={this.state.game.infoUrl} alt={'Info'} target={'_blank'}>
+                                                <i className={'fas fa-chart-line text-success'}/>
+                                            </a>
+                                        </div>
+                                    }
                                 </div>
-
                                 <div className={'col-4'}>
                                     <TeamDisplay shield={this.state.game.awayShield} name={this.state.game.awayFullName}/>
                                 </div>
