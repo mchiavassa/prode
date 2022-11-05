@@ -10,7 +10,6 @@
                  aria-valuenow="{{\App\Utils\Numbers::format($percentage)}}"
                  aria-valuemin="0"
                  aria-valuemax="100">
-                {{\App\Utils\Numbers::format($percentage)}}%
             </div>
         </div>
     </div>
