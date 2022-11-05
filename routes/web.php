@@ -49,6 +49,7 @@ Route::get('/rules', [HomeController::class, 'rules'])->name('rules');
 
 Route::get('/rankings', [StatsController::class, 'rankings'])->name('rankings');
 Route::get('/me/stats', [StatsController::class, 'mine'])->name('stats.mine');
+Route::get('/me/stats/forecasts', [StatsController::class, 'forecastsProgress'])->name('stats.forecasts');
 
 Route::get('/parties', [PartyController::class, 'index'])->name('party');
 Route::get('/parties/list/others', [PartyController::class, 'listOthers'])->name('party.list.others');

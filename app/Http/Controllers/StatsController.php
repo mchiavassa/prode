@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Utils\DateTimes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StatsController extends Controller
 {
@@ -161,8 +162,10 @@ class StatsController extends Controller
 
     public function mine()
     {
-        $userForecastsComputed = $this->forecast->where('user_id', Auth::user()->id)->get()->filter(function($forecast) {return $forecast->computed();});
-        $userForecastsComputedCount = $userForecastsComputed->count();
+        $userForecasts = $this->forecast->where('user_id', Auth::user()->id)->get();
+        $userForecastsComputed = $userForecasts->filter(function($forecast) {return $forecast->computed();});
+        $userForecastsComputedCount = $userForecasts->count();
+        $userForecastsCount = $userForecasts->count();
         $matchResultForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::RESULT, $forecast->assertions);})->count();
         $matchScoreForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::SCORE, $forecast->assertions);})->count();
         $matchTieBreakExistenceForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::TIEBREAK_EXISTENCE, $forecast->assertions);})->count();
@@ -172,6 +175,7 @@ class StatsController extends Controller
 
         return view('stats.mine', [
             'points' => Auth::user()->points,
+            'userForecastsCount' => $userForecastsCount,
             'userForecastsComputedCount' => $userForecastsComputedCount,
 
             'matchResultForecastsCount' => $matchResultForecastsCount,
@@ -199,5 +203,26 @@ class StatsController extends Controller
                 ? 0
                 : ($noMatchForecastsCount / $userForecastsComputedCount) * 100,
         ]);
+    }
+
+    public function forecastsProgress()
+    {
+        $gamesAvailableCount = DB::table('games')
+            ->join('game_sets', 'game_sets.id', '=', 'games.set_id')
+            ->whereIn('game_sets.status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED])
+            ->count();
+
+        $userForecastsCount = $this->forecast->where('user_id', Auth::user()->id)->count();
+
+        return view(
+            'stats.forecasts',
+            [
+                'gamesCount' => $gamesAvailableCount,
+                'forecastsCount' => $userForecastsCount,
+                'percentage' =>  $gamesAvailableCount == 0
+                    ? 0
+                    : ($userForecastsCount / $gamesAvailableCount) * 100
+            ]
+        );
     }
 }

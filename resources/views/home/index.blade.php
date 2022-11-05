@@ -7,6 +7,16 @@
         </div>
     </div>
 
+    <div class="async-list" data-source-url="{{route('stats.forecasts')}}">
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="loading text-center mt-1" style="display: none">
+                <img class="small" src="{{asset('img/loading.svg')}}" />
+            </div>
+        </div>
+    </div>
+
     <div class="async-list" data-source-url="{{route('forecast.next')}}">
     </div>
     <div class="row mb-3">
