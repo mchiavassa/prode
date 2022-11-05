@@ -30,8 +30,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">{{__('party.mine')}}</h4>
-                <div class="async-list" data-source-url="{{route('party.list.mine')}}">
+                <h4 class="mb-4">{{__('set.title')}}</h4>
+                <div class="async-list" data-source-url="{{route('set.list')}}">
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -44,8 +44,8 @@
         </div>
         <div class="col-md-6">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">{{__('set.title')}}</h4>
-                <div class="async-list" data-source-url="{{route('set.list')}}">
+                <h4 class="mb-4">{{__('party.mine')}}</h4>
+                <div class="async-list" data-source-url="{{route('party.list.mine')}}">
                 </div>
                 <div class="row">
                     <div class="col-md-12">
