@@ -164,7 +164,7 @@ class StatsController extends Controller
     {
         $userForecasts = $this->forecast->where('user_id', Auth::user()->id)->get();
         $userForecastsComputed = $userForecasts->filter(function($forecast) {return $forecast->computed();});
-        $userForecastsComputedCount = $userForecasts->count();
+        $userForecastsComputedCount = $userForecastsComputed->count();
         $userForecastsCount = $userForecasts->count();
         $matchResultForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::RESULT, $forecast->assertions);})->count();
         $matchScoreForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::SCORE, $forecast->assertions);})->count();
