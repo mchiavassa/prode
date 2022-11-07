@@ -96,8 +96,16 @@ class PartyController extends Controller
     {
         $validated = $request->validated();
 
+        $name = Arr::get($validated, 'name');
+
+        if ($this->party->where('name', $name)->exists()) {
+            return redirect()
+                ->route('party.create.show')
+                ->with(self::ERROR_MESSAGE, __('party.create.errors.name', ['name' => $name]));
+        }
+
         $party = new Party();
-        $party->name = Arr::get($validated, 'name');
+        $party->name = $name;
         $party->save();
 
         $party->users()->attach(Auth::user()->id, ['is_admin' => true]);

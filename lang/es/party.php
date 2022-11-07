@@ -27,7 +27,10 @@ return [
     'create' => [
         'title' => 'Crea tu grupo',
         'name' => 'Nombre',
-        'create' => 'Crear'
+        'create' => 'Crear',
+        'errors' => [
+            'name' => 'Ya existe un grupo llamado ":name". Intenta con otro nombre.'
+        ],
     ],
     'description' => [
         'placeholder' => 'Aquí puedes escribir lo que quieras: reglas internas, mensajes, etc.',

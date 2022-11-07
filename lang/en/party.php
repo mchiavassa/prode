@@ -27,7 +27,10 @@ return [
     'create' => [
         'title' => 'Create your party',
         'name' => 'Name',
-        'create' => 'Create'
+        'create' => 'Create',
+        'errors' => [
+            'name' => 'There\'s an existing party called ":name". Try with another name.'
+        ],
     ],
     'description' => [
         'placeholder' => 'You can use this for messages, internal rules or anything you want to share with your party...',

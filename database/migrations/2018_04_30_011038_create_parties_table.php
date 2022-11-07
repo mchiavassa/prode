@@ -21,6 +21,7 @@ class CreatePartiesTable extends Migration
             $table->boolean('hidden')->default(false);
 
             $table->timestamps();
+            $table->index(['name']);
         });
     }
 
