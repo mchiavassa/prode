@@ -136,7 +136,10 @@ class PartyController extends Controller
             ->findOrFail($id);
 
         if (Auth::user()->isAdmin()) {
-            $joinRequest = $this->partyJoinRequest->where('user_id', Auth::user()->id)->first();
+            $joinRequest = $this->partyJoinRequest
+                ->where('user_id', Auth::user()->id)
+                ->where('party_id', $id)
+                ->first();
             $sets = $this->getActiveSets();
 
             return view(
@@ -150,7 +153,10 @@ class PartyController extends Controller
         }
 
         if (!$this->loggedUserBelongsToParty($party)) {
-            $joinRequest = $this->partyJoinRequest->where('user_id', Auth::user()->id)->first();
+            $joinRequest = $this->partyJoinRequest
+                ->where('user_id', Auth::user()->id)
+                ->where('party_id', $id)
+                ->first();
 
             return view('party.apply', ['party' => $party, 'joinRequest' => $joinRequest]);
         }
