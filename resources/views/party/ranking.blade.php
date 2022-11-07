@@ -10,7 +10,7 @@
                 {{ $rankingUser->item->name }}
                 @if($rankingUser->item->pivot->is_admin)
                     <span class="badge rounded-pill bg-success">Admin</span>
-                @elseif($party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
+                @elseif($party->users->contains('id', Auth::user()->id) && $party->users->where('id', Auth::user()->id)->first()->pivot->is_admin)
                     <form action="{{route('party.user.makeAdmin', ['partyId' => $rankingUser->item->pivot->party_id, 'userId' => $rankingUser->item->id])}}" method="POST" class="d-inline">
                         @csrf
                         <input type="submit" class="btn btn-sm btn-light" style="font-size: 0.7em; padding: 0.1rem 0.5rem" value="{{__('party.make-admin')}}" />
