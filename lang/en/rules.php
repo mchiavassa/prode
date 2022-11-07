@@ -16,9 +16,9 @@ return [
     ],
     'points' => 'Points',
     'assertions' => [
-        \App\Models\ForecastAssertion::RESULT => 'Having guessed the wining team or tie in case the match allows it.', // Habiendo acertado el equipo ganador o si hubo empate en caso que el tipo de partido lo permita.
-        \App\Models\ForecastAssertion::SCORE => 'Having guessed the amount of goals during game time.', // Habiendo acertado la cantidad de goles marcados durante el juego.
-        \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE => 'In case the match goes to penalties and your forecasts has penalties submitted.', // En caso que el juego vaya a penales y tu pronóstico también tenga penales cargados.
-        \App\Models\ForecastAssertion::TIEBREAK_SCORE => 'In case you guessed the exact amount of penalties scored per team.', // En caso que hayas acertado la cantidad exacta de penales marcados por cada equipo.
+        \App\Models\ForecastAssertion::RESULT => 'Having guessed the wining team or tie (in case the match allows it)',
+        \App\Models\ForecastAssertion::SCORE => 'Having guessed the amount of goals during game time.',
+        \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE => 'In case the match goes to penalties and your forecasts has penalties submitted.',
+        \App\Models\ForecastAssertion::TIEBREAK_SCORE => 'In case you guessed the exact amount of penalties scored per team.',
     ],
 ];
