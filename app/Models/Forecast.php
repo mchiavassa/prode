@@ -44,4 +44,14 @@ class Forecast extends Model
     {
         return $this->assertions !== null && in_array($assertion, $this->assertions);
     }
+
+    public function printHomeResult(): string
+    {
+        return $this->home_score.($this->home_tie_break_score ? '('.$this->home_tie_break_score.')' : '');
+    }
+
+    public function printAwayResult(): string
+    {
+        return $this->away_score.($this->away_tie_break_score ? '('.$this->away_tie_break_score.')' : '');
+    }
 }

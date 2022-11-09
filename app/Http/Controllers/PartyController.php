@@ -415,8 +415,8 @@ class PartyController extends Controller
                     'name' => $user->name,
                     'picture_url' => $user->picture_url,
                 ],
-                'home_score' => $forecast->home_score.($forecast->home_tie_break_score ? '('.$forecast->home_tie_break_score.')' : ''),
-                'away_score' => $forecast->away_score.($forecast->away_tie_break_score ? '('.$forecast->away_tie_break_score.')' : ''),
+                'home_score' => $forecast->printHomeResult(),
+                'away_score' => $forecast->printAwayResult(),
             ];
         });
 
@@ -425,8 +425,8 @@ class PartyController extends Controller
             $partyUsersGameForecasts->map(function (Forecast $forecast) use ($party) {
                 $user = $party->users->where('id', $forecast->user_id)->first();
 
-                $homeScore = $forecast->home_score.($forecast->home_tie_break_score ? '('.$forecast->home_tie_break_score.')' : '');
-                $awayScore = $forecast->away_score.($forecast->away_tie_break_score ? '('.$forecast->away_tie_break_score.')' : '');
+                $homeScore = $forecast->printHomeResult();
+                $awayScore = $forecast->printAwayResult();
                 $score = sprintf('%s-%s', $homeScore, $awayScore);
 
                 return sprintf('#%s %s %s', $user->id, $user->name, $score);

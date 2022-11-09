@@ -6,6 +6,7 @@ return [
         'datetime' => [
             'forecast_box' => 'DD/MM HH:mm',
             'full' => 'd/m/Y H:i',
+            'full_js' => 'DD/MM/YYYY HH:mm',
             'day' => 'd',
             'hour' => 'h',
             'minute' => 'm',

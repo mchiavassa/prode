@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdate;
+use App\Models\Forecast;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -12,13 +13,15 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     private User $user;
+    private Forecast $forecast;
     private UserService $userService;
 
-    public function __construct(User $user, UserService $userService)
+    public function __construct(User $user, Forecast $forecast, UserService $userService)
     {
         $this->middleware('auth');
 
         $this->user = $user;
+        $this->forecast = $forecast;
         $this->userService = $userService;
     }
 
@@ -96,7 +99,32 @@ class UserController extends Controller
 
         Auth::logout();
 
-        return redirect()->route('login')->with(self::SUCCESS_MESSAGE, __('account.delete.succeed'));;
+        return redirect()->route('login')->with(self::SUCCESS_MESSAGE, __('account.delete.succeed'));
+    }
 
+    public function loggedUserForecasts()
+    {
+        return $this->userForecasts(Auth::user()->id);
+    }
+
+    /**
+     * Returns a complete list of forecasts for the user
+     */
+    public function userForecasts($id)
+    {
+        $forecasts = $this->forecast
+            ->with('game')
+            ->with('game.set')
+            ->where('user_id', $id)
+            ->get()
+            ->sortByDesc(function($forecast, $key) {
+                return $forecast->game->date_and_hour;
+            });
+
+        $user = $id === Auth::user()->id
+            ? Auth::user()
+            : $this->user->findOrFail($id);
+
+        return view('user.forecasts', ['forecasts' => $forecasts, 'user' => $user]);
     }
 }

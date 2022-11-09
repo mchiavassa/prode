@@ -10,6 +10,7 @@
                 <th scope="col">{{__('users.logins')}}</th>
                 <th scope="col">{{__('users.email')}}</th>
                 <th scope="col">{{__('users.parties')}}</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -34,6 +35,11 @@
                         @foreach($user->parties->pluck('name') as $group)
                             <div>{{$group}}</div>
                         @endforeach
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" href="{{ route('user.forecasts', ['id' => $user->id]) }}">
+                            <i class="bi-magic"></i>
+                        </a>
                     </td>
                 </tr>
             @endforeach

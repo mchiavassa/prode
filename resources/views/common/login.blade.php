@@ -9,15 +9,18 @@
         </a>
 
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ route('forecasts.mine') }}">
+                <i class="bi-magic"></i> {{__('users.forecasts.mine')}}
+            </a>
             <a class="dropdown-item" href="{{ route('profile.show') }}">
-                {{__('account.menu.profile')}}
+                <i class="bi-person"></i> {{__('account.menu.profile')}}
             </a>
             <a class="dropdown-item" href="{{ route('delete.show') }}">
-                {{__('account.menu.delete')}}
+                <i class="bi-x-circle"></i> {{__('account.menu.delete')}}
             </a>
             <a class="dropdown-item" href="{{ route('logout') }}"
                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                {{__('account.menu.logout')}} <i class="bi-box-arrow-right"></i>
+                <i class="bi-box-arrow-right"></i> {{__('account.menu.logout')}}
             </a>
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -48,6 +48,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/rules', [HomeController::class, 'rules'])->name('rules');
 
 Route::get('/rankings', [StatsController::class, 'rankings'])->name('rankings');
+Route::get('/me/forecasts', [UserController::class, 'loggedUserForecasts'])->name('forecasts.mine');
 Route::get('/me/stats', [StatsController::class, 'mine'])->name('stats.mine');
 Route::get('/me/stats/forecasts', [StatsController::class, 'forecastsProgress'])->name('stats.forecasts');
 
@@ -84,7 +85,7 @@ Route::put('/games/{gameId}/forecast/{forecastId}', [ForecastController::class, 
 */
 Route::middleware(['auth.admin'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('user');
-
+    Route::get('/users/{id}/forecasts', [UserController::class, 'userForecasts'])->where('id', '[0-9]+')->name('user.forecasts');
     Route::get('/admin/stats', [StatsController::class, 'admin'])->name('stats.admin');
 
     Route::get('/admin/sets', [GameSetController::class, 'indexAdmin'])->name('set.admin');
