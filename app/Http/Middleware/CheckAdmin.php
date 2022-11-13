@@ -12,7 +12,7 @@ class CheckAdmin extends Middleware
 {
     public function handle($request, Closure $next, ...$guards)
     {
-        if (!$request->user()->isAdmin()) {
+        if ($request->user() == null || !$request->user()->isAdmin()) {
             return redirect()->route('home');
         }
 
