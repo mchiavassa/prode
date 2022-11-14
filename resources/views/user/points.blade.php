@@ -26,7 +26,7 @@
             <tbody>
             @if ($usersWithErrors->isEmpty())
                 <tr class="table-success text-center fst-italic">
-                    <td colspan="4">{{__('users.points.no_mismatches')}}</td>
+                    <td colspan="5">{{__('users.points.no_mismatches')}}</td>
                 </tr>
             @endif
             @foreach ($usersWithErrors as $userWithError)

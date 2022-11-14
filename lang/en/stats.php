@@ -26,7 +26,7 @@ return [
         'forecast_progress'=> 'You\'ve forecasted :forecasts of :games games available.',
         'result' => 'Matches where you guessed the result',
         'score' => 'Matches where you guessed the score.',
-        'tiebreak_existence' => 'Matches where you guessed the existence of tie break',
+        'tiebreak_existence' => 'Matches defined by tie break where you guessed the existence of it',
         'tiebreak_score' => 'Matches where you guessed the exact amount of penalties',
         'nothing' => 'Matches where you haven\'t guessed anything',
     ]

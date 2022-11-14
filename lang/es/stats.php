@@ -26,7 +26,7 @@ return [
         'forecast_progress'=> 'Pronosticaste :forecasts de :games partidos disponibles.',
         'result' => 'Partidos donde acertaste el resultado',
         'score' => 'Partidos donde acertaste la cantidad de goles',
-        'tiebreak_existence' => 'Partidos donde acertaste que el partido se define por penales',
+        'tiebreak_existence' => 'Partidos donde hubo penales y acertaste la existencia de ellos',
         'tiebreak_score' => 'Partidos donde acertaste la cantidad exacta de penales por la definición',
         'nothing' => 'Partidos donde no has acertado nada',
     ]

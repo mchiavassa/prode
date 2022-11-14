@@ -77,7 +77,7 @@
                         @include('common.user-ranking', ['ranking' => $usersTieBreakRanking, 'unit' => '%'])
                     </div>
                     <div class="tab-pane fade" id="pills-top-tiebreak-score" role="tabpanel" aria-labelledby="pills-top-tiebreak-score-tab">
-                        @include('common.user-ranking', ['ranking' => $usersTieBreakRanking, 'unit' => '%'])
+                        @include('common.user-ranking', ['ranking' => $usersTieBreakScoreRanking, 'unit' => '%'])
                     </div>
                 </div>
             </div>
