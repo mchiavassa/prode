@@ -48,7 +48,7 @@ $realPoints = $forecasts->sum('points_earned')
                         @if($forecast->game->computed)
                             {{$forecast->game->printHomeResult().' - '. $forecast->game->printAwayResult()}}
                         @else
-                            {{__('users.forecasts.pending')}}
+                            <span class="fst-italic">{{__('users.forecasts.pending')}}</span>
                         @endif
                     </td>
                     <td style="width: 20%">
@@ -61,7 +61,7 @@ $realPoints = $forecasts->sum('points_earned')
                         })->implode(' + ')) : '-'}}
                     </td>
                     <td style="width: 5%">
-                        {{$forecast->points_earned ?: '-'}}
+                        {{$forecast->game->computed ? $forecast->points_earned : '-'}}
                     </td>
                     <td style="width: 15%" class="local-datetime" data-timestamp="{{\App\Utils\DateTimes::toTimestamp($forecast->updated_at)}}">
                     </td>
