@@ -28,7 +28,7 @@ return [
         'score' => 'Partidos donde acertaste la cantidad de goles',
         'tiebreak_existence' => 'Partidos donde hubo penales y acertaste la existencia de ellos',
         'tiebreak_score' => 'Partidos donde acertaste la cantidad exacta de penales por la definición',
-        'nothing' => 'Partidos donde no has acertado nada',
+        'nothing' => 'Partidos donde no acertaste nada',
     ]
 
 ];
