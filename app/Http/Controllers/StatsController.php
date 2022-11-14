@@ -184,6 +184,7 @@ class StatsController extends Controller
             'points' => Auth::user()->points,
             'userForecastsCount' => $userForecastsCount,
             'userForecastsComputedCount' => $userForecastsComputedCount,
+            'userForecastsComputedWithTieBreakResultCount' => $userForecastsComputedWithTieBreakResultCount,
 
             'matchResultForecastsCount' => $matchResultForecastsCount,
             'matchResultForecastsPercentage' => $userForecastsComputedCount == 0

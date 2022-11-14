@@ -19,6 +19,6 @@ $points = config('domain.points.'.$stat) * $forecastsCount
              aria-valuemax="100"></div>
     </div>
     <small class="text-muted">
-        {{$forecastsCount}} {{__('stats.mine.'.($forecastsCount == 1 ? 'forecast' : 'forecasts'))}} <strong>{{$points > 0 ? '+'.$points.' '.strtolower(__('stats.points')) : ''}}</strong>
+        {{__('stats.mine.'.($total == 1 ? 'forecast' : 'forecasts'), ['count' => $forecastsCount, 'total' => $total])}} <strong>{{$points > 0 ? '+'.$points.' '.strtolower(__('stats.points')) : ''}}</strong>
     </small>
 </div>

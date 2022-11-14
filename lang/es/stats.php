@@ -17,8 +17,8 @@ return [
 
     'mine' => [
         'title' => 'Tus estadísticas',
-        'forecasts' => 'partidos',
-        'forecast' => 'partido',
+        'forecasts' => ':count de :total partidos',
+        'forecast' => ':count de :total partido',
         'forecasts_count'=> 'partidos pronosticados',
         'forecast_count'=> 'partido pronosticado',
         'forecasts_computed_count'=> 'pronósticos computados',
