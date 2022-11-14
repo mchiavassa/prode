@@ -256,7 +256,10 @@ class PartyController extends Controller
             );
         }
 
-        $joinRequest = $this->partyJoinRequest->where('user_id', Auth::user()->id)->first();
+        $joinRequest = $this->partyJoinRequest
+            ->where('user_id', Auth::user()->id)
+            ->where('party_id', $id)
+            ->first();
 
         if ($joinRequest) {
             return redirect()->route('party.details', ['id' => $id])->with(
