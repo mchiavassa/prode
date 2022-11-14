@@ -8,7 +8,7 @@ return [
     ],
     'forecasts' => [
         'title' => 'Pronostica',
-        'description' => 'A medida que la competición avanza, nuevos partidos serán habilitados para que envíes tus pronósticos.',
+        'description' => 'A medida que la competición avanza, nuevos partidos serán habilitados para que envíes tus pronósticos. Podrás enviar y modificar tus pronósticos hasta la hora del partido.',
     ],
     'compete' => [
         'title' => 'Compite',

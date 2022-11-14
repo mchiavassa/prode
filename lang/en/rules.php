@@ -8,7 +8,7 @@ return [
     ],
     'forecasts' => [
         'title' => 'Forecast',
-        'description' => 'As the competition moves forward, new matches will become available to submit your forecasts.',
+        'description' => 'As the competition moves forward, new matches will become available to submit your forecasts. You\'ll be able to submit and update your forecasts until the hour of the match.',
     ],
     'compete' => [
         'title' => 'Compete',
