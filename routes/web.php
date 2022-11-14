@@ -86,6 +86,9 @@ Route::put('/games/{gameId}/forecast/{forecastId}', [ForecastController::class, 
 Route::middleware(['auth.admin'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('user');
     Route::get('/users/{id}/forecasts', [UserController::class, 'userForecasts'])->where('id', '[0-9]+')->name('user.forecasts');
+    Route::get('/users/points', [UserController::class, 'usersPoints'])->name('user.points.show');
+    Route::post('/users/points/adjust', [UserController::class, 'adjustPoints'])->name('user.points.adjust');
+
     Route::get('/admin/stats', [StatsController::class, 'admin'])->name('stats.admin');
 
     Route::get('/admin/sets', [GameSetController::class, 'indexAdmin'])->name('set.admin');

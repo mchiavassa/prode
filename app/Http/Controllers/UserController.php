@@ -127,4 +127,25 @@ class UserController extends Controller
 
         return view('user.forecasts', ['forecasts' => $forecasts, 'user' => $user]);
     }
+
+    /**
+     * Returns a complete list of users re-calculating their points based on submitted forecasts
+     */
+    public function usersPoints()
+    {
+        $results = $this->userService->adjustPoints(true);
+
+        return view('user.points', $results->all());
+    }
+
+    /**
+     * Returns a complete list of users re-calculating their points based on submitted forecasts
+     */
+    public function adjustPoints()
+    {
+        $this->userService->adjustPoints(false);
+
+        return redirect()->route('user.points.show')
+            ->with(self::SUCCESS_MESSAGE, __('users.points.success'));
+    }
 }

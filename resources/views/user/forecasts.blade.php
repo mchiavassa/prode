@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@php
+$realPoints = $forecasts->sum('points_earned')
+@endphp
 @section('content')
     <h2 class="mb-2">
         @if($user->id === Auth::user()->id)
@@ -71,6 +74,15 @@
                 <td>{{$user->points}}</td>
                 <td></td>
             </tr>
+            @if ($realPoints != $user->points)
+                <tr class="fw-bold table-danger">
+                    <td colspan="6">{{__('users.points.real')}}</td>
+                    <td>{{$realPoints}}</td>
+                    <td>
+                        <a href="{{route('user.points.show')}}" class="btn btn-sm btn-danger">{{__('users.points.adjust')}}</a>
+                    </td>
+                </tr>
+            @endif
             </tfoot>
         </table>
     </div>

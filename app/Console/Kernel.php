@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Console\Commands\AdjustUserPoints;
 use App\Console\Commands\CreateParty;
 use App\Console\Commands\InviteUserToParty;
 use App\Console\Commands\TestEmailProvider;
@@ -21,7 +20,6 @@ class Kernel extends ConsoleKernel
         CreateParty::class,
         InviteUserToParty::class,
         TestEmailProvider::class,
-        AdjustUserPoints::class,
     ];
 
     /**

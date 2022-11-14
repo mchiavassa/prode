@@ -11,12 +11,14 @@ use App\Models\UserTempToken;
 use App\Notifications\EmailVerification;
 use App\Utils\DateTimes;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
 
 class UserService
 {
     private DatabaseManager $db;
+    private User $user;
     private Party $party;
     private UserTempToken $userTempToken;
     private Forecast $forecast;
@@ -25,6 +27,7 @@ class UserService
 
     public function __construct(
         DatabaseManager $db,
+        User $user,
         Party $party,
         UserTempToken $userTempToken,
         Forecast $forecast,
@@ -33,6 +36,7 @@ class UserService
     )
     {
         $this->db = $db;
+        $this->user = $user;
         $this->party = $party;
         $this->userTempToken = $userTempToken;
         $this->forecast = $forecast;
@@ -146,5 +150,39 @@ class UserService
         }
 
         $user->save();
+    }
+
+    public function adjustPoints(bool $dryRun) : Collection
+    {
+        return $this->db->connection()->transaction(function () use ($dryRun) {
+            $allUsers = $this->user->get();
+            $usersWithErrors = collect();
+            $usersOk = collect();
+
+            foreach ($allUsers as $user) {
+                $forecasts = $this->forecast->where('user_id', $user->id)->get();
+                $realPoints = $forecasts->sum('points_earned');
+                $currentPoints = $user->points;
+
+                if ($currentPoints != $realPoints) {
+                    if (!$dryRun) {
+                        $user->points = $realPoints;
+                        $user->save();
+
+                        $usersOk->push($user);
+                    } else {
+                        $usersWithErrors->push((object)[
+                            'user' => $user,
+                            'currentPoints' => $currentPoints,
+                            'realPoints' => $realPoints,
+                        ]);
+                    }
+                } else {
+                    $usersOk->push($user);
+                }
+            }
+
+            return collect(['usersOk' => $usersOk, 'usersWithErrors' => $usersWithErrors]);
+        });
     }
 }

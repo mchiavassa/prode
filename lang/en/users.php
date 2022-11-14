@@ -21,5 +21,16 @@ return [
         'hours' => 'All hours in',
         'total' => 'Total',
         'none' => 'No forecasts',
+    ],
+    'points' => [
+        'current' => 'Current points',
+        'real' => 'Real points',
+        'adjust' => 'Adjust points',
+        'verify' => 'Verify points',
+        'success' => 'All user points adjusted',
+        'ok' => 'Users OK',
+        'mismatches' => 'Users with points mismatches',
+        'no_mismatches' => 'All good! no users with points mismatches',
+        'no_ok' => 'All users have points mismatches :(',
     ]
 ];

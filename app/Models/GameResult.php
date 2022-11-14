@@ -46,20 +46,20 @@ class GameResult
     public static function buildFromForecast(Forecast $forecast): GameResult
     {
         return new self(
-            $forecast->home_score,
-            $forecast->away_score,
-            $forecast->home_tie_break_score,
-            $forecast->away_tie_break_score
+            (int) $forecast->home_score,
+            (int) $forecast->away_score,
+            empty($forecast->home_tie_break_score) ? null : (int) $forecast->home_tie_break_score,
+            empty($forecast->away_tie_break_score) ? null : (int) $forecast->away_tie_break_score
         );
     }
 
     public static function buildFromGame(Game $game): GameResult
     {
         return new self(
-            $game->home_score,
-            $game->away_score,
-            $game->home_tie_break_score,
-            $game->away_tie_break_score
+            (int) $game->home_score,
+            (int) $game->away_score,
+            empty($game->home_tie_break_score) ? null : (int) $game->home_tie_break_score,
+            empty($game->away_tie_break_score) ? null : (int) $game->away_tie_break_score
         );
     }
 

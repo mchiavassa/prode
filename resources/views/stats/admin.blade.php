@@ -6,6 +6,12 @@
     </div>
 
     <div class="row">
+        <div class="col-md-12 mb-2">
+            <a href="{{route('user.points.show')}}" class="btn btn-warning">{{__('users.points.verify')}}</a>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-6">
