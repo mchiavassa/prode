@@ -2,7 +2,7 @@
 $points = config('domain.points.'.$stat) * $forecastsCount
 @endphp
 
-<div class="card dropdown-item bg-light border-{{$color}} mb-2">
+<div class="card card-stats bg-light border-{{$color}} mb-2">
     <span>
         {{__('domain.forecast.assertion.'.$stat)}}
         <i class="fas fa-question-circle text-muted" data-toggle="tooltip" data-placement="top" title="{{__('stats.mine.'.$stat)}}"></i>
