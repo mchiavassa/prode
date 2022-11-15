@@ -17,7 +17,7 @@ return [
     'points' => 'Points',
     'assertions' => [
         \App\Models\ForecastAssertion::RESULT => 'Having guessed the wining team or tie (in case the match allows it)',
-        \App\Models\ForecastAssertion::SCORE => 'Having guessed the amount of goals during game time.',
+        \App\Models\ForecastAssertion::SCORE => 'Having guessed the exact amount of goals during game time for each team.',
         \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE => 'In case the match goes to penalties and your forecasts has penalties submitted.',
         \App\Models\ForecastAssertion::TIEBREAK_SCORE => 'In case you guessed the exact amount of penalties scored per team.',
     ],
