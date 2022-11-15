@@ -210,6 +210,7 @@ class StatsController extends Controller
             'noMatchForecastsPercentage' => $computedGamesCount == 0
                 ? 0
                 : (($noMatchForecastsCount + $nonForecastedMatchesCount) / $computedGamesCount) * 100,
+            'nonForecastedMatchesCount' => $nonForecastedMatchesCount,
         ]);
     }
 

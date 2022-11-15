@@ -2,11 +2,17 @@
     <div class="row mb-1">
         <div class="col-md-12">
             <h4 class="h3 d-inline-block">{{__('stats.mine.title')}}</h4>
-            <span class="badge rounded-pill bg-dark align-text-bottom">
+            <span class="badge rounded-pill bg-success align-text-bottom">
                 <strong>{{$userForecastsCount}}</strong>
                 {{__('stats.mine.'.($userForecastsCount == 1 ? 'forecast_count' : 'forecasts_count'))}}
             </span>
-            <span class="badge rounded-pill bg-success align-text-bottom">
+            @if($nonForecastedMatchesCount > 0)
+            <span class="badge rounded-pill bg-danger align-text-bottom">
+                <strong>{{$nonForecastedMatchesCount}}</strong>
+                {{__('stats.mine.'.($nonForecastedMatchesCount == 1 ? 'game_not_forecasted_count' : 'games_not_forecasted_count'))}}
+            </span>
+            @endif
+            <span class="badge rounded-pill bg-dark align-text-bottom">
                 <strong>{{$computedGamesCount}}</strong>
                 {{__('stats.mine.'.($computedGamesCount == 1 ? 'game_computed_count' : 'games_computed_count'))}}
             </span>

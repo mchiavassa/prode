@@ -122,8 +122,8 @@ class GameController extends Controller
     {
         /** @var Game $game */
         $game = $this->game
-            ->where('computed', 0)
             ->where('id', $id)
+            ->where('computed', 0)
             ->first();
 
         if (!$game) {
@@ -145,8 +145,8 @@ class GameController extends Controller
     {
         /** @var Game $game */
         $game = $this->game
-            ->where('computed', 1)
             ->where('id', $id)
+            ->where('computed', 1)
             ->first();
 
         if (!$game) {
