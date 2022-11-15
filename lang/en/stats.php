@@ -17,10 +17,10 @@ return [
 
     'mine' => [
         'title' => 'Your statistics',
-        'forecasts_count'=> 'matches forecasted',
-        'forecast_count'=> 'match forecasted',
-        'forecasts_computed_count'=> 'forecasts computed',
-        'forecast_computed_count'=> 'forecast computed',
+        'forecasts_count'=> 'forecasts submitted',
+        'forecast_count'=> 'forecast submitted',
+        'games_computed_count'=> 'matches computed',
+        'game_computed_count'=> 'match computed',
         'forecasts' => ':count out of :total matches',
         'forecast' => ':count out of :total match',
         'forecast_progress'=> 'You\'ve forecasted :forecasts of :games games available.',

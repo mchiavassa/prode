@@ -56,10 +56,16 @@ class StatsController extends Controller
             return $avgUser;
         });
 
-        $topUsersByResult = $this->sortUsersByAssertion($allUsers, ForecastAssertion::RESULT);
-        $topUsersByScore = $this->sortUsersByAssertion($allUsers, ForecastAssertion::SCORE);
-        $topUsersByTieBreak = $this->sortUsersByAssertion($allUsers, ForecastAssertion::TIEBREAK_EXISTENCE);
-        $topUsersByTieBreakScore = $this->sortUsersByAssertion($allUsers, ForecastAssertion::TIEBREAK_SCORE);
+        $computedGames = $this->game->where('computed', 1)->get();
+        $computedGamesCount = $computedGames->count();
+        $computedGamesWithTieBreakResultCount = $computedGames
+            ->filter(function($game) {return $game->hasResultWithTieBreak();})
+            ->count();
+
+        $topUsersByResult = $this->sortUsersByAssertion($allUsers, ForecastAssertion::RESULT, $computedGamesCount);
+        $topUsersByScore = $this->sortUsersByAssertion($allUsers, ForecastAssertion::SCORE, $computedGamesCount);
+        $topUsersByTieBreak = $this->sortUsersByAssertion($allUsers, ForecastAssertion::TIEBREAK_EXISTENCE, $computedGamesWithTieBreakResultCount);
+        $topUsersByTieBreakScore = $this->sortUsersByAssertion($allUsers, ForecastAssertion::TIEBREAK_SCORE, $computedGamesWithTieBreakResultCount);
 
         $topUsersCount = 5;
         $topPartiesCount = 5;
@@ -92,28 +98,18 @@ class StatsController extends Controller
         return view('stats.rankings', $data);
     }
 
-    private function sortUsersByAssertion(Collection $users, string $assertion): Collection
+    private function sortUsersByAssertion(Collection $users, string $assertion, int $total): Collection
     {
-        return $users->map(function(User $user) use ($assertion) {
-            $computedForecastsCount = $user->forecasts
-                ->filter(function(Forecast $forecast) use ($assertion) {
-                    $isTieBreakAssertion = in_array(
-                        $assertion,
-                        [ForecastAssertion::TIEBREAK_EXISTENCE, ForecastAssertion::TIEBREAK_SCORE]);
-                    return $isTieBreakAssertion
-                        // count only forecasts of games with tie-break result
-                        ? $forecast->computed() && $forecast->game->hasResultWithTieBreak()
-                        : $forecast->computed();
-                })->count();
+        return $users->map(function(User $user) use ($assertion, $total) {
             $forecastWithResult = $user->forecasts
                 ->filter(function(Forecast $forecast) use ($assertion) {
                     return $forecast->withAssertion($assertion);
                 })->count();
             // we make use of the User object here to reuse all the ranking view logic
             $avgUser = clone $user;
-            $avgUser->points = $computedForecastsCount == 0
+            $avgUser->points = $total == 0
                 ? 0
-                : ($forecastWithResult / $computedForecastsCount) * 100;
+                : ($forecastWithResult / $total) * 100;
 
             return $avgUser;
         });
@@ -170,8 +166,11 @@ class StatsController extends Controller
     {
         $userForecasts = $this->forecast->with('game')->where('user_id', Auth::user()->id)->get();
         $userForecastsComputed = $userForecasts->filter(function($forecast) {return $forecast->computed();});
-        $userForecastsComputedCount = $userForecastsComputed->count();
-        $userForecastsComputedWithTieBreakResultCount = $userForecastsComputed->filter(function($forecast) {return $forecast->game->hasResultWithTieBreak();})->count();
+
+        $computedGames = $this->game->where('computed', 1)->get();
+        $computedGamesCount = $computedGames->count();
+        $computedGamesWithTieBreakResultCount = $computedGames->filter(function($game) {return $game->hasResultWithTieBreak();})->count();
+
         $userForecastsCount = $userForecasts->count();
         $matchResultForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::RESULT, $forecast->assertions);})->count();
         $matchScoreForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::SCORE, $forecast->assertions);})->count();
@@ -179,37 +178,38 @@ class StatsController extends Controller
         $matchTieBreakScoreForecastsCount = $userForecastsComputed->filter(function ($forecast) { return in_array(ForecastAssertion::TIEBREAK_SCORE, $forecast->assertions);})->count();
         $noMatchForecastsCount = $userForecastsComputed
             ->where('points_earned', 0)->count();
+        $nonForecastedMatchesCount = $computedGamesCount - $userForecastsComputed->count();
 
         return view('stats.mine', [
             'points' => Auth::user()->points,
             'userForecastsCount' => $userForecastsCount,
-            'userForecastsComputedCount' => $userForecastsComputedCount,
-            'userForecastsComputedWithTieBreakResultCount' => $userForecastsComputedWithTieBreakResultCount,
+            'computedGamesCount' => $computedGamesCount,
+            'computedGamesWithTieBreakResultCount' => $computedGamesWithTieBreakResultCount,
 
             'matchResultForecastsCount' => $matchResultForecastsCount,
-            'matchResultForecastsPercentage' => $userForecastsComputedCount == 0
+            'matchResultForecastsPercentage' => $computedGamesCount == 0
                 ? 0
-                : ($matchResultForecastsCount / $userForecastsComputedCount) * 100,
+                : ($matchResultForecastsCount / $computedGamesCount) * 100,
 
             'matchScoreForecastsCount' => $matchScoreForecastsCount,
-            'matchScoreForecastsPercentage' => $userForecastsComputedCount == 0
+            'matchScoreForecastsPercentage' => $computedGamesCount == 0
                 ? 0
-                : ($matchScoreForecastsCount / $userForecastsComputedCount) * 100,
+                : ($matchScoreForecastsCount / $computedGamesCount) * 100,
 
             'matchTieBreakExistenceForecastsCount' => $matchTieBreakExistenceForecastsCount,
             'matchTieBreakExistenceForecastsPercentage' => $matchTieBreakExistenceForecastsCount == 0
                 ? 0
-                : ($matchTieBreakExistenceForecastsCount / $userForecastsComputedWithTieBreakResultCount) * 100,
+                : ($matchTieBreakExistenceForecastsCount / $computedGamesWithTieBreakResultCount) * 100,
 
             'matchTieBreakScoreForecastsCount' => $matchTieBreakScoreForecastsCount,
             'matchTieBreakScoreForecastsPercentage' => $matchTieBreakScoreForecastsCount == 0
                 ? 0
-                : ($matchTieBreakScoreForecastsCount / $userForecastsComputedWithTieBreakResultCount) * 100,
+                : ($matchTieBreakScoreForecastsCount / $computedGamesWithTieBreakResultCount) * 100,
 
-            'noMatchForecastsCount' => $noMatchForecastsCount,
-            'noMatchForecastsPercentage' => $userForecastsComputedCount == 0
+            'noMatchForecastsCount' => $noMatchForecastsCount + $nonForecastedMatchesCount,
+            'noMatchForecastsPercentage' => $computedGamesCount == 0
                 ? 0
-                : ($noMatchForecastsCount / $userForecastsComputedCount) * 100,
+                : (($noMatchForecastsCount + $nonForecastedMatchesCount) / $computedGamesCount) * 100,
         ]);
     }
 

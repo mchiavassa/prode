@@ -7,26 +7,26 @@
                 {{__('stats.mine.'.($userForecastsCount == 1 ? 'forecast_count' : 'forecasts_count'))}}
             </span>
             <span class="badge rounded-pill bg-success align-text-bottom">
-                <strong>{{$userForecastsComputedCount}}</strong>
-                {{__('stats.mine.'.($userForecastsComputedCount == 1 ? 'forecast_computed_count' : 'forecasts_computed_count'))}}
+                <strong>{{$computedGamesCount}}</strong>
+                {{__('stats.mine.'.($computedGamesCount == 1 ? 'game_computed_count' : 'games_computed_count'))}}
             </span>
         </div>
     </div>
     <div class="row">
         <div class="col-md">
-            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::RESULT, 'percentage' => $matchResultForecastsPercentage, 'forecastsCount' => $matchResultForecastsCount, 'total' => $userForecastsComputedCount, 'color' => 'success'])
+            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::RESULT, 'percentage' => $matchResultForecastsPercentage, 'forecastsCount' => $matchResultForecastsCount, 'total' => $computedGamesCount, 'color' => 'success'])
         </div>
         <div class="col-md">
-            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::SCORE, 'percentage' => $matchScoreForecastsPercentage, 'forecastsCount' => $matchScoreForecastsCount, 'total' => $userForecastsComputedCount, 'color' => 'success'])
+            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::SCORE, 'percentage' => $matchScoreForecastsPercentage, 'forecastsCount' => $matchScoreForecastsCount, 'total' => $computedGamesCount, 'color' => 'success'])
         </div>
         <div class="col-md">
-            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE, 'percentage' => $matchTieBreakExistenceForecastsPercentage, 'forecastsCount' => $matchTieBreakExistenceForecastsCount, 'total' => $userForecastsComputedWithTieBreakResultCount, 'color' => 'success'])
+            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE, 'percentage' => $matchTieBreakExistenceForecastsPercentage, 'forecastsCount' => $matchTieBreakExistenceForecastsCount, 'total' => $computedGamesWithTieBreakResultCount, 'color' => 'success'])
         </div>
         <div class="col-md">
-            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::TIEBREAK_SCORE, 'percentage' => $matchTieBreakScoreForecastsPercentage, 'forecastsCount' => $matchTieBreakScoreForecastsCount, 'total' => $userForecastsComputedWithTieBreakResultCount, 'color' => 'success'])
+            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::TIEBREAK_SCORE, 'percentage' => $matchTieBreakScoreForecastsPercentage, 'forecastsCount' => $matchTieBreakScoreForecastsCount, 'total' => $computedGamesWithTieBreakResultCount, 'color' => 'success'])
         </div>
         <div class="col-md">
-            @include('stats.card', ['stat' => 'nothing', 'percentage' => $noMatchForecastsPercentage, 'forecastsCount' => $noMatchForecastsCount, 'total' => $userForecastsComputedCount, 'color' => 'danger'])
+            @include('stats.card', ['stat' => 'nothing', 'percentage' => $noMatchForecastsPercentage, 'forecastsCount' => $noMatchForecastsCount, 'total' => $computedGamesCount, 'color' => 'danger'])
         </div>
     </div>
 </div>

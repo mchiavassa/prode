@@ -6,10 +6,11 @@ $realPoints = $forecasts->sum('points_earned')
 @section('content')
     <h2 class="mb-2">
         @if($user->id === Auth::user()->id)
-            {{__('users.forecasts.mine')}}
+            {{__('users.forecasts.mine')}} ({{$forecasts->count()}})
         @else
             {{__('users.forecasts.user')}} {{ $user->name }}
             <img src="{{ $user->picture_url }}" class="rounded" height="30px" onerror="this.onerror=null; this.src='{{asset('img/user-avatar.png')}}'">
+            ({{$forecasts->count()}})
         @endif
     </h2>
     <div style="text-align: right" class="mb-2 text-muted fst-italic timezone"></div>
