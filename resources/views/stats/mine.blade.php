@@ -23,6 +23,9 @@
             @include('stats.card', ['stat' => \App\Models\ForecastAssertion::RESULT, 'percentage' => $matchResultForecastsPercentage, 'forecastsCount' => $matchResultForecastsCount, 'total' => $computedGamesCount, 'color' => 'success'])
         </div>
         <div class="col-md">
+            @include('stats.card', ['stat' => \App\Models\ForecastAssertion::TEAM_SCORE, 'percentage' => $matchTeamScoreForecastsPercentage, 'forecastsCount' => $matchTeamScoreForecastsCount, 'total' => $computedGamesCount, 'color' => 'success'])
+        </div>
+        <div class="col-md">
             @include('stats.card', ['stat' => \App\Models\ForecastAssertion::SCORE, 'percentage' => $matchScoreForecastsPercentage, 'forecastsCount' => $matchScoreForecastsCount, 'total' => $computedGamesCount, 'color' => 'success'])
         </div>
         <div class="col-md">

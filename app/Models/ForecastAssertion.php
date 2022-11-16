@@ -20,6 +20,11 @@ class ForecastAssertion
     const SCORE = 'score';
 
     /**
+     * Assertion of the game score for any of the teams
+     */
+    const TEAM_SCORE = 'team_score';
+
+    /**
      * Assertion of the tiebreak score (exact amount of penalties from each team)
      */
     const TIEBREAK_SCORE = 'tiebreak_score';
@@ -32,6 +37,7 @@ class ForecastAssertion
     private array $assertions = [
         self::RESULT,
         self::SCORE,
+        self::TEAM_SCORE,
         self:: TIEBREAK_SCORE,
         self::TIEBREAK_EXISTENCE,
     ];

@@ -51,6 +51,11 @@
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-top-team-scores-tab" data-bs-toggle="pill" data-bs-target="#pills-top-team-scores" type="button" role="tab" aria-controls="pills-top-team-scores" aria-selected="false">
+                            {{__('domain.forecast.assertion.'.\App\Models\ForecastAssertion::TEAM_SCORE)}}
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-top-scores-tab" data-bs-toggle="pill" data-bs-target="#pills-top-scores" type="button" role="tab" aria-controls="pills-top-scores" aria-selected="false">
                             {{__('domain.forecast.assertion.'.\App\Models\ForecastAssertion::SCORE)}}
                         </button>
@@ -69,6 +74,9 @@
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-top-results" role="tabpanel" aria-labelledby="pills-top-results-tab">
                         @include('common.user-ranking', ['ranking' => $usersResultRanking, 'unit' => '%'])
+                    </div>
+                    <div class="tab-pane fade" id="pills-top-team-scores" role="tabpanel" aria-labelledby="pills-top-team-scores-tab">
+                        @include('common.user-ranking', ['ranking' => $usersTeamScoreRanking, 'unit' => '%'])
                     </div>
                     <div class="tab-pane fade" id="pills-top-scores" role="tabpanel" aria-labelledby="pills-top-scores-tab">
                         @include('common.user-ranking', ['ranking' => $usersScoreRanking, 'unit' => '%'])

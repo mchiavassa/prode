@@ -17,7 +17,8 @@ return [
     'forecast' => [
         'assertion' => [
             \App\Models\ForecastAssertion::RESULT => 'Resultado',
-            \App\Models\ForecastAssertion::SCORE => 'Goles',
+            \App\Models\ForecastAssertion::SCORE => 'Todos los goles',
+            \App\Models\ForecastAssertion::TEAM_SCORE => 'Goles de un equipo',
             \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE => 'Hay penales',
             \App\Models\ForecastAssertion::TIEBREAK_SCORE => 'Cantidad de penales',
             'nothing' => 'Sin aciertos',

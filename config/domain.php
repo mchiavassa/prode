@@ -18,6 +18,7 @@ return [
     'points' => [
         'result' => 10,
         'score' => 10,
+        'team_score' => 5,
         'tiebreak_score' => 10,
         'tiebreak_existence' => 5,
     ],

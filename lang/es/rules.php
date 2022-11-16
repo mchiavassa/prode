@@ -17,7 +17,8 @@ return [
     'points' => 'Puntos',
     'assertions' => [
         \App\Models\ForecastAssertion::RESULT => 'Habiendo acertado el equipo ganador o si hubo empate (en caso que el tipo de partido lo permita).',
-        \App\Models\ForecastAssertion::SCORE => 'Habiendo acertado la cantidad exacta de goles marcados durante el juego por cada equipo.',
+        \App\Models\ForecastAssertion::SCORE => 'Habiendo acertado la cantidad exacta de goles de ambos equipos.',
+        \App\Models\ForecastAssertion::TEAM_SCORE => 'Habiendo acertado la cantidad exacta de goles de sólo uno de los equipos.',
         \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE => 'En caso que el juego vaya a penales y tu pronóstico también tenga penales cargados.',
         \App\Models\ForecastAssertion::TIEBREAK_SCORE => 'En caso que hayas acertado la cantidad exacta de penales marcados por cada equipo.',
     ],

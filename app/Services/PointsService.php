@@ -27,6 +27,7 @@ class PointsService
         return [
             ForecastAssertion::RESULT => config('domain.points.result'),
             ForecastAssertion::SCORE => config('domain.points.score'),
+            ForecastAssertion::TEAM_SCORE => config('domain.points.team_score'),
             ForecastAssertion::TIEBREAK_SCORE => config('domain.points.tiebreak_score'),
             ForecastAssertion::TIEBREAK_EXISTENCE => config('domain.points.tiebreak_existence'),
         ];

@@ -144,6 +144,23 @@ class ForecastAssertionsServiceTest extends TestCase
         $this->assertEquals([ForecastAssertion::RESULT, ForecastAssertion::SCORE], $assertions->all());
     }
 
+    public function testRightResultAndTeamScoreGuess()
+    {
+        $service = $this->getService();
+
+        $forecast = new Forecast();
+        $forecast->home_score = 1;
+        $forecast->away_score = 9;
+
+        $game = new Game();
+        $game->home_score = 1;
+        $game->away_score = 8;
+
+        $assertions = $service->resolveForecastAssertions($forecast, $game);
+
+        $this->assertEquals([ForecastAssertion::RESULT, ForecastAssertion::TEAM_SCORE], $assertions->all());
+    }
+
     public function testRightResultAndScoreAndTieBreakGuess()
     {
         $service = $this->getService();
@@ -202,6 +219,23 @@ class ForecastAssertionsServiceTest extends TestCase
         $this->assertEquals([], $assertions->all());
     }
 
+    public function testWrongResultWithTeamScoreGuess()
+    {
+        $service = $this->getService();
+
+        $forecast = new Forecast();
+        $forecast->home_score = 1;
+        $forecast->away_score = 0;
+
+        $game = new Game();
+        $game->home_score = 1;
+        $game->away_score = 2;
+
+        $assertions = $service->resolveForecastAssertions($forecast, $game);
+
+        $this->assertEquals([ForecastAssertion::TEAM_SCORE], $assertions->all());
+    }
+
     public function testWrongResultWithTieBreakGuess()
     {
         $service = $this->getService();
@@ -223,7 +257,7 @@ class ForecastAssertionsServiceTest extends TestCase
         $this->assertEquals([ForecastAssertion::TIEBREAK_EXISTENCE], $assertions->all());
     }
 
-    public function testWrongResultWithTieBreakMiss()
+    public function testWrongResultWithTieBreakMissButTeamScore()
     {
         $service = $this->getService();
 
@@ -239,7 +273,7 @@ class ForecastAssertionsServiceTest extends TestCase
 
         $assertions = $service->resolveForecastAssertions($forecast, $game);
 
-        $this->assertEquals([], $assertions->all());
+        $this->assertEquals([ForecastAssertion::TEAM_SCORE], $assertions->all());
     }
 
     public function testWrongResultAndRightScore()

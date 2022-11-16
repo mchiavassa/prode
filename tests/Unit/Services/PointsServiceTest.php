@@ -26,6 +26,15 @@ class PointsServiceTest extends TestCase
         $this->assertEquals(config('domain.points.score'), $points);
     }
 
+    public function testGetAssertionsPointsTeamScore()
+    {
+        $service = $this->getService();
+
+        $points = $service->getAssertionsPoints(collect(ForecastAssertion::TEAM_SCORE));
+
+        $this->assertEquals(config('domain.points.team_score'), $points);
+    }
+
     public function testGetAssertionsPointsTieBreakScore()
     {
         $service = $this->getService();

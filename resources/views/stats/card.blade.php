@@ -5,7 +5,6 @@ $points = config('domain.points.'.$stat) * $forecastsCount
 <div class="card card-stats bg-light border-{{$color}} mb-2">
     <span>
         {{__('domain.forecast.assertion.'.$stat)}}
-        <i class="fas fa-question-circle text-muted" data-toggle="tooltip" data-placement="top" title="{{__('stats.mine.'.$stat)}}"></i>
     </span>
     <div style="font-size: 1.5em; font-weight:bold">
         {{\App\Utils\Numbers::format($percentage)}}%
@@ -19,6 +18,9 @@ $points = config('domain.points.'.$stat) * $forecastsCount
              aria-valuemax="100"></div>
     </div>
     <small class="text-muted">
-        {{__('stats.mine.'.($total == 1 ? 'forecast' : 'forecasts'), ['count' => $forecastsCount, 'total' => $total])}} <strong>{{$points > 0 ? '+'.$points.' '.strtolower(__('stats.points')) : ''}}</strong>
+        {{__('stats.mine.'.($total == 1 ? 'forecast' : 'forecasts'), ['count' => $forecastsCount, 'total' => $total])}}
+        <br/>
+        <strong>{{$points > 0 ? '+'.$points.' '.strtolower(__('stats.points')) : ''}}</strong>
+        <i class="fas fa-question-circle text-muted" style="font-size: 0.8em;" data-toggle="tooltip" data-placement="top" title="{{__('stats.mine.'.$stat)}}"></i>
     </small>
 </div>

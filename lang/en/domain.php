@@ -17,7 +17,8 @@ return [
     'forecast' => [
         'assertion' => [
             \App\Models\ForecastAssertion::RESULT => 'Result',
-            \App\Models\ForecastAssertion::SCORE => 'Score',
+            \App\Models\ForecastAssertion::SCORE => 'Full score',
+            \App\Models\ForecastAssertion::TEAM_SCORE => 'Single team score',
             \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE => 'Tie break existence',
             \App\Models\ForecastAssertion::TIEBREAK_SCORE => 'Tie break score',
             'nothing' => 'No assertions',

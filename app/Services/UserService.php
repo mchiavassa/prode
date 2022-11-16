@@ -161,6 +161,7 @@ class UserService
 
             foreach ($allUsers as $user) {
                 $forecasts = $this->forecast->where('user_id', $user->id)->get();
+
                 $realPoints = $forecasts->sum('points_earned');
                 $currentPoints = $user->points;
 

@@ -22,6 +22,8 @@ class ForecastAssertionsService
 
         if ($this->scoreMatches($forecast, $game)) {
             $assertions->push(ForecastAssertion::SCORE);
+        } else if ($this->teamScoreMatches($forecast, $game)) {
+            $assertions->push(ForecastAssertion::TEAM_SCORE);
         }
 
         if ($game->hasResultWithTieBreak() && $forecast->hasResultWithTieBreak()) {
@@ -44,6 +46,12 @@ class ForecastAssertionsService
     {
         return $forecast->home_score === $game->home_score
             && $forecast->away_score === $game->away_score;
+    }
+
+    private function teamScoreMatches(Forecast $forecast, Game $game)
+    {
+        return $forecast->home_score === $game->home_score
+            || $forecast->away_score === $game->away_score;
     }
 
     private function tieBreakMatches(Forecast $forecast, Game $game)

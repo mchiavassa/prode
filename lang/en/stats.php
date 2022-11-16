@@ -26,10 +26,11 @@ return [
         'forecasts' => ':count out of :total matches',
         'forecast' => ':count out of :total match',
         'forecast_progress'=> 'You\'ve forecasted :forecasts of :games games available.',
-        'result' => 'Matches where you guessed the result',
-        'score' => 'Matches where you guessed the score.',
-        'tiebreak_existence' => 'Matches defined by tie break where you guessed the existence of it',
-        'tiebreak_score' => 'Matches where you guessed the exact amount of penalties',
+        \App\Models\ForecastAssertion::RESULT => 'Matches where you guessed the result',
+        \App\Models\ForecastAssertion::SCORE => 'Matches where you guessed the score of both teams',
+        \App\Models\ForecastAssertion::TEAM_SCORE => 'Matches where you guessed the score of a single team',
+        \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE => 'Matches defined by tie break where you guessed the existence of it',
+        \App\Models\ForecastAssertion::TIEBREAK_SCORE => 'Matches where you guessed the exact amount of penalties',
         'nothing' => 'Matches where you haven\'t guessed anything',
     ]
 

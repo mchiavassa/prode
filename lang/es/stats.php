@@ -26,10 +26,11 @@ return [
         'game_not_forecasted_count' => 'partido no pronosticado',
         'games_not_forecasted_count' => 'partidos no pronosticados',
         'forecast_progress'=> 'Pronosticaste :forecasts de :games partidos disponibles.',
-        'result' => 'Partidos donde acertaste el resultado',
-        'score' => 'Partidos donde acertaste la cantidad de goles',
-        'tiebreak_existence' => 'Partidos donde hubo penales y acertaste la existencia de ellos',
-        'tiebreak_score' => 'Partidos donde acertaste la cantidad exacta de penales por la definición',
+        \App\Models\ForecastAssertion::RESULT => 'Partidos donde acertaste el resultado',
+        \App\Models\ForecastAssertion::SCORE => 'Partidos donde acertaste la cantidad de goles de ambos equipos',
+        \App\Models\ForecastAssertion::TEAM_SCORE => 'Partidos donde acertaste la cantidad de goles de un equipo',
+        \App\Models\ForecastAssertion::TIEBREAK_EXISTENCE => 'Partidos donde hubo penales y acertaste la existencia de ellos',
+        \App\Models\ForecastAssertion::TIEBREAK_SCORE => 'Partidos donde acertaste la cantidad exacta de penales por la definición',
         'nothing' => 'Partidos donde no acertaste nada',
     ]
 
