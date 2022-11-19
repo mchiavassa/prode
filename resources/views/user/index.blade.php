@@ -38,7 +38,7 @@
                     </td>
                     <td>
                         <a class="btn btn-sm btn-warning" href="{{ route('user.forecasts', ['id' => $user->id]) }}">
-                            <i class="bi-magic"></i>
+                            <i class="bi-magic"></i> {{$user->forecasts->count()}}
                         </a>
                     </td>
                 </tr>

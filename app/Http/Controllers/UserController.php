@@ -32,7 +32,7 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->user
-            ->with('parties')
+            ->with(['parties', 'forecasts'])
             ->orderBy('name')
             ->get();
 
