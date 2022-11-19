@@ -167,7 +167,11 @@ class GameController extends Controller
      */
     public function listAdmin(int $id)
     {
-        $games = $this->game->where('set_id', $id)->orderBy('date_and_hour')->get();
+        $games = $this->game
+            ->with('forecasts')
+            ->where('set_id', $id)
+            ->orderBy('date_and_hour')
+            ->get();
 
         return view('game.list-admin', ['games' => $games]);
     }

@@ -30,6 +30,9 @@
                 </div>
                 <div class="row text-center">
                     <div class="col-12">
+                        <span class="badge rounded-pill bg-success mb-2">
+                            {{$game->forecasts->count()}} {{__('stats.mine.forecasts_count')}}
+                        </span>
                         @if($game->hasResult() && !$game->computed)
                             <form action="{{route('game.compute', ['id' => $game->id])}}" method="POST">
                                 @csrf
