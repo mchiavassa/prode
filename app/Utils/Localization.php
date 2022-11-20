@@ -31,6 +31,8 @@ class Localization
             'points' => __('game.forecasts.points'),
             'live' => __('domain.game.status.live'),
             'finished' => __('domain.game.status.finished'),
+            'forecasts' => __('game.forecasts.title'),
+            'set' => __('users.forecasts.game_set'),
         ];
     }
 }

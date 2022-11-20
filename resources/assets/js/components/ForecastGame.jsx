@@ -104,7 +104,12 @@ export default class ForecastGame extends Component {
                                     {this.state.game.isAuditable &&
                                     <div className={'text-muted'}>
                                         <a href={this.state.game.forecastsUrl}>
-                                            <i className={'bi-magic audit'}/>
+                                            <span>
+                                                <i className={'bi-magic audit'} data-tip data-for={'forecasts-' + this.state.game.id}/>
+                                                <ReactTooltip id={'forecasts-' + this.state.game.id} place={'right'} type={'dark'} effect={'solid'}>
+                                                    {this.state.strings.forecasts}
+                                                </ReactTooltip>
+                                            </span>
                                         </a>
                                     </div>
                                     }
@@ -115,7 +120,10 @@ export default class ForecastGame extends Component {
                                 <div className={'col-2 text-right'}>
                                     <div className={'text-muted'}>
                                         <a href={this.state.game.setUrl} alt={'Set'}>
-                                            <i className={'bi-card-checklist text-dark'}/>
+                                            <i className={'bi-card-checklist text-dark'} data-tip data-for={'set-' + this.state.game.id}/>
+                                            <ReactTooltip id={'set-' + this.state.game.id} place={'left'} type={'dark'} effect={'solid'}>
+                                                {this.state.strings.set}
+                                            </ReactTooltip>
                                         </a>
                                     </div>
                                 </div>
