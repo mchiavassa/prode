@@ -61,21 +61,21 @@ class GameService
     /**
      * Returns a list of upcoming games to forecast.
      *
-     * It will retrieve future games, including live ones up to 2 hours from the start.
+     * It will retrieve future games, including live ones up to 2.5 hours from the start.
      * It will group them by date and return the immediate upcoming ones.
      * If there are less than 2 upcoming games, it will try to pull games from the following date.
      */
     public function getUpcomingGamesToForecast2()
     {
         $minGamesToDisplay = 2;
-        $maxHoursDisplayingFinishedGames = 2; // A match usually lasts 2 hours
-        $gamesFrom = DateTimes::now()->addHours(-$maxHoursDisplayingFinishedGames)->toDateString();
+        $maxMinutesDisplayingFinishedGames = 150;
+        $gamesFrom = DateTimes::now()->addMinutes(-$maxMinutesDisplayingFinishedGames)->toDateTimeString();
 
         $futureGames = $this->game
             ->whereHas('set', function ($query) {
                 $query->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED]);
             })
-            ->whereDate('date_and_hour', '>=' , $gamesFrom)
+            ->where('date_and_hour', '>=' , $gamesFrom)
             ->orderBy('date_and_hour')
             ->get();
 
