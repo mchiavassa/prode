@@ -19,7 +19,7 @@ return [
         'party_selector_placeholder' => 'Selecciona un grupo...',
         'submit' => 'Pronosticar',
         'countdown' => [
-            'before' => 'faltan',
+            'before' => '',
             'after' => 'para que comience',
         ],
         'your' => 'Tu pronóstico',
