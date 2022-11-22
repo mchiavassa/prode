@@ -10,7 +10,7 @@ return [
     ],
     'game' => [
         'status' => [
-            'live' => 'LIVE',
+            'live' => 'Directo',
             'finished' => 'Finalizado',
         ],
     ],
