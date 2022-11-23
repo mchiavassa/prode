@@ -7,6 +7,7 @@
         <thead>
             <tr>
                 <th></th>
+                <th></th>
                 <th style="text-align: right">
                     <a href="data:text/plain;base64,{{base64_encode($forecasts_text)}}"
                        download="forecasts.txt"
@@ -23,6 +24,9 @@
                 </td>
                 <td>
                     {{Arr::get($forecast, 'home_score')}} - {{Arr::get($forecast, 'away_score')}}
+                </td>
+                <td>
+                    {{Arr::get($forecast, 'assertions')}}
                 </td>
             </tr>
         @endforeach

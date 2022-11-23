@@ -53,13 +53,7 @@ $realPoints = $forecasts->sum('points_earned')
                         @endif
                     </td>
                     <td style="width: 20%">
-                        {{$forecast->assertions ? (collect($forecast->assertions)->map(function($assertion) {
-                            return sprintf(
-                                '%s (%s)',
-                                __('domain.forecast.assertion.'.$assertion),
-                                config('domain.points.'.$assertion)
-                            );
-                        })->implode(' + ')) : '-'}}
+                        {{$forecast->assertions ? $forecast->printAssertions() : '-'}}
                     </td>
                     <td style="width: 5%">
                         {{$forecast->game->computed ? $forecast->points_earned : '-'}}

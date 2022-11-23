@@ -54,4 +54,15 @@ class Forecast extends Model
     {
         return $this->away_score.($this->away_tie_break_score ? '('.$this->away_tie_break_score.')' : '');
     }
+
+    public function printAssertions(): string
+    {
+        return collect($this->assertions)->map(function($assertion) {
+            return sprintf(
+                '%s (%s)',
+                __('domain.forecast.assertion.'.$assertion),
+                config('domain.points.'.$assertion)
+            );
+        })->implode(' + ');
+    }
 }

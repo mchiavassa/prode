@@ -228,13 +228,7 @@ class ForecastController extends Controller
             'homeTieBreakScore' => $forecast->home_tie_break_score,
             'awayTieBreakScore' => $forecast->away_tie_break_score,
             'pointsEarned' => $forecast->points_earned,
-            'assertions' => collect($forecast->assertions)->map(function($assertion) {
-                return sprintf(
-                    '%s (%s)',
-                    __('domain.forecast.assertion.'.$assertion),
-                    config('domain.points.'.$assertion)
-                );
-            })->implode(' + ')
+            'assertions' => $forecast->printAssertions(),
         ];
     }
 }

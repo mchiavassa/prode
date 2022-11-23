@@ -420,6 +420,7 @@ class PartyController extends Controller
                 ],
                 'home_score' => $forecast->printHomeResult(),
                 'away_score' => $forecast->printAwayResult(),
+                'assertions' => $forecast->assertions ? $forecast->printAssertions() : '-'
             ];
         });
 
