@@ -35,7 +35,7 @@ class Ranking extends Collection
         $topRankingCompleted = false;
 
         foreach ($sortedItems as $item) {
-            if ($item->points < $currentPoints) {
+            if ($item->points != $currentPoints) {
                 $currentPoints = $item->points;
                 $position++;
 

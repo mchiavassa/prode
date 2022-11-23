@@ -12,8 +12,8 @@ return [
     'users' => 'Usuarios hoy',
     'parties' => 'Grupos hoy',
     'forecasts' => 'Pronósticos enviados hoy',
-    'top_matches' => 'Mejores partidos',
-    'worst_matches' => 'Peores partidos',
+    'top_matches' => 'Con mas puntos',
+    'worst_matches' => 'Con menos puntos',
     'top_sets' => 'Top Fechas',
 
     'mine' => [
