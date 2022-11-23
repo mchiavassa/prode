@@ -406,9 +406,15 @@ class PartyController extends Controller
         }
 
         $partyUsersGameForecasts = $this->forecast
+            ->with('game')
             ->where('game_id', $gameId)
             ->whereIn('user_id', $party->users->pluck('id'))
             ->get();
+
+        if (empty($partyUsersGameForecasts) ||
+            !$partyUsersGameForecasts->get(0)->game->isAuditable()) {
+            abort(404);
+        }
 
         $forecasts = $partyUsersGameForecasts->map(function (Forecast $forecast) use ($party) {
             $user = $party->users->where('id', $forecast->user_id)->first();
