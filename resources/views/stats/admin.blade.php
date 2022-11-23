@@ -78,12 +78,6 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card p-3 mb-3">
-                <h4 class="mb-4">{{__('stats.top_matches')}}</h4>
-                @include('common.ranking', ['ranking' => \App\Models\Ranking::ofItemsWithPositions($games, 5)])
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card p-3 mb-3">
                 <h4 class="mb-4">{{__('stats.top_sets')}}</h4>
                 @include('common.ranking', ['ranking' => \App\Models\Ranking::ofItems($gameSets)])
             </div>

@@ -69,7 +69,19 @@ class StatsController extends Controller
         $topUsersByTieBreakScore = $this->sortUsersByAssertion($allUsers, ForecastAssertion::TIEBREAK_SCORE, $computedGamesWithTieBreakResultCount);
 
         $topUsersCount = 5;
+        $topAssertionsCount = 3;
         $topPartiesCount = 5;
+        $topGamesCount = 5;
+
+        $games = collect();
+        foreach($this->game->with('forecasts')->where('computed', 1)->get() as $game) {
+            $points = $game->forecasts->sum('points_earned');
+
+            $games->push((object)[
+                'name' => sprintf('%s - %s', __('domain.teams.'.$game->home), __('domain.teams.'.$game->away)),
+                'points' => $points
+            ]);
+        }
 
         $data = [
             'usersRanking' => Ranking::ofItemsWithPositionsAndIncludeItem(
@@ -86,15 +98,14 @@ class StatsController extends Controller
                 function($user, $user2) {
                     return $user->email === $user2->email;
                 }),
-            'usersResultRanking' => Ranking::ofItemsWithPositions($topUsersByResult, $topUsersCount),
-            'usersScoreRanking' => Ranking::ofItemsWithPositions($topUsersByScore, $topUsersCount),
-            'usersTeamScoreRanking' => Ranking::ofItemsWithPositions($topUsersByTeamScore, $topUsersCount),
-            'usersTieBreakRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreak, $topUsersCount),
-            'usersTieBreakScoreRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreakScore, $topUsersCount),
-            'totalUsersCount' => $allUsers->count(),
-            'topUsersCount' => $topUsersCount,
+            'usersResultRanking' => Ranking::ofItemsWithPositions($topUsersByResult, $topAssertionsCount),
+            'usersScoreRanking' => Ranking::ofItemsWithPositions($topUsersByScore, $topAssertionsCount),
+            'usersTeamScoreRanking' => Ranking::ofItemsWithPositions($topUsersByTeamScore, $topAssertionsCount),
+            'usersTieBreakRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreak, $topAssertionsCount),
+            'usersTieBreakScoreRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreakScore, $topAssertionsCount),
             'partiesRanking' => Ranking::ofItemsWithPositions($allParties, $topPartiesCount),
-            'topPartiesCount' => $topPartiesCount,
+            'topGamesRanking' => Ranking::ofItemsWithPositions($games, $topGamesCount),
+            'worstGamesRanking' => Ranking::ofItemsWithPositionsDescendant($games, $topGamesCount),
         ];
 
         return view('stats.rankings', $data);
@@ -138,16 +149,6 @@ class StatsController extends Controller
             ]);
         }
 
-        $games = collect();
-        foreach($this->game->with('forecasts')->get() as $game) {
-            $points = $game->forecasts->sum('points_earned');
-
-            $games->push((object)[
-                'name' => sprintf('%s - %s', __('domain.teams.'.$game->home), __('domain.teams.'.$game->away)),
-                'points' => $points
-            ]);
-        }
-
         $todayForecasts = $this->forecast->with('user')->whereDate('created_at', DateTimes::now()->toDateString())->get();
         $todayForecasters = $allUsers->whereIn('id', $todayForecasts->groupBy('user_id')->keys()->all());
 
@@ -159,7 +160,6 @@ class StatsController extends Controller
             'totalAverage' => $totalPoints / $allUsers->count(),
             'usersWithPoints' => $usersWithPoints,
             'gameSets' => $gameSets->where('points', '>', 0),
-            'games' => $games->where('points', '>', 0),
             'todayForecasters' => $todayForecasters,
         ]);
     }

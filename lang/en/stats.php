@@ -12,7 +12,8 @@ return [
     'users' => 'Users today',
     'parties' => 'Parties today',
     'forecasts' => 'Forecasts submitted today',
-    'top_matches' => 'Top 5 matches',
+    'top_matches' => 'Best matches',
+    'worst_matches' => 'Worst matches',
     'top_sets' => 'Top Game Sets',
 
     'mine' => [

@@ -9,16 +9,21 @@ use Illuminate\Support\Collection;
  */
 class Ranking extends Collection
 {
-    private function __construct(Collection $items, $positions = null, $includeItem = null, $compareFunc = null)
+    private const DESC = 'desc';
+    private const ASC = 'asc';
+
+    private function __construct(Collection $items, $positions = null, $includeItem = null, $compareFunc = null, $sort = self::ASC)
     {
-        $sortedItems = $items->sort(function ($a, $b) {
+        $sortedItems = $items->sort(function ($a, $b) use ($sort) {
             if($a->points === $b->points) {
                 if(strtolower($a->name) === strtolower($b->name)) {
                     return 0;
                 }
                 return strtolower($a->name) < strtolower($b->name) ? -1 : 1;
             }
-            return $a->points > $b->points ? -1 : 1;
+            return $sort == self::ASC
+                ? ($a->points > $b->points ? -1 : 1)
+                : ($a->points < $b->points ? -1 : 1);
         });
 
         $ranking = [];
@@ -71,6 +76,11 @@ class Ranking extends Collection
     public static function ofItemsWithPositions(Collection $items, int $positions): Ranking
     {
         return new self($items, $positions);
+    }
+
+    public static function ofItemsWithPositionsDescendant(Collection $items, int $positions): Ranking
+    {
+        return new self($items, $positions, null, null,self::DESC);
     }
 
     public static function ofItemsWithPositionsAndIncludeItem(
