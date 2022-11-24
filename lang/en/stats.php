@@ -4,7 +4,7 @@ return [
     'rankings_title' => 'Rankings',
     'top_users' => 'Top players',
     'total_users' => ':total players total',
-    'best_assertions' => 'Top assertions',
+    'best_assertions' => 'Top matches asserted',
     'top_parties' => 'Top parties',
     'top_parties_detail' => 'with 2 players or more',
     'points' => 'Points',

@@ -120,9 +120,7 @@ class StatsController extends Controller
                 })->count();
             // we make use of the User object here to reuse all the ranking view logic
             $avgUser = clone $user;
-            $avgUser->points = $total == 0
-                ? 0
-                : ($forecastWithResult / $total) * 100;
+            $avgUser->points = $forecastWithResult;
 
             return $avgUser;
         });

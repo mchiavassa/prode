@@ -4,7 +4,7 @@ return [
     'rankings_title' => 'Rankings',
     'top_users' => 'Top jugadores',
     'total_users' => ':total jugadores total',
-    'best_assertions' => 'Mejores aciertos',
+    'best_assertions' => 'Top partidos acertados',
     'top_parties' => 'Top grupos',
     'top_parties_detail' => 'con 2 o más jugadores',
     'points' => 'Puntos',

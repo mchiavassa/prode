@@ -2,6 +2,7 @@
 
 return [
     'players' => 'Players',
+    'go' => 'Go to group',
     'average' => 'Avg Points',
     'average_details' => 'Total group points divided by the amount of players.',
     'points' => 'Total Points',

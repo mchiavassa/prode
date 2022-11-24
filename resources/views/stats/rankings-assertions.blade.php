@@ -33,19 +33,19 @@
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-top-results" role="tabpanel" aria-labelledby="pills-top-results-tab">
-                    @include('common.user-ranking', ['ranking' => $usersResultRanking, 'unit' => '%'])
+                    @include('common.user-ranking', ['ranking' => $usersResultRanking])
                 </div>
                 <div class="tab-pane fade" id="pills-top-team-scores" role="tabpanel" aria-labelledby="pills-top-team-scores-tab">
-                    @include('common.user-ranking', ['ranking' => $usersTeamScoreRanking, 'unit' => '%'])
+                    @include('common.user-ranking', ['ranking' => $usersTeamScoreRanking])
                 </div>
                 <div class="tab-pane fade" id="pills-top-scores" role="tabpanel" aria-labelledby="pills-top-scores-tab">
-                    @include('common.user-ranking', ['ranking' => $usersScoreRanking, 'unit' => '%'])
+                    @include('common.user-ranking', ['ranking' => $usersScoreRanking])
                 </div>
 {{--                <div class="tab-pane fade" id="pills-top-tiebreak" role="tabpanel" aria-labelledby="pills-top-tiebreak-tab">--}}
-{{--                    @include('common.user-ranking', ['ranking' => $usersTieBreakRanking, 'unit' => '%'])--}}
+{{--                    @include('common.user-ranking', ['ranking' => $usersTieBreakRanking])--}}
 {{--                </div>--}}
 {{--                <div class="tab-pane fade" id="pills-top-tiebreak-score" role="tabpanel" aria-labelledby="pills-top-tiebreak-score-tab">--}}
-{{--                    @include('common.user-ranking', ['ranking' => $usersTieBreakScoreRanking, 'unit' => '%'])--}}
+{{--                    @include('common.user-ranking', ['ranking' => $usersTieBreakScoreRanking])--}}
 {{--                </div>--}}
             </div>
         </div>

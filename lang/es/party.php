@@ -2,6 +2,7 @@
 
 return [
     'players' => 'Jugadores',
+    'go' => 'Ir al grupo',
     'average' => 'Promedio',
     'average_details' => 'Puntos totales dividido la cantidad de jugadores.',
     'points' => 'Puntos totales',

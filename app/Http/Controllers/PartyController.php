@@ -448,7 +448,8 @@ class PartyController extends Controller
             [
                 'forecasts' => $forecasts,
                 'forecasts_text' => $formatted,
-                'party_name' => $party->name
+                'party_name' => $party->name,
+                'party_id' => $party->id
             ]
         );
     }

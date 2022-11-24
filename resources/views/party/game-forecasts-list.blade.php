@@ -6,7 +6,11 @@
     <table class="table">
         <thead>
             <tr>
-                <th></th>
+                <th>
+                    <a href="{{ route('party.details', ['id' => $party_id]) }}" class="btn btn-primary">
+                        {{__('party.go')}}
+                    </a>
+                </th>
                 <th></th>
                 <th style="text-align: right">
                     <a href="data:text/plain;base64,{{base64_encode($forecasts_text)}}"
