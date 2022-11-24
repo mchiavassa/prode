@@ -1,17 +1,19 @@
 <table class="table">
     <tbody>
-    @foreach($ranking as $rankingItem)
-        <tr>
+    @for ($i = 0; $i < $ranking->count(); $i++)
+        <tr style="{{$i == 0 || $ranking[$i-1]->position != $ranking[$i]->position ? 'border-top-style: solid;' : 'border-top-style: hidden;'}}">
             <td style="width: 5%">
-                {{ $rankingItem->position }}
+                @if ($i == 0 || $ranking[$i-1]->position != $ranking[$i]->position)
+                    {{ $ranking[$i]->position }}
+                @endif
             </td>
             <td style="width: 80%">
-                {{ $rankingItem->item->name }}
+                {{ $ranking[$i]->item->name }}
             </td>
             <td>
-                {{ \App\Utils\Numbers::format($rankingItem->item->points) }}
+                {{ \App\Utils\Numbers::format($ranking[$i]->item->points) }}
             </td>
         </tr>
-    @endforeach
+    @endfor
     </tbody>
 </table>
