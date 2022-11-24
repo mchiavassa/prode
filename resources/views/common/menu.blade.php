@@ -9,12 +9,10 @@
         <li class="nav-item">
             <a class="nav-link {{Route::currentRouteName() === 'party' ? 'active' : ''}}" href="{{route('party')}}">{{__('menu.parties')}}</a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link {{Route::currentRouteName() === 'rankings' ? 'active' : ''}}" href="{{route('rankings')}}">{{__('menu.rankings')}}</a>
+        </li>
         @if(Auth::user()->isAdmin())
-            <li class="nav-item">
-                <a class="nav-link {{Route::currentRouteName() === 'rankings' ? 'active' : ''}}" href="{{route('rankings')}}">{{__('menu.rankings')}}</a>
-            </li>
-        
             <li class="nav-item">
                 <a class="nav-link {{Route::currentRouteName() === 'user' ? 'active' : ''}}" href="{{route('user')}}">{{__('menu.users')}}</a>
             </li>
