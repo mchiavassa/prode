@@ -118,6 +118,9 @@
                     loading.fadeOut(500);
                 });
             });
+            if ($('#forecasts-select option[data-forecasts-url]').length === 1) {
+                $('#forecasts-select option[data-forecasts-url]').attr('selected' , true).trigger('change');
+            }
         });
     </script>
 @endpush

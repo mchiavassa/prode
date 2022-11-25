@@ -22,11 +22,11 @@
         <tbody>
         @foreach($forecasts as $forecast)
             <tr>
-                <td>
+                <td style="width: 40%">
                     <img src="{{Arr::get($forecast, 'user.picture_url')}}" class="rounded" height="30px" onerror="this.onerror=null; this.src='{{asset('img/user-avatar.png')}}'">
                     {{Arr::get($forecast, 'user.name')}}
                 </td>
-                <td>
+                <td style="width: 15%">
                     {{Arr::get($forecast, 'home_score')}} - {{Arr::get($forecast, 'away_score')}}
                 </td>
                 <td>
