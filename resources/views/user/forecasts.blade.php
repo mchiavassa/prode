@@ -58,8 +58,12 @@ $realPoints = $forecasts->sum('points_earned')
                     <td style="width: 5%">
                         {{$forecast->game->computed ? $forecast->points_earned : '-'}}
                     </td>
+                    @if(!$forecast->game->computed)
                     <td style="width: 15%" class="local-datetime" data-timestamp="{{\App\Utils\DateTimes::toTimestamp($forecast->updated_at)}}">
                     </td>
+                    @else
+                    <td>-</td>
+                    @endif
                 </tr>
             @endforeach
             </tbody>
