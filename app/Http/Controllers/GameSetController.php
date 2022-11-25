@@ -95,13 +95,14 @@ class GameSetController extends Controller
     {
         $gameSets = $this->gameSet
             ->with('games')
-            ->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED]);
+            ->whereIn('status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED])
+            ->get();
 
         return view(
             'set.list',
             [
-                'gameSetsEnabled' => $gameSets->where('status', GameSet::STATUS_ENABLED)->get(),
-                'gameSetsFinished' => $gameSets->where('status', GameSet::STATUS_FINISHED)->get()
+                'gameSetsEnabled' => $gameSets->where('status', GameSet::STATUS_ENABLED),
+                'gameSetsFinished' => $gameSets->where('status', GameSet::STATUS_FINISHED)
             ]);
     }
 }
