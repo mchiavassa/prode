@@ -141,10 +141,22 @@ class AuthService
             ->where('provider_key', $externalUser->getId())
             ->first();
 
+        $userUpdated = false;
+
         if (empty($providerLogin)) {
             $this->addProviderLogin($user, $externalUser);
         } else {
             $user->picture_url = $externalUser->getPictureUrl();
+            $userUpdated = true;
+        }
+
+        // a login with external provider validates the email
+        if (!$user->emailIsVerified()) {
+            $user->email_verified_at = DateTimes::now();
+            $userUpdated = true;
+        }
+
+        if ($userUpdated) {
             $user->save();
         }
 
