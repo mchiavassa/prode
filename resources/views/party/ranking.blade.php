@@ -1,7 +1,7 @@
 <table class="table">
     <tbody>
     @for ($i = 0; $i < $ranking->count(); $i++)
-        <tr class="{{$ranking[$i]->item->email == Auth::user()->email ? 'fw-bold' : ''}}"
+        <tr class="{{$ranking[$i]->item->email == Auth::user()->email ? 'fw-bold bg-light' : ''}}"
             style="{{$i == 0 || $ranking[$i-1]->position != $ranking[$i]->position ? 'border-top-style: solid;' : 'border-top-style: hidden;'}}">
             <td style="width: 5%">
                 @if ($i == 0 || $ranking[$i-1]->position != $ranking[$i]->position)
