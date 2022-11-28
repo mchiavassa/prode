@@ -73,10 +73,13 @@
             </div>
         </main>
         <footer class="bd-footer text-muted">
-            <div class="container text-center mb-3">
+            <div class="container text-center mb-1">
                 <a href="https://github.com/mchiavassa/prode" class="repo-link" target="_blank">
                     <i class="bi-github" style="font-size: 2rem;"></i>
                 </a>
+            </div>
+            <div class="text-center mb-2" style="font-size: 0.7em">
+                <a href="https://www.freeprivacypolicy.com/live/86653d2f-2e92-4801-a4ae-7f1db0300d79" class="text-muted nav-link" target="_blank">Privacy policy</a>
             </div>
         </footer>
     </div>
