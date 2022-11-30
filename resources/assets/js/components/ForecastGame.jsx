@@ -152,7 +152,7 @@ export default class ForecastGame extends Component {
                                                         <strong>
                                                             {days > 0 ? days + this.state.strings.format.day + ' ' : ''}
                                                             {hours > 0 || days > 0 ? hours + this.state.strings.format.hour + ' ' : ''}
-                                                            {minutes > 0 || hours > 0 ? minutes + this.state.strings.format.minute + ' ' : ''}
+                                                            {minutes > 0 || hours > 0 || days > 0 ? minutes + this.state.strings.format.minute + ' ' : ''}
                                                             {seconds}{this.state.strings.format.second}
                                                         </strong> {this.state.strings.countdown.after}
                                                     </span>;
