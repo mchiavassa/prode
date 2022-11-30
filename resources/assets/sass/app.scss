@@ -34,6 +34,9 @@ body {
     }
 }
 
+.collapsing {
+    transition: none;
+}
 
 .bg-light {
   background-color: rgba(248,249,250, .8) !important;

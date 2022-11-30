@@ -43,7 +43,7 @@ export default class ForecastForm extends Component {
                 <div className={'row mt-4'}>
                     <div className={'col-6 border-right'}>
                         <div className={'row'}>
-                            <div className={!this.props.tieBreakRequired ? 'col-6 offset-6' : 'col-6'}>
+                            <div className={'col-6 offset-6'}>
                                 <label>{this.state.strings.goals}</label>
                                 <input type="number"
                                        name="homeScore"
@@ -54,19 +54,6 @@ export default class ForecastForm extends Component {
                                        inputMode="numeric"
                                 />
                             </div>
-                            {this.props.tieBreakRequired === true &&
-                                <div className={'col-6'}>
-                                    <label>{this.state.strings.penalties}</label>
-                                    <input type="number"
-                                           name="homeTieBreakScore"
-                                           value={this.state.homeTieBreakScore}
-                                           autoComplete={'off'}
-                                           className={'form-control mb-2'}
-                                           onChange={this.handleInputChange}
-                                           inputMode="numeric"
-                                    />
-                                </div>
-                            }
                         </div>
                     </div>
                     <div className={'col-6'}>
@@ -82,22 +69,55 @@ export default class ForecastForm extends Component {
                                        inputMode="numeric"
                                 />
                             </div>
-                            {this.props.tieBreakRequired === true &&
-                                <div className={'col-6'}>
-                                    <label>{this.state.strings.penalties}</label>
-                                    <input type="number"
-                                           name="awayTieBreakScore"
-                                           value={this.state.awayTieBreakScore}
-                                           autoComplete={'off'}
-                                           className={'form-control mb-2'}
-                                           onChange={this.handleInputChange}
-                                           inputMode="numeric"
-                                    />
-                                </div>
-                            }
                         </div>
                     </div>
                 </div>
+                {this.props.tieBreakRequired === true &&
+                    <div className={'bg-light'}>
+                        <div className={'row mt-1'}>
+                            <div className={'col-12'}>
+                                <button
+                                    className="btn btn-sm btn-light col-12"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target={'#tiebox-' + this.props.gameId}
+                                    aria-expanded="false"
+                                    aria-controls={'tiebox-' + this.props.gameId}>
+                                    {this.state.strings.penalties}
+                                </button>
+                            </div>
+                        </div>
+                        <div className={'row mt-1 collapse ' + (!this.state.homeTieBreakScore && !this.state.awayTieBreakScore ? '' : 'show')} id={'tiebox-' + this.props.gameId}>
+                            <div className={'col-6 mt-2 border-right'}>
+                                <div className={'row'}>
+                                    <div className={'col-6 offset-6'}>
+                                        <input type="number"
+                                               name="homeTieBreakScore"
+                                               value={this.state.homeTieBreakScore}
+                                               autoComplete={'off'}
+                                               className={'form-control mb-2'}
+                                               onChange={this.handleInputChange}
+                                               inputMode="numeric"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={'col-6 mt-2 border-right'}>
+                                <div className={'row'}>
+                                    <div className={'col-6'}>
+                                        <input type="number"
+                                               name="awayTieBreakScore"
+                                               value={this.state.awayTieBreakScore}
+                                               autoComplete={'off'}
+                                               className={'form-control mb-2'}
+                                               onChange={this.handleInputChange}
+                                               inputMode="numeric"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> }
                 <div className={'mt-2 text-center'}>
                     <button onClick={this.validateForecast} className={'btn btn-primary'}>{this.state.strings.submit}</button>
                 </div>

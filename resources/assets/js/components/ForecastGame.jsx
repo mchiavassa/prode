@@ -217,6 +217,7 @@ export default class ForecastGame extends Component {
                             {!this.state.game.hasResult && !this.state.forecast && this.state.game.canForecast &&
                                 <ForecastForm strings={this.state.strings}
                                               tieBreakRequired={this.state.game.tieBreakRequired}
+                                              gameId={this.state.game.id}
                                               onForecastSubmit={this.onForecastSubmit} />
                             }
 
@@ -224,6 +225,7 @@ export default class ForecastGame extends Component {
                                 <div>
                                     <ForecastForm strings={this.state.strings}
                                                   tieBreakRequired={this.state.game.tieBreakRequired}
+                                                  gameId={this.state.game.id}
                                                   homeScore={this.state.forecast.homeScore}
                                                   awayScore={this.state.forecast.awayScore}
                                                   homeTieBreakScore={this.state.forecast.homeTieBreakScore}
