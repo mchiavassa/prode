@@ -148,7 +148,13 @@ export default class ForecastGame extends Component {
                                                     return <span className={'badge rounded-pill live-badge bg-danger mt-1 '}>{this.state.strings.live}</span>;
                                                 } else {
                                                     return <span className={'text-muted'}>
-                                                        {this.state.strings.countdown.before} <strong>{days}{this.state.strings.format.day} {hours}{this.state.strings.format.hour} {minutes}{this.state.strings.format.minute} {seconds}{this.state.strings.format.second}</strong> {this.state.strings.countdown.after}
+                                                        {this.state.strings.countdown.before}
+                                                        <strong>
+                                                            {days > 0 ? days + this.state.strings.format.day + ' ' : ''}
+                                                            {hours > 0 ? hours + this.state.strings.format.hour + ' ' : ''}
+                                                            {minutes > 0 ? minutes + this.state.strings.format.minute + ' ' : ''}
+                                                            {seconds}{this.state.strings.format.second}
+                                                        </strong> {this.state.strings.countdown.after}
                                                     </span>;
                                                 }
                                            }}/>
