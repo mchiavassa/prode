@@ -222,12 +222,16 @@ class StatsController extends Controller
 
     public function forecastsProgress()
     {
-        $gamesAvailableCount = DB::table('games')
-            ->join('game_sets', 'game_sets.id', '=', 'games.set_id')
-            ->whereIn('game_sets.status', [GameSet::STATUS_ENABLED, GameSet::STATUS_FINISHED])
-            ->count();
+        $gamesAvailable = $this->game
+            ->where('date_and_hour', '>=' , DateTimes::now())
+            ->where('computed', 0)
+            ->get();
+        $gamesAvailableCount = $gamesAvailable->count();
 
-        $userForecastsCount = $this->forecast->where('user_id', Auth::user()->id)->count();
+        $userForecastsCount = $this->forecast
+            ->where('user_id', Auth::user()->id)
+            ->whereIn('game_id', $gamesAvailable->pluck('id')->all())
+            ->count();
 
         return view(
             'stats.forecasts',

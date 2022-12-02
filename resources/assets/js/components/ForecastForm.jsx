@@ -87,7 +87,7 @@ export default class ForecastForm extends Component {
                                 </button>
                             </div>
                         </div>
-                        <div className={'row mt-1 collapse ' + (!this.state.homeTieBreakScore && !this.state.awayTieBreakScore ? '' : 'show')} id={'tiebox-' + this.props.gameId}>
+                        <div className={'row mt-1 collapse ' + (this.state.homeTieBreakScore === '' && this.state.awayTieBreakScore === '' ? '' : 'show')} id={'tiebox-' + this.props.gameId}>
                             <div className={'col-6 mt-2 border-right'}>
                                 <div className={'row'}>
                                     <div className={'col-6 offset-6'}>
