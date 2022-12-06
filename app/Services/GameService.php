@@ -61,7 +61,7 @@ class GameService
     /**
      * Returns a list of upcoming games to forecast.
      *
-     * It will retrieve future games, including live ones up to 2.5 hours from the start.
+     * It will retrieve future games, including live ones up to 4 hours from the start.
      * It will group them by date and return the immediate upcoming ones.
      * If there are less than 2 upcoming games, it will try to pull games from the following date.
      */

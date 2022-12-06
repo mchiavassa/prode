@@ -23,7 +23,7 @@
     <link rel="icon" type="image/png" href="{{asset('img/favicon/favicon-32x32.png')}}" sizes="32x32" />
     <link rel="icon" type="image/png" href="{{asset('img/favicon/favicon-16x16.png')}}" sizes="16x16" />
     <link rel="icon" type="image/png" href="{{asset('img/favicon/favicon-128.png')}}" sizes="128x128" />
-
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <!-- Styles -->
     @stack('css')
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
