@@ -68,7 +68,7 @@ class GameService
     public function getUpcomingGamesToForecast2()
     {
         $minGamesToDisplay = 2;
-        $maxMinutesDisplayingFinishedGames = 150;
+        $maxMinutesDisplayingFinishedGames = 240;
         $gamesFrom = DateTimes::now()->addMinutes(-$maxMinutesDisplayingFinishedGames)->toDateTimeString();
 
         $futureGames = $this->game
