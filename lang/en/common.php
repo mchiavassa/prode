@@ -33,5 +33,10 @@ return [
                 'message' => 'We are working to prevent this to happen again.'
             ]
         ]
+    ],
+    'refresh' => [
+        'pull' => 'Pull down to refresh',
+        'release' => 'Release to refresh',
+        'refreshing' => 'Refreshing'
     ]
 ];

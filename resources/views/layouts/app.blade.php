@@ -131,6 +131,17 @@
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     @include('common.messages')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pulltorefreshjs/0.1.22/index.umd.min.js"></script>
+    <script type="text/javascript">
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: 'main',
+            instructionsPullToRefresh: '{{__('common.refresh.pull')}}',
+            instructionsReleaseToRefresh: '{{__('common.refresh.release')}}',
+            instructionsRefreshing: '{{__('common.refresh.refreshing')}}'
+        });
+    </script>
     @stack('script')
 </body>
 </html>
