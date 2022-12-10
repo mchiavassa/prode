@@ -64,11 +64,11 @@ class Game extends Model
 
     public function printHomeResult(): string
     {
-        return $this->hasResult() ? ($this->home_score.($this->home_tie_break_score ? '('.$this->home_tie_break_score.')' : '')) : '';
+        return $this->hasResult() ? ($this->home_score.($this->home_tie_break_score !== null ? '('.$this->home_tie_break_score.')' : '')) : '';
     }
 
     public function printAwayResult(): string
     {
-        return $this->hasResult() ? ($this->away_score.($this->away_tie_break_score ? '('.$this->away_tie_break_score.')' : '')) : '';
+        return $this->hasResult() ? ($this->away_score.($this->away_tie_break_score !== null ? '('.$this->away_tie_break_score.')' : '')) : '';
     }
 }

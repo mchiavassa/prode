@@ -47,12 +47,12 @@ class Forecast extends Model
 
     public function printHomeResult(): string
     {
-        return $this->home_score.($this->home_tie_break_score ? '('.$this->home_tie_break_score.')' : '');
+        return $this->home_score.($this->home_tie_break_score !== null ? '('.$this->home_tie_break_score.')' : '');
     }
 
     public function printAwayResult(): string
     {
-        return $this->away_score.($this->away_tie_break_score ? '('.$this->away_tie_break_score.')' : '');
+        return $this->away_score.($this->away_tie_break_score !== null ? '('.$this->away_tie_break_score.')' : '');
     }
 
     public function printAssertions(): string
