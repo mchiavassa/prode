@@ -70,8 +70,8 @@ class StatsController extends Controller
 
         $topUsersCount = 5;
         $topAssertionsCount = 3;
-        $topAssertionsTieBreakCount = 2;
-        $topAssertionsTieBreakScoreCount = 1;
+        $topAssertionsTieBreakCount = 3;
+        $topAssertionsTieBreakScoreCount = 3;
         $topPartiesCount = 5;
         $topGamesCount = 5;
 
