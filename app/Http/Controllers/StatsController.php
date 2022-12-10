@@ -70,6 +70,8 @@ class StatsController extends Controller
 
         $topUsersCount = 5;
         $topAssertionsCount = 3;
+        $topAssertionsTieBreakCount = 2;
+        $topAssertionsTieBreakScoreCount = 1;
         $topPartiesCount = 5;
         $topGamesCount = 5;
 
@@ -101,8 +103,8 @@ class StatsController extends Controller
             'usersResultRanking' => Ranking::ofItemsWithPositions($topUsersByResult, $topAssertionsCount),
             'usersScoreRanking' => Ranking::ofItemsWithPositions($topUsersByScore, $topAssertionsCount),
             'usersTeamScoreRanking' => Ranking::ofItemsWithPositions($topUsersByTeamScore, $topAssertionsCount),
-            'usersTieBreakRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreak, $topAssertionsCount),
-            'usersTieBreakScoreRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreakScore, $topAssertionsCount),
+            'usersTieBreakRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreak, $topAssertionsTieBreakCount),
+            'usersTieBreakScoreRanking' => Ranking::ofItemsWithPositions($topUsersByTieBreakScore, $topAssertionsTieBreakScoreCount),
             'partiesRanking' => Ranking::ofItemsWithPositions($allParties, $topPartiesCount),
             'topGamesRanking' => Ranking::ofItemsWithPositions($games, $topGamesCount),
             'worstGamesRanking' => Ranking::ofItemsWithPositionsDescendant($games, $topGamesCount),

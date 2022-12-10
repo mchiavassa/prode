@@ -20,16 +20,16 @@
                         {{__('domain.forecast.assertion.'.\App\Models\ForecastAssertion::SCORE)}}
                     </button>
                 </li>
-{{--                <li class="nav-item" role="presentation">--}}
-{{--                    <button class="nav-link" id="pills-top-tiebreak-tab" data-bs-toggle="pill" data-bs-target="#pills-top-tiebreak" type="button" role="tab" aria-controls="pills-top-tiebreak" aria-selected="false">--}}
-{{--                        {{__('domain.forecast.assertion.'.\App\Models\ForecastAssertion::TIEBREAK_EXISTENCE)}}--}}
-{{--                    </button>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item" role="presentation">--}}
-{{--                    <button class="nav-link" id="pills-top-tiebreak-score-tab" data-bs-toggle="pill" data-bs-target="#pills-top-tiebreak-score" type="button" role="tab" aria-controls="pills-top-tiebreak-score" aria-selected="false">--}}
-{{--                        {{__('domain.forecast.assertion.'.\App\Models\ForecastAssertion::TIEBREAK_SCORE)}}--}}
-{{--                    </button>--}}
-{{--                </li>--}}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-top-tiebreak-tab" data-bs-toggle="pill" data-bs-target="#pills-top-tiebreak" type="button" role="tab" aria-controls="pills-top-tiebreak" aria-selected="false">
+                        {{__('domain.forecast.assertion.'.\App\Models\ForecastAssertion::TIEBREAK_EXISTENCE)}}
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-top-tiebreak-score-tab" data-bs-toggle="pill" data-bs-target="#pills-top-tiebreak-score" type="button" role="tab" aria-controls="pills-top-tiebreak-score" aria-selected="false">
+                        {{__('domain.forecast.assertion.'.\App\Models\ForecastAssertion::TIEBREAK_SCORE)}}
+                    </button>
+                </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-top-results" role="tabpanel" aria-labelledby="pills-top-results-tab">
@@ -41,12 +41,12 @@
                 <div class="tab-pane fade" id="pills-top-scores" role="tabpanel" aria-labelledby="pills-top-scores-tab">
                     @include('common.user-ranking', ['ranking' => $usersScoreRanking])
                 </div>
-{{--                <div class="tab-pane fade" id="pills-top-tiebreak" role="tabpanel" aria-labelledby="pills-top-tiebreak-tab">--}}
-{{--                    @include('common.user-ranking', ['ranking' => $usersTieBreakRanking])--}}
-{{--                </div>--}}
-{{--                <div class="tab-pane fade" id="pills-top-tiebreak-score" role="tabpanel" aria-labelledby="pills-top-tiebreak-score-tab">--}}
-{{--                    @include('common.user-ranking', ['ranking' => $usersTieBreakScoreRanking])--}}
-{{--                </div>--}}
+                <div class="tab-pane fade" id="pills-top-tiebreak" role="tabpanel" aria-labelledby="pills-top-tiebreak-tab">
+                    @include('common.user-ranking', ['ranking' => $usersTieBreakRanking])
+                </div>
+                <div class="tab-pane fade" id="pills-top-tiebreak-score" role="tabpanel" aria-labelledby="pills-top-tiebreak-score-tab">
+                    @include('common.user-ranking', ['ranking' => $usersTieBreakScoreRanking])
+                </div>
             </div>
         </div>
     </div>
