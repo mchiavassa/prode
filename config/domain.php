@@ -72,6 +72,6 @@ return [
           'KOR',
     ],
     'closing' => [
-        'enabled' => false // enables a closing message for users
+        'enabled' => true // enables a closing message for users
     ],
 ];
