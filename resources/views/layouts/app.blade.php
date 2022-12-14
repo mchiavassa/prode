@@ -66,7 +66,7 @@
                 </div>
             </div>
         </nav>
-
+        @include('common.closing')
         <main class="container">
             <div class="my-3 p-4 bg-main">
                 @yield('content')

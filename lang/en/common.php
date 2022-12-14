@@ -38,5 +38,8 @@ return [
         'pull' => 'Pull down to refresh',
         'release' => 'Release to refresh',
         'refreshing' => 'Refreshing'
-    ]
+    ],
+    'closing' => [
+        'message' => 'Prode will be closed 24 hours after the final match. Thank you for playing!'
+    ],
 ];

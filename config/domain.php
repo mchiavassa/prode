@@ -71,4 +71,7 @@ return [
           'URU',
           'KOR',
     ],
+    'closing' => [
+        'enabled' => false // enables a closing message for users
+    ],
 ];

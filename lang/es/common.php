@@ -38,5 +38,8 @@ return [
         'pull' => 'Actualizar',
         'release' => 'Actualizar',
         'refreshing' => 'Actualizando...'
-    ]
+    ],
+    'closing' => [
+        'message' => 'Prode se cerrará 24 horas después del partido final. ¡Gracias por jugar!'
+    ],
 ];
